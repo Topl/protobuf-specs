@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package co.topl.proto.services;
+
+import 'models/common.proto';
+import 'models/block.proto';
+import 'models/transaction.proto';
+
+service ToplGrpc {
+  rpc BroadcastTransaction (BroadcastTransactionReq) returns (BroadcastTransactionRes);
+  rpc CurrentMempool (CurrentMempoolReq) returns (CurrentMempoolRes);
+
+  rpc FetchBlockHeader (FetchBlockHeaderReq) returns (FetchBlockHeaderRes);
+  rpc FetchBlockBody (FetchBlockBodyReq) returns (FetchBlockBodyRes);
+  rpc FetchTransaction (FetchTransactionReq) returns (FetchTransactionRes);
+
+  rpc FetchBlockIdAtHeight (FetchBlockIdAtHeightReq) returns (FetchBlockIdAtHeightRes);
+
+}
+
+message BroadcastTransactionReq {
+  co.topl.proto.models.Transaction transaction = 1;
+}
+
+message BroadcastTransactionRes {}
+
+message CurrentMempoolReq {}
+
+message CurrentMempoolRes {
+  repeated co.topl.proto.models.TransactionId transactionIds = 1;
+}
+
+message FetchBlockHeaderReq {
+  co.topl.proto.models.BlockId blockId = 1;
+}
+
+message FetchBlockHeaderRes {
+  co.topl.proto.models.BlockHeader header = 1;
+}
+
+message FetchBlockBodyReq {
+  co.topl.proto.models.BlockId blockId = 1;
+}
+
+message FetchBlockBodyRes {
+  co.topl.proto.models.BlockBody body = 1;
+}
+
+message FetchTransactionReq {
+  co.topl.proto.models.TransactionId transactionId = 1;
+}
+
+message FetchTransactionRes {
+  co.topl.proto.models.Transaction transaction = 1;
+}
+
+message FetchBlockIdAtHeightReq {
+  uint64 height = 1;
+}
+
+message FetchBlockIdAtHeightRes {
+  co.topl.proto.models.BlockId blockId = 1;
+}

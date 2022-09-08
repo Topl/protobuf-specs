@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package co.topl.proto.models;
+
+// #ProtoByteComment
+// Protobuf does not support `byte` types, so we use uint32 instead
+
+// A byte indicating a specific network
+message NetworkPrefix {
+  // See #ProtoByteComment
+  uint32 value = 1;
+}
+
+// A hash with a byte prefix indicating the data type of the original value
+message TypedEvidence {
+  // See #ProtoByteComment
+  // A 1-byte discriminator of the original value type
+  uint32 typePrefix = 1;
+  // A blake2b256 32-byte hash of the original value
+  bytes evidence = 2;
+}
+
+// An identifier of a Block
+message BlockId {
+  // A 32-byte blake2b256 hash
+  bytes value = 1;
+}
+
+// An identifier of a Transaction
+message TransactionId {
+  // A 32-byte blake2b256 hash
+  bytes value = 1;
+}
+
+// TODO: Does this representation need to change?
+// Represents a 128-bit integer
+message Int128 {
+  // BigInt Representation
+  bytes value = 1;
+}
