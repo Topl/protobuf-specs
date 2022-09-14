@@ -35,6 +35,6 @@ message TransactionId {
 // TODO: Does this representation need to change?
 // Represents a 128-bit integer
 message Int128 {
-  // BigInt Representation
+  // Java BigInt Representation: two's-complement, big-endian
   bytes value = 1;
 }
