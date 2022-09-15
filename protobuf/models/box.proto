@@ -6,7 +6,7 @@ import 'models/common.proto';
 import 'models/address.proto';
 import 'models/proof.proto';
 
-// A synthetic type representing a Transaction Output's value, as well as its spending address evidence
+// A type representing a Transaction Output's value, as well as its spending address evidence.
 message Box {
   // The evidence of the Proposition which locks this Box
   TypedEvidence evidence = 1;

@@ -17,11 +17,11 @@ message BlockHeader {
   bytes txRoot = 3;
   // A fuzzy search for addresses associated with this block
   bytes bloomFilter = 4;
-  // The UNIX timestamp (ms) when the block was created
+  // The UTC UNIX timestamp (ms) when the block was created
   uint64 timestamp = 5;
   // The 1-based index of this block in the blockchain
   uint64 height = 6;
-  // The time-slot in which the block producer is eligible to produce this block
+  // The time-slot in which the block producer created the block
   uint64 slot = 7;
   // A certificate indicating that the block producer was eligible to make this block
   EligibilityCertificate eligibilityCertificate = 8;

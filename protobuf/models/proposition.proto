@@ -54,7 +54,7 @@ message PropositionKnowledgeHashLock {
 // A Proposition that can be satisfied by satisfying a minimum number of sub-propositions.
 message PropositionCompositionalThreshold {
   // The minimum number of sub-propositions that must be satisfied
-  int32 threshold = 1;
+  uint32 threshold = 1;
   // The *set* of available sub-propositions that can be satisfied.  Propositions must be distinct.
   repeated Proposition propositions = 2;
 }
