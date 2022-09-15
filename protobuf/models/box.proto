@@ -56,14 +56,10 @@ message AssetV1BoxValue {
 
   // An identifier for a collection of Assets
   message Code {
-    // See #ProtoByteComment
-    // TODO: Can we delete this because we know it's a V1 Asset?
-    // The version of the AssetCode (must be `1`)
-    uint32 version = 1;
     // The SpendingAddress of the user/application which minted this Asset.
-    SpendingAddress issuerAddress = 2;
+    SpendingAddress issuerAddress = 1;
     // A name for this Asset.  Must be latin-1 encoded.  Must be at most 8 bytes in length.
-    bytes shortName = 3;
+    bytes shortName = 2;
   }
 }
 // Represents a proof-of-stake registration for an Operator (Block Producer)
