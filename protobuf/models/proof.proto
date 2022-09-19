@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package co.topl.proto.models;
+
+import 'models/verification_key.proto';
+
+// Represents an argument which satisfies a Proposition
+message Proof {
+  oneof sealed_value {
+    ProofUndefined undefined = 1;
+
+    ProofKnowledgeCurve25519 knowledgeCurve25519 = 2;
+    ProofKnowledgeEd25519 knowledgeEd25519 = 3;
+    ProofKnowledgeVrfEd25519 knowledgeVrfEd25519 = 4;
+    ProofKnowledgeKesSum knowledgeKesSum = 5;
+    ProofKnowledgeKesProduct knowledgeKesProduct = 6;
+    ProofKnowledgeHashLock knowledgeHashLock = 7;
+
+    ProofCompositionalThreshold compositionalThreshold = 8;
+    ProofCompositionalAnd compositionalAnd = 9;
+    ProofCompositionalOr compositionalOr = 10;
+    ProofCompositionalNot compositionalNot = 11;
+
+    ProofContextualHeightLock contextualHeightLock = 12;
+    ProofContextualRequiredTransactionIO contextualTransactionIO = 13;
+  }
+}
+
+// A Proof which will always verify to `false`
+message ProofUndefined {}
+
+// A Proof which contains a Curve25519 signature
+message ProofKnowledgeCurve25519 {
+  // The 64-byte signature of the bytes of the Transaction
+  bytes value = 1;
+}
+
+// A Proof which contains an Ed25519 signature
+message ProofKnowledgeEd25519 {
+  // The 64-byte signature of the bytes of the Transaction
+  bytes value = 1;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofKnowledgeVrfEd25519 {
+  // The 80-byte signature
+  bytes value = 1;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofKnowledgeKesSum {
+  VerificationKeyEd25519 verificationKey = 1;
+  ProofKnowledgeEd25519 signature = 2;
+  // List of 32-byte Arrays
+  repeated bytes witness = 3;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofKnowledgeKesProduct {
+  ProofKnowledgeKesSum superSignature = 1;
+  ProofKnowledgeKesSum subSignature = 2;
+  // 32-bytes
+  bytes subRoot = 3;
+}
+
+// A Proof which provides a value that results in a hash equal to the Proposition's
+message ProofKnowledgeHashLock {
+  // The original data that was hashed to create the corresponding Proposition
+  bytes value = 1;
+}
+
+// A Proof which contains a list of sub-proofs which align with the sub-propositions of the Proposition
+message ProofCompositionalThreshold {
+  // The sub-proofs which satisfy the sub-propositions.  There should be the same number of sub-proofs as there are sub-propositions, and they should be in the same order.
+  repeated Proof proofs = 1;
+}
+
+// A Proof which contains two sub-proofs corresponding to the two sub-propositions of the Proposition.
+message ProofCompositionalAnd {
+  // Proof A
+  Proof a = 1;
+  // Proof B
+  Proof b = 2;
+}
+
+// A Proof which contains two sub-proofs corresponding to the two sub-propositions of the Proposition.
+message ProofCompositionalOr {
+  // Proof A
+  Proof a = 1;
+  // Proof B
+  Proof b = 2;
+}
+
+// A Proof which contains a single sub-proof corresponding to the sub-proposition of the Proposition.
+message ProofCompositionalNot {
+  // Proof A
+  Proof a = 1;
+}
+
+// A Proof which is satisfied by the context of the blockchain when the Transaction is included
+message ProofContextualHeightLock {}
+
+// A Proof which is satisfied by the context of the blockchain (and this Transaction) when the Transaction is included
+message ProofContextualRequiredTransactionIO {}

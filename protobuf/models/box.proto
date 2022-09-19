@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package co.topl.proto.models;
+
+import 'models/common.proto';
+import 'models/address.proto';
+import 'models/proof.proto';
+
+// A type representing a Transaction Output's value, as well as its spending address evidence.
+message Box {
+  // The evidence of the Proposition which locks this Box
+  TypedEvidence evidence = 1;
+  // The value inside of the Box
+  BoxValue value = 2;
+
+  // Represents an identifier or pointer to a Box
+  message Id {
+    TransactionId transactionId = 1;
+    int32 transactionOutputIndex = 2;
+  }
+}
+
+// Captures the value/token/currency/data inside of a Box
+message BoxValue {
+  oneof sealed_value {
+    EmptyBoxValue empty = 1;
+    PolyBoxValue poly = 2;
+    ArbitBoxValue arbit = 3;
+    AssetV1BoxValue assetV1 = 4;
+    OperatorRegistrationBoxValue operatorRegistration = 5;
+  }
+}
+
+// A Box which stores no particular value
+message EmptyBoxValue {}
+// A Box which stores Poly coins
+message PolyBoxValue {
+  // The number of nanopolys
+  Int128 quantity = 1;
+}
+// A Box which stores Arbit coins
+message ArbitBoxValue {
+  // The number of nanoarbits
+  Int128 quantity = 1;
+}
+// A Box which stores Assets (v1)
+message AssetV1BoxValue {
+  // The number of assets
+  Int128 quantity = 1;
+  // The code of this asset
+  Code assetCode = 2;
+  // Optional user/application commitment data.  Strict: 32 bytes
+  bytes securityRoot = 3;
+  // Optional user/application metadata.  Must be latin-1 encoded.  Must be at most 127 bytes in length.
+  optional bytes metadata = 4;
+
+  // An identifier for a collection of Assets
+  message Code {
+    // The SpendingAddress of the user/application which minted this Asset.
+    SpendingAddress issuerAddress = 1;
+    // A name for this Asset.  Must be latin-1 encoded.  Must be at most 8 bytes in length.
+    bytes shortName = 2;
+  }
+}
+// Represents a proof-of-stake registration for an Operator (Block Producer)
+message OperatorRegistrationBoxValue {
+  ProofKnowledgeKesProduct vrfCommitment = 1;
+}

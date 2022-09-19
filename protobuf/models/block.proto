@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package co.topl.proto.models;
+
+import 'models/common.proto';
+import 'models/address.proto';
+import 'models/certificate.proto';
+import 'models/transaction.proto';
+
+// Captures a block producer's consensus-commitment to a new block
+message BlockHeader {
+  // The parent block's ID.  Each header builds from a single parent.
+  BlockId parentHeaderId = 1;
+  // The slot of the parent block
+  uint64 parentSlot = 2;
+  // The commitment/accumulator of the block body
+  bytes txRoot = 3;
+  // A fuzzy search for addresses associated with this block
+  bytes bloomFilter = 4;
+  // The UTC UNIX timestamp (ms) when the block was created
+  uint64 timestamp = 5;
+  // The 1-based index of this block in the blockchain
+  uint64 height = 6;
+  // The time-slot in which the block producer created the block
+  uint64 slot = 7;
+  // A certificate indicating that the block producer was eligible to make this block
+  EligibilityCertificate eligibilityCertificate = 8;
+  // A certificate indicating the operator's commitment to this block
+  OperationalCertificate operationalCertificate = 9;
+  // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
+  optional bytes metadata = 10;
+  // The operator's staking address
+  StakingAddressOperator address = 11;
+}
+
+// Captures the ordering of transaction IDs within a block
+message BlockBody {
+  // A list of Transaction IDs included in this block
+  repeated TransactionId transactionIds = 1;
+}
+
+// Captures the ordering of transactions (not just IDs) within a block
+message FullBlockBody {
+  // A list of Transactions included in this block
+  repeated Transaction transaction = 1;
+}
+
+// Captures the header and all transactions in a block
+message FullBlock {
+  // The block's header
+  BlockHeader header = 1;
+  // The block's full body
+  FullBlockBody fullBody = 2;
+}
