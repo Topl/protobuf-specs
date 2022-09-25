@@ -2,9 +2,11 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
+import 'common/common.proto'
+
 // Captures the value/token/currency/data inside of a Box
 // if possible to separate, could we put this tokens into separate VMs (for the sake of constraint independence)
-message BoxValue {
+message Value {
     oneof sealed_value {
       EmptyBoxValue empty = 1;
       LvlBoxValue poly = 2;

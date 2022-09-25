@@ -1,11 +1,12 @@
 syntax = "proto3";
 
-package co.topl.proto.models;
+package co.topl.proto.ledger;
 
-import 'models/address.proto';
-import 'models/box.proto';
-import 'models/proof.proto';
-import 'models/proposition.proto';
+import 'common/common.proto'
+import 'ledger/address.proto';
+import 'ledger/value.proto';
+import 'quivr/proof.proto';
+import 'quivr/proposition.proto';
 
 // Represents the destruction and creation of Boxes
 message Transaction {
@@ -27,14 +28,14 @@ message Transaction {
     // A Proof which satisfies the Proposition of the Box.
     Proof proof = 3;
     // The value inside the box being spent
-    BoxValue value = 4;
+    Value value = 4;
   }
   // A new Box
   message Output {
     // The address associated with the Box, including a commitment to a Proposition that unlocks this new Box
     FullAddress address = 1;
     // The value of the new Box
-    BoxValue value = 2;
+    Value value = 2;
     // A flag indicating if this Output is being generated from nothing.  For users/applications, only Asset and Registration values are allowed in `value`.
     bool minting = 3;
   }

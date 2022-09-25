@@ -7,24 +7,26 @@ import 'ledger/transaction.proto'
 
 // Captures the ordering of transaction IDs within a block
 message BlockBody {
-      // The commitment/accumulator of the block body
+  // The commitment/accumulator of the block body
   bytes txRoot = 3; // todo: does the header ID already commit us to the txRoot?
   // A fuzzy search for addresses associated with this block
   bytes bloomFilter = 4;
-    // A list of Transaction IDs included in this block
-    repeated TransactionId transactionIds = 1;
-      // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
+  // A list of Transaction IDs included in this block
+  repeated TransactionId transactionIds = 1;
+  // Optional metadata stamped by the operator.  Must be latin-1 encoded, and
+  // must be at most 32 bytes in length.
   optional bytes metadata = 10;
-  }
-  
-  // Captures the ordering of transactions (not just IDs) within a block
-  message FullBlockBody {
-          // The commitment/accumulator of the block body
+}
+
+// Captures the ordering of transactions (not just IDs) within a block
+message FullBlockBody {
+  // The commitment/accumulator of the block body
   bytes txRoot = 3; // todo: does the header ID already commit us to the txRoot?
   // A fuzzy search for addresses associated with this block
   bytes bloomFilter = 4;
-    // A list of Transactions included in this block
-    repeated Transaction transaction = 1;
-          // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
+  // A list of Transactions included in this block
+  repeated Transaction transaction = 1;
+  // Optional metadata stamped by the operator.  Must be latin-1 encoded, and
+  // must be at most 32 bytes in length.
   optional bytes metadata = 10;
-  }
+}

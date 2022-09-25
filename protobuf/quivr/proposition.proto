@@ -1,18 +1,19 @@
 syntax = "proto3";
 
-package co.topl.proto.models;
+package co.topl.proto.quivr;
 
-import 'models/verification_key.proto';
-import 'models/box.proto';
+import 'common/verification_key.proto';
+import 'common/common.proto';
 
 // Captures the logic/script/contract that must be satisfied in order to spend a particular Box
 message Proposition {
   oneof sealed_value {
     PropositionPermanentlyLocked permanentlyLocked = 1;
 
-    PropositionKnowledgeCurve25519 knowledgeCurve25519 = 3;
-    PropositionKnowledgeEd25519 knowledgeEd25519 = 4;
-    PropositionKnowledgeExtendedEd25519 knowledgeExtendedEd25519 = 5;
+    PropositionSignatureCurve25519 knowledgeCurve25519 = 3;
+    PropositionSignatureEd25519 knowledgeEd25519 = 4;
+    PropositionSignatureExtendedEd25519 knowledgeExtendedEd25519 = 5;
+
     PropositionKnowledgeHashLock knowledgeHashLock = 6;
 
     PropositionCompositionalThreshold compositionalThreshold = 7;
@@ -30,17 +31,17 @@ message PropositionPermanentlyLocked {}
 
 // A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided Curve25519 verification key
 // @deprecated
-message PropositionKnowledgeCurve25519 {
+message PropositionSignatureCurve25519 {
   VerificationKeyCurve25519 key = 1;
 }
 
 // A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided Ed25519 verification key
-message PropositionKnowledgeEd25519 {
+message PropositionSignatureEd25519 {
   VerificationKeyEd25519 key = 1;
 }
 
 // A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided ExtendedEd25519 verification key
-message PropositionKnowledgeExtendedEd25519 {
+message PropositionSignatureExtendedEd25519 {
   VerificationKeyExtendedEd25519 key = 1;
 }
 

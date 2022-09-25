@@ -2,8 +2,7 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
-import 'common/common.proto';
-import 'common/crypto/verification_key.proto';
+import 'common.proto';
 import 'quivr/proof.proto';
 
 // todo: I'm not sure we need this ?? Should discuss

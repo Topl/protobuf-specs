@@ -1,0 +1,4 @@
+// true quantified boolean function
+
+ForAll(input: List[Proposition]): TQBF[Proposition]
+Exists(input: List[Propostiion], threshold): TQBF[Proposition]

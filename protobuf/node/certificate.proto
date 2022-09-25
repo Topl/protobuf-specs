@@ -1,8 +1,9 @@
 syntax = "proto3";
 
-package co.topl.proto.models;
+package co.topl.proto.node;
 
-import 'common/crypto/verification_key.proto';
+import 'common/verification_key.proto';
+import 'quivr/proposition.proto';
 import 'quivr/proof.proto';
 
 // A certificate which commits an operator to a linear key, which is then used to sign the block
@@ -14,7 +15,7 @@ message OperationalCertificate {
   // The linear VK
   VerificationKeyEd25519 childVK = 3;
   // The signature of the block
-  ProofKnowledgeEd25519 childSignature = 4;
+  ProofSignatureEd25519 childSignature = 4;
 }
 
 // A certificate proving the operator's election
@@ -27,4 +28,39 @@ message EligibilityCertificate {
   bytes thresholdEvidence = 3;
   // The epoch's randomness, 32-bytes
   bytes eta = 4;
+}
+
+// For consensus purposes - not recommended for users/applications
+message VerificationKeyVrfEd25519 {
+  // Strict: 32 bytes
+  bytes value = 1;
+}
+
+// For consensus purposes - not recommended for users/applications
+message VerificationKeyKesProduct {
+  // Strict: 32 bytes
+  bytes value = 1;
+  int32 step = 2;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofSignatureVrfEd25519 {
+  // The 80-byte signature
+  bytes value = 1;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofSignatureKesSum {
+  VerificationKeyEd25519 verificationKey = 1;
+  ProofSignatureEd25519 signature = 2;
+  // List of 32-byte Arrays
+  repeated bytes witness = 3;
+}
+
+// A Proof for consensus purposes - not recommended for UTxO spending logic.
+message ProofSignatureKesProduct {
+  ProofSignatureKesSum superSignature = 1;
+  ProofSignatureKesSum subSignature = 2;
+  // 32-bytes
+  bytes subRoot = 3;
 }
