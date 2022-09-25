@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package co.topl.proto.services;
+
+import 'common/common.proto';
+import 'ledger/transaction.proto';
+import 'node/header.proto';
+
+service NodeRpc {
+  // Submit a proven Transaction to the node
+  rpc BroadcastTransaction (BroadcastTransactionReq) returns (BroadcastTransactionRes);
+  // Read the contents of the node's mempool
+  rpc CurrentMempool (CurrentMempoolReq) returns (CurrentMempoolRes);
+
+  // retrieve a Block Header by its ID
+  rpc FetchBlockHeader (FetchBlockHeaderReq) returns (FetchBlockHeaderRes);
+
+  // retrieve a Block Body by its ID
+  rpc FetchBlockBody (FetchBlockBodyReq) returns (FetchBlockBodyRes);
+
+  // retrieve a Transaction by its ID
+  rpc FetchTransaction (FetchTransactionReq) returns (FetchTransactionRes);
+
+
+  // retrieve the Block ID associated with a height, according to the node's canonical chain
+  rpc FetchBlockIdAtHeight (FetchBlockIdAtHeightReq) returns (FetchBlockIdAtHeightRes);
+
+}
+
+// Request type for BroadcastTransaction
+message BroadcastTransactionReq {
+  // A "proven" Transaction that is meant to be included in the blockchain
+  co.topl.proto.ledger.Transaction transaction = 1;
+}
+
+// Response type for BroadcastTransaction
+message BroadcastTransactionRes {}
+
+// Request type for CurrentMempool
+message CurrentMempoolReq {}
+
+// Response type for CurrentMempool
+message CurrentMempoolRes {
+  // A list of Transaction IDs that are currently in the node's mempool
+  repeated co.topl.proto.common.TransactionId transactionIds = 1;
+}
+
+// Request type for FetchBlockHeader
+message FetchBlockHeaderReq {
+  // The ID of the block to retrieve
+  co.topl.proto.common.BlockId blockId = 1;
+}
+
+// Response type for FetchBlockHeader
+message FetchBlockHeaderRes {
+  // The Block Header associated with the requested ID.  None/null if not found.
+  optional co.topl.proto.node.BlockHeader header = 1;
+}
+
+// Request type for FetchBlockBody
+message FetchBlockBodyReq {
+  // The ID of the block to retrieve
+  co.topl.proto.common.BlockId blockId = 1;
+}
+
+// Response type for FetchBlockBody
+message FetchBlockBodyRes {
+  // The Block Body associated with the requested ID.  None/null if not found.
+  optional co.topl.proto.ledger.BlockBody body = 1;
+}
+
+// Request type for FetchTransaction
+message FetchTransactionReq {
+  co.topl.proto.common.TransactionId transactionId = 1;
+}
+
+// Response type for FetchTransaction
+message FetchTransactionRes {
+  // The Transaction associated with the requested ID.  None/null if not found.
+  optional co.topl.proto.ledger.Transaction transaction = 1;
+}
+
+// Request type for FetchBlockIdAtHeight
+message FetchBlockIdAtHeightReq {
+  // The height of interest
+  uint64 height = 1;
+}
+
+// Response type for FetchBlockIdAtHeight
+message FetchBlockIdAtHeightRes {
+  // The Block ID associated with the requested height.  None/null if not found.
+  optional co.topl.proto.common.BlockId blockId = 1;
+}

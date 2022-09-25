@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package co.topl.proto.common;
+
+import 'common/common.proto';
+import 'ledger/value.proto';
+
+// A type representing a Transaction Output's value, as well as its spending address evidence.
+message Box {
+  // The evidence of the Proposition which locks this Box
+  TypedEvidence evidence = 1;
+  // The value inside of the Box
+  BoxValue value = 2;
+
+  // Represents an identifier or pointer to a Box
+  message Id {
+    TransactionId transactionId = 1;
+    int32 transactionOutputIndex = 2;
+  }
+}
+
+

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package co.topl.proto.models;
+
+import 'common/crypto/verification_key.proto';
+import 'quivr/proof.proto';
+
+// A certificate which commits an operator to a linear key, which is then used to sign the block
+message OperationalCertificate {
+  // The KES VK of the parent key (forward-secure) (hour+minute hands)
+  VerificationKeyKesProduct parentVK = 1;
+  // Signs the `childVK` using the `parentSK`
+  ProofKnowledgeKesProduct parentSignature = 2;
+  // The linear VK
+  VerificationKeyEd25519 childVK = 3;
+  // The signature of the block
+  ProofKnowledgeEd25519 childSignature = 4;
+}
+
+// A certificate proving the operator's election
+message EligibilityCertificate {
+  // Signs `eta ++ slot` using the `vrfSK`
+  ProofKnowledgeVrfEd25519 vrfSig = 1;
+  // The VRF VK
+  VerificationKeyVrfEd25519 vrfVK = 2;
+  // A 32-byte blake2b256 hash of the operator's `threshold`
+  bytes thresholdEvidence = 3;
+  // The epoch's randomness, 32-bytes
+  bytes eta = 4;
+}
