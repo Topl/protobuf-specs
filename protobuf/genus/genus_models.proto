@@ -4,7 +4,7 @@ syntax = "proto3";
 // Message definitions for data created by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
-package co.topl.proto.models;
+package co.topl.proto.genus;
 
 // Specify the order of data for indexes.
 enum SortOrder {

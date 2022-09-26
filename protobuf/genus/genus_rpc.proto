@@ -1,0 +1,42 @@
+
+// Operations related to blocks
+service GenusBlockService {
+  // Get a GenusBlock by its hash
+  rpc getBlockById(BlockId) returns (GenusBlock);
+
+  // get a GenusBlock by its height
+  rpc getBlockByHeight(ChainDistance) returns (GenusBlock);
+
+  // get a GenusBlock by its depth
+  rpc getBlockByDepth(ChainDistance) returns (GenusBlock);
+}
+
+// Operations related to GenusBlock contents
+service TransactionService {
+  // Get a transaction by its ID
+  rpc getTransactionById(GetTransactionByIdRequest) returns (stream Transaction);
+
+  // Create a transaction index using on-chain data.
+  rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
+
+  // Create a transaction index using off-chain data.
+  rpc createOffChainTransactionIndex(CreateOffChainTransactionIndexRequest) returns (RecordCount);
+
+  // Get information about existing transaction indexes
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (stream TransactionIndexCreationRequest);
+
+  // Drop an index
+  rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
+
+  // get transactions that are in a named index and match the given value.
+  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream Transaction);
+
+  // Get the boxes currently associated with a specified addresses
+  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+
+  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
+}
+
+service SubscriptionService {
+  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse)''
+}
