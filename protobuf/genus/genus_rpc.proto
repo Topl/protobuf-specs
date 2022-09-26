@@ -8,6 +8,7 @@ package co.topl.proto.genus;
 
 import 'models/address.proto';
 import 'models/block.proto';
+import 'models/box.proto';
 import 'models/common.proto';
 import 'models/transaction.proto';
 import 'genus/genus_models.proto';
@@ -65,6 +66,16 @@ message QueryByAddressRequest {
   repeated models.SpendingAddress addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
+}
+
+
+message BoxQueryResponse {
+  // Map addresses that are Base58 encoded to boxes.
+  map<string, BoxStatuses> addressesToBoxes = 1;
+
+  message BoxStatuses {
+    repeated genus.BoxStatus boxStatus = 1;
+  }
 }
 
 service SubscriptionService {

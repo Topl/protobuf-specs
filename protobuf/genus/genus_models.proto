@@ -4,12 +4,21 @@ syntax = "proto3";
 // Message definitions for data created by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
+import 'models/box.proto';
+
 package co.topl.proto.genus;
 
+// Used to identify the status of a box.
 enum BoxStatus {
-  SPENT = 0;
-  UNSPENT = 1;
-  PENDING = 2;
+  SPENT = 0;   // The box is spent
+  UNSPENT = 1; // The box is not spent
+  PENDING = 2; // There is a transaction pending that may spend the box.
+}
+
+// A Box and its status
+message BoxState {
+  models.Box box = 1;
+  BoxStatus status = 2;
 }
 
 // Specify the order of data for indexes.
