@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package co.topl.proto.services;
 
-import 'common/common.proto';
-import 'ledger/transaction.proto';
-import 'node/header.proto';
+import "common/utility.proto";
+import "ledger/transaction.proto";
+import "node/header.proto";
 
 service NodeRpc {
   // Submit a proven Transaction to the node

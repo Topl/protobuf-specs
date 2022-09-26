@@ -2,17 +2,15 @@ syntax = "proto3";
 
 package co.topl.proto.quivr;
 
-import 'common/verification_key.proto';
-
 // Represents an argument which satisfies a Proposition
 message Proof {
   oneof sealed_value {
     ProofUndefined undefined = 1;
 
-    ProofSignatureCurve25519 knowledgeCurve25519 = 2;
-    ProofSignatureEd25519 knowledgeEd25519 = 3;
+    ProofSignatureCurve25519 signatureCurve25519 = 2;
+    ProofSignatureEd25519 signatureEd25519 = 3;
 
-    ProofKnowledgeHashLock knowledgeHashLock = 7;
+    ProofKnowledgeHashLock signatureHashLock = 7;
 
     ProofCompositionalThreshold compositionalThreshold = 8;
     ProofCompositionalAnd compositionalAnd = 9;

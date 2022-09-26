@@ -2,19 +2,19 @@ syntax = "proto3";
 
 package co.topl.proto.quivr;
 
-import 'common/verification_key.proto';
-import 'common/common.proto';
+import "common/utility.proto";
+import "common/verification_key.proto";
 
 // Captures the logic/script/contract that must be satisfied in order to spend a particular Box
 message Proposition {
   oneof sealed_value {
     PropositionPermanentlyLocked permanentlyLocked = 1;
 
-    PropositionSignatureCurve25519 knowledgeCurve25519 = 3;
-    PropositionSignatureEd25519 knowledgeEd25519 = 4;
-    PropositionSignatureExtendedEd25519 knowledgeExtendedEd25519 = 5;
+    PropositionSignatureCurve25519 signatureCurve25519 = 3;
+    PropositionSignatureEd25519 signatureEd25519 = 4;
+    PropositionSignatureExtendedEd25519 signatureExtendedEd25519 = 5;
 
-    PropositionKnowledgeHashLock knowledgeHashLock = 6;
+    PropositionKnowledgeHashLock signatureHashLock = 6;
 
     PropositionCompositionalThreshold compositionalThreshold = 7;
     PropositionCompositionalAnd compositionalAnd = 8;
@@ -29,23 +29,23 @@ message Proposition {
 // A Proposition that can't be satisfied
 message PropositionPermanentlyLocked {}
 
-// A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided Curve25519 verification key
+// A Proposition that can be satisfied by proving signature of a secret key corresponding to the provided Curve25519 verification key
 // @deprecated
 message PropositionSignatureCurve25519 {
-  VerificationKeyCurve25519 key = 1;
+  co.topl.proto.common.VerificationKeyCurve25519 key = 1;
 }
 
-// A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided Ed25519 verification key
+// A Proposition that can be satisfied by proving signature of a secret key corresponding to the provided Ed25519 verification key
 message PropositionSignatureEd25519 {
-  VerificationKeyEd25519 key = 1;
+  co.topl.proto.common.VerificationKeyEd25519 key = 1;
 }
 
-// A Proposition that can be satisfied by proving knowledge of a secret key corresponding to the provided ExtendedEd25519 verification key
+// A Proposition that can be satisfied by proving signature of a secret key corresponding to the provided ExtendedEd25519 verification key
 message PropositionSignatureExtendedEd25519 {
-  VerificationKeyExtendedEd25519 key = 1;
+  co.topl.proto.common.VerificationKeyExtendedEd25519 key = 1;
 }
 
-// A Proposition that can be satisfied by knowledge of data that can be hashed to the provided digest.
+// A Proposition that can be satisfied by signature of data that can be hashed to the provided digest.
 // At this time, only 32-byte blake2b256 is supported.
 message PropositionKnowledgeHashLock {
   // The hashed value.  Must be 32-bytes.
@@ -96,7 +96,7 @@ message PropositionContextualRequiredTransactionIO {
   // A "match" description for a particular Box
   message Requirement {
     // The exact Box to match
-    Box box = 1;
+    co.topl.proto.common.Box box = 1;
     // The Box's location within the Transaction
     BoxLocation location = 2;
   }

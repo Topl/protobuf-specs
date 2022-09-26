@@ -2,16 +2,15 @@ syntax = "proto3";
 
 package co.topl.proto.node;
 
-import 'common/common.proto';
-import 'ledger/address.proto';
-import 'ledger/body.proto';
-import 'ledger/transaction.proto';
-import 'node/certificate.proto';
+import "common/utility.proto";
+import "ledger/address.proto";
+import "ledger/body.proto";
+import "node/certificate.proto";
 
 // Captures a block producer's consensus-commitment to a new block
 message BlockHeader {
   // The parent block's ID.  Each header builds from a single parent.
-  BlockId parentHeaderId = 1;
+  co.topl.proto.common.BlockId parentHeaderId = 1;
   // The slot of the parent block
   uint64 parentSlot = 2;
   // The UTC UNIX timestamp (ms) when the block was created
@@ -21,13 +20,13 @@ message BlockHeader {
   // The time-slot in which the block producer created the block
   uint64 slot = 7;
   // A certificate indicating that the block producer was eligible to make this block
-  EligibilityCertificate eligibilityCertificate = 8;
+  co.topl.proto.node.EligibilityCertificate eligibilityCertificate = 8;
   // A certificate indicating the operator's commitment to this block
-  OperationalCertificate operationalCertificate = 9;
+  co.topl.proto.node.OperationalCertificate operationalCertificate = 9;
   // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
-  optional bytes metadata = 10;
+  bytes metadata = 10;
   // The operator's staking address
-  StakingAddressOperator address = 11;
+  co.topl.proto.ledger.StakingAddressOperator address = 11;
 }
 
 // Captures the header and all transactions in a block
@@ -35,5 +34,5 @@ message FullBlock {
   // The block's header
   BlockHeader header = 1;
   // The block's full body
-  FullBlockBody fullBody = 2;
+  co.topl.proto.ledger.FullBlockBody fullBody = 2;
 }

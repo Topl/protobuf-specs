@@ -2,26 +2,27 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
-import 'common.proto';
-import 'quivr/proof.proto';
+import "common/utility.proto";
+import "common/verification_key.proto";
+import "quivr/proof.proto";
 
 // todo: I'm not sure we need this ?? Should discuss
 // Captures the "ownership" of a UTxO
 message FullAddress {
   // A byte prefix indicating the network instance to which this address belongs
-  NetworkPrefix networkPrefix = 1;
+  co.topl.proto.common.NetworkPrefix networkPrefix = 1;
   // Commitment to the logic for who may spend a UTxO
   SpendingAddress spendingAddress = 2;
   // Encodes which staking account which owns the funds of the UTxO
   StakingAddress stakingAddress = 3;
   // TODO: What do we name this?
-  ProofKnowledgeEd25519 commitment = 4;
+  co.topl.proto.quivr.ProofSignatureEd25519 commitment = 4;
 }
 
 // Commits to a lock/proposition
 message SpendingAddress {
   // The evidence of the proposition
-  TypedEvidence typedEvidence = 1;
+  co.topl.proto.common.TypedContractEvidence typedEvidence = 1;
 }
 
 // Encodes the staking account which owns the funds of the UTxO
@@ -35,7 +36,7 @@ message StakingAddress {
 // A type of StakingAddress in which Arbits (the staking token) are owned by a block producer
 message StakingAddressOperator {
   // The operator's verification key
-  VerificationKeyEd25519 vk = 1;
+  co.topl.proto.common.VerificationKeyEd25519 vk = 1;
 }
 
 // A type of StakingAddress in which Arbits are not used for staking at all.  These arbits are excluded

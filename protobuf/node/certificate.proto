@@ -2,26 +2,25 @@ syntax = "proto3";
 
 package co.topl.proto.node;
 
-import 'common/verification_key.proto';
-import 'quivr/proposition.proto';
-import 'quivr/proof.proto';
+import "common/verification_key.proto";
+import "quivr/proof.proto";
 
 // A certificate which commits an operator to a linear key, which is then used to sign the block
 message OperationalCertificate {
   // The KES VK of the parent key (forward-secure) (hour+minute hands)
   VerificationKeyKesProduct parentVK = 1;
   // Signs the `childVK` using the `parentSK`
-  ProofKnowledgeKesProduct parentSignature = 2;
+  ProofSignatureKesProduct parentSignature = 2;
   // The linear VK
-  VerificationKeyEd25519 childVK = 3;
+  co.topl.proto.common.VerificationKeyEd25519 childVK = 3;
   // The signature of the block
-  ProofSignatureEd25519 childSignature = 4;
+  co.topl.proto.quivr.ProofSignatureEd25519 childSignature = 4;
 }
 
 // A certificate proving the operator's election
 message EligibilityCertificate {
   // Signs `eta ++ slot` using the `vrfSK`
-  ProofKnowledgeVrfEd25519 vrfSig = 1;
+  ProofSignatureVrfEd25519 vrfSig = 1;
   // The VRF VK
   VerificationKeyVrfEd25519 vrfVK = 2;
   // A 32-byte blake2b256 hash of the operator's `threshold`
@@ -51,8 +50,8 @@ message ProofSignatureVrfEd25519 {
 
 // A Proof for consensus purposes - not recommended for UTxO spending logic.
 message ProofSignatureKesSum {
-  VerificationKeyEd25519 verificationKey = 1;
-  ProofSignatureEd25519 signature = 2;
+  co.topl.proto.common.VerificationKeyEd25519 verificationKey = 1;
+  co.topl.proto.quivr.ProofSignatureEd25519 signature = 2;
   // List of 32-byte Arrays
   repeated bytes witness = 3;
 }

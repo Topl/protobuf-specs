@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
-import 'common/common.proto'
-import 'ledger/address.proto';
-import 'ledger/value.proto';
-import 'quivr/proof.proto';
-import 'quivr/proposition.proto';
+import "common/utility.proto";
+import "ledger/address.proto";
+import "ledger/value.proto";
+import "quivr/proof.proto";
+import "quivr/proposition.proto";
 
 // Represents the destruction and creation of Boxes
 message Transaction {
@@ -17,25 +17,25 @@ message Transaction {
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
   // An optional array of latin-1 encoded bytes.  Maximum length: 127
-  optional bytes data = 4;
+  bytes data = 4;
 
   // References a box to spend, plus the proof that is authorized to spend it
   message Input {
     // The previous box (reference) to spend
-    Box.Id boxId = 1;
+    co.topl.proto.common.Box.Id boxId = 1;
     // The Proposition which unlocks the Box.  Must result in the "spendingAddress" stamped on the referenced UTxO
-    Proposition proposition = 2;
+    co.topl.proto.quivr.Proposition proposition = 2;
     // A Proof which satisfies the Proposition of the Box.
-    Proof proof = 3;
+    co.topl.proto.quivr.Proof proof = 3;
     // The value inside the box being spent
-    Value value = 4;
+    co.topl.proto.ledger.BoxValue value = 4;
   }
   // A new Box
   message Output {
     // The address associated with the Box, including a commitment to a Proposition that unlocks this new Box
-    FullAddress address = 1;
+    co.topl.proto.ledger.FullAddress address = 1;
     // The value of the new Box
-    Value value = 2;
+    co.topl.proto.ledger.BoxValue value = 2;
     // A flag indicating if this Output is being generated from nothing.  For users/applications, only Asset and Registration values are allowed in `value`.
     bool minting = 3;
   }

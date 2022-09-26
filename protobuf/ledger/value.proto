@@ -2,11 +2,13 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
-import 'common/common.proto'
+import "common/utility.proto";
+import "ledger/address.proto";
+import "node/certificate.proto";
 
 // Captures the value/token/currency/data inside of a Box
 // if possible to separate, could we put this tokens into separate VMs (for the sake of constraint independence)
-message Value {
+message BoxValue {
     oneof sealed_value {
       EmptyBoxValue empty = 1;
       LvlBoxValue poly = 2;
@@ -21,35 +23,35 @@ message Value {
   // A Box which stores Poly coins
   message LvlBoxValue {
     // The number of nanopolys
-    Int128 quantity = 1;
-    optional bytes metadata = 2;
+    co.topl.proto.common.Int128 quantity = 1;
+    bytes metadata = 2;
   }
   // A Box which stores Arbit coins
   message ToplBoxValue {
     // The number of nanoarbits
-    Int128 quantity = 1;
-    optional bytes metadata = 2;
+    co.topl.proto.common.Int128 quantity = 1;
+    bytes metadata = 2;
   }
   // A Box which stores Assets (v1)
   message AssetV1BoxValue {
     // The number of assets
-    Int128 quantity = 1;
+    co.topl.proto.common.Int128 quantity = 1;
     // The code of this asset
     Code assetCode = 2;
     // Optional user/application commitment data.  Strict: 32 bytes
     bytes securityRoot = 3;
     // Optional user/application metadata.  Must be latin-1 encoded.  Must be at most 127 bytes in length.
-    optional bytes metadata = 4;
+    bytes metadata = 4;
   
     // An identifier for a collection of Assets
     message Code {
       // The SpendingAddress of the user/application which minted this Asset.
-      SpendingAddress issuerAddress = 1;
+      co.topl.proto.ledger.SpendingAddress issuerAddress = 1;
       // A name for this Asset.  Must be latin-1 encoded.  Must be at most 8 bytes in length.
       bytes shortName = 2;
     }
   }
   // Represents a proof-of-stake registration for an Operator (Block Producer)
   message OperatorRegistrationBoxValue {
-    ProofKnowledgeKesProduct vrfCommitment = 1;
+    co.topl.proto.node.ProofSignatureKesProduct vrfCommitment = 1;
   }
