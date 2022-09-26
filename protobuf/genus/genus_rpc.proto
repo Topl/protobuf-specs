@@ -1,14 +1,25 @@
+syntax = "proto3";
+
+///////////////////////////////////////////////////////////////////////////////
+// Services provided by Genus
+///////////////////////////////////////////////////////////////////////////////
+
+package co.topl.proto.genus;
+
+import 'models/common.proto';
+import 'models/block.proto';
+import 'genus/genus_models.proto';
 
 // Operations related to blocks
 service GenusBlockService {
   // Get a GenusBlock by its hash
-  rpc getBlockById(BlockId) returns (GenusBlock);
+  rpc getBlockById(models.BlockId) returns (models.FullBlock);
 
   // get a GenusBlock by its height
-  rpc getBlockByHeight(ChainDistance) returns (GenusBlock);
+  rpc getBlockByHeight(ChainDistance) returns (models.FullBlock);
 
   // get a GenusBlock by its depth
-  rpc getBlockByDepth(ChainDistance) returns (GenusBlock);
+  rpc getBlockByDepth(ChainDistance) returns (models.FullBlock);
 }
 
 // Operations related to GenusBlock contents

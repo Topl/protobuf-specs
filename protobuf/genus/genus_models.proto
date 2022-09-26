@@ -18,3 +18,8 @@ enum SortOrder {
 message ConfidenceFactor {
   double value = 1;
 }
+
+// The distance between blocks
+message ChainDistance {
+  int64 value = 1;
+}
