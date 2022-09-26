@@ -6,8 +6,10 @@ syntax = "proto3";
 
 package co.topl.proto.genus;
 
-import 'models/common.proto';
+import 'models/address.proto';
 import 'models/block.proto';
+import 'models/common.proto';
+import 'models/transaction.proto';
 import 'genus/genus_models.proto';
 
 // Operations related to blocks
@@ -19,13 +21,20 @@ service GenusBlockService {
   rpc getBlockByHeight(ChainDistance) returns (models.FullBlock);
 
   // get a GenusBlock by its depth
+  // Since blocks keep getting added, we expect that multiple calls to this with the same argument will return different blocks.
   rpc getBlockByDepth(ChainDistance) returns (models.FullBlock);
 }
 
 // Operations related to GenusBlock contents
 service TransactionService {
   // Get a transaction by its ID
-  rpc getTransactionById(GetTransactionByIdRequest) returns (stream Transaction);
+  // This returns the transaction when it is in the Genus database AND its confidence factor is at least the specified value.
+  rpc getTransactionById(GetTransactionByIdRequest) returns (models.Transaction);
+
+  // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+
+  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
 
   // Create a transaction index using on-chain data.
   rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
@@ -41,11 +50,21 @@ service TransactionService {
 
   // get transactions that are in a named index and match the given value.
   rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream Transaction);
+}
 
-  // Get the boxes currently associated with a specified addresses
-  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+// Used to request a transaction by specifying its ID.
+message GetTransactionByIdRequest {
+  models.TransactionId transactionId = 1;
+  // The default value for confidenceFactor is 0.9999999 (7 nines)
+  optional ConfidenceFactor confidenceFactor = 2;
+}
 
-  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
+// Used to request boxes by the
+message QueryByAddressRequest {
+  // All the addresses of interest
+  repeated models.SpendingAddress addresses = 1;
+  // The default value for confidenceFactor is 0.9999999 (7 nines)
+  optional ConfidenceFactor confidenceFactor = 2;
 }
 
 service SubscriptionService {

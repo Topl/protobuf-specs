@@ -6,6 +6,12 @@ syntax = "proto3";
 
 package co.topl.proto.genus;
 
+enum BoxStatus {
+  SPENT = 0;
+  UNSPENT = 1;
+  PENDING = 2;
+}
+
 // Specify the order of data for indexes.
 enum SortOrder {
   ASCENDING = 0;
