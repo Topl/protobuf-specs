@@ -4,6 +4,7 @@ package co.topl.proto.services;
 
 import "common/utility.proto";
 import "ledger/transaction.proto";
+import "ledger/body.proto";
 import "node/header.proto";
 
 service NodeRpc {
@@ -54,7 +55,7 @@ message FetchBlockHeaderReq {
 // Response type for FetchBlockHeader
 message FetchBlockHeaderRes {
   // The Block Header associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.node.BlockHeader header = 1;
+  co.topl.proto.node.BlockHeader header = 1;
 }
 
 // Request type for FetchBlockBody
@@ -66,7 +67,7 @@ message FetchBlockBodyReq {
 // Response type for FetchBlockBody
 message FetchBlockBodyRes {
   // The Block Body associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.ledger.BlockBody body = 1;
+  co.topl.proto.ledger.BlockBody body = 1;
 }
 
 // Request type for FetchTransaction
@@ -77,7 +78,7 @@ message FetchTransactionReq {
 // Response type for FetchTransaction
 message FetchTransactionRes {
   // The Transaction associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.ledger.Transaction transaction = 1;
+  co.topl.proto.ledger.Transaction transaction = 1;
 }
 
 // Request type for FetchBlockIdAtHeight
@@ -89,5 +90,5 @@ message FetchBlockIdAtHeightReq {
 // Response type for FetchBlockIdAtHeight
 message FetchBlockIdAtHeightRes {
   // The Block ID associated with the requested height.  None/null if not found.
-  optional co.topl.proto.common.BlockId blockId = 1;
+  co.topl.proto.common.BlockId blockId = 1;
 }
