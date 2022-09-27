@@ -14,7 +14,7 @@ import 'models/transaction.proto';
 import 'genus/genus_models.proto';
 
 // Operations related to blocks
-service GenusBlockService {
+service GenusFullBlockService {
   // Get a GenusBlock by its hash
   rpc getBlockById(models.BlockId) returns (models.FullBlock);
 
@@ -30,7 +30,12 @@ service GenusBlockService {
 service TransactionService {
   // Get a transaction by its ID
   // This returns the transaction when it is in the Genus database AND its confidence factor is at least the specified value.
-  rpc getTransactionById(GetTransactionByIdRequest) returns (models.Transaction);
+  rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
+
+  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getTransactionByAddressStream(TransactionByAddressRequest) returns(stream TransactionReceipt);
+
+  rpc getTransactionByBloomFilter();
 
   // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
   rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
@@ -54,9 +59,6 @@ service TransactionService {
 
   // Create a transaction index using on-chain data.
   rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
-
-  // Create a transaction index using off-chain data.
-  rpc createOffChainTransactionIndex(CreateOffChainTransactionIndexRequest) returns (RecordCount);
 
   // Get information about existing transaction indexes
   rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexDefs);
@@ -99,16 +101,9 @@ message BoxQueryResponse {
   }
 }
 
-// A request to create an index of transaction based on their on-chain metadata
+// A request to create an index of transactions based on their on-chain data
 message CreateOnChainTransactionIndexRequest {
   IndexSpec indexSpec = 1;
-}
-
-// A request to create an index of off-chain metadata assuming that transaction metadata contains the URL of data that can be obtained with an HTTP GET.
-message CreateOffChainTransactionIndexRequest {
-  IndexSpec indexSpec = 1;
-  // Describes how Genus will get authenticated and authorized to read the contents of URLs.
-  optional Auth auth = 5;
 }
 
 // Definitions of existing database indexes.
@@ -119,28 +114,6 @@ message IndexDefs {
 message IndexDef {
   oneof xdev {
       CreateOnChainTransactionIndexRequest onChain = 1;
-      CreateOffChainTransactionIndexRequest offChain = 1;
-  }
-}
-
-// Describes a strategy for authenticating and authorizing Genus to access off-chain data.
-message Auth {
-  oneof authStrategy {
-    NullAuth public = 1;
-    OidcM2m oidcM2m = 2; // Open ID connect; machine to machine scenario.
-  }
-
-  // A strategy to authenticate and authorize for publicly available resources
-  message NullAuth {
-
-  }
-
-  // A strategy to authenticate and authorize using OIDC (Open ID Connect), machine to machine scenario
-  message OidcM2m {
-    string clientId = 1;     // Id that identifies this client
-    string clientSecret = 2; // A secret that authenticates this client
-    string idP = 3;          // The URL of an identity provider that will authenticate this client and return a token that authorizes it.
-    string audience = 4;     // This will be an IdP-specific value.
   }
 }
 

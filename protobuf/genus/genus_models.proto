@@ -6,6 +6,8 @@ syntax = "proto3";
 
 import 'models/address.proto';
 import 'models/box.proto';
+import 'models/common.proto';
+import 'models/transaction.proto';
 
 package co.topl.proto.genus;
 
@@ -132,4 +134,11 @@ message IndexFilter {
   oneof filter {
     string regexIndexFilter = 1;
   }
+}
+
+message TransactionReceipt {
+  models.Transaction transaction = 1;
+  ConfidenceFactor confidenceFactor = 2;
+  models.BlockId blockId = 3;
+  ChainDistance depth = 4;
 }
