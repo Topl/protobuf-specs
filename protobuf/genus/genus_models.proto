@@ -76,3 +76,8 @@ message AssetLabel {
     fixed64 seriesHashLeastSignificant = 8;
   }
 }
+
+// Represent a quantity of database record
+message RecordCount {
+  uint64 value = 1;
+}

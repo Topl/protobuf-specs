@@ -40,6 +40,18 @@ service TransactionService {
 
   rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
 
+  /////////////////////////////////////////////////////////////////////////////
+  //
+  // The following RPCs are for managing database indexes on the data fields of
+  // transactions.They allow for indexing on-chain data or off chain data.
+  //
+  // They also allow the indexes to be based on field values that are embedded
+  // in the data. Two types of field organization are supported. One is data
+  // that is a JSON object. The other is data that is character separated
+  // fields.
+  //
+  /////////////////////////////////////////////////////////////////////////////
+
   // Create a transaction index using on-chain data.
   rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
 
@@ -73,7 +85,8 @@ message QueryByAddressRequest {
 
 // User to request Box by their asset type
 message QueryByAssetLabelRequest {
-  string assetLabel = 1;
+  AssetLabel assetLabel = 1;
+  // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
