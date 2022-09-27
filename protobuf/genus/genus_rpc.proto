@@ -59,7 +59,7 @@ service TransactionService {
   rpc createOffChainTransactionIndex(CreateOffChainTransactionIndexRequest) returns (RecordCount);
 
   // Get information about existing transaction indexes
-  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexSpecs);
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexDefs);
 
   // Drop an index
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
