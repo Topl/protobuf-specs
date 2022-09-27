@@ -59,7 +59,7 @@ service TransactionService {
   rpc createOffChainTransactionIndex(CreateOffChainTransactionIndexRequest) returns (RecordCount);
 
   // Get information about existing transaction indexes
-  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (stream TransactionIndexCreationRequest);
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexSpecs);
 
   // Drop an index
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
@@ -111,6 +111,18 @@ message CreateOffChainTransactionIndexRequest {
   optional Auth auth = 5;
 }
 
+// Definitions of existing database indexes.
+message IndexDefs {
+  repeated IndexDef indexDef = 1;
+}
+
+message IndexDef {
+  oneof xdev {
+      CreateOnChainTransactionIndexRequest onChain = 1;
+      CreateOffChainTransactionIndexRequest offChain = 1;
+  }
+}
+
 // Describes a strategy for authenticating and authorizing Genus to access off-chain data.
 message Auth {
   oneof authStrategy {
@@ -137,6 +149,6 @@ message GetExistingTransactionIndexesRequest {
 
 }
 
-service SubscriptionService {
-  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
-}
+//service SubscriptionService {
+//  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
+//}
