@@ -35,6 +35,9 @@ service TransactionService {
   // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
   rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
 
+  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getBoxesByAddressStream(QueryByAddressRequest) returns(stream BoxQueryResponse);
+
   rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
 
   // Create a transaction index using on-chain data.

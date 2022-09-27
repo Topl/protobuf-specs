@@ -38,3 +38,15 @@ message ConfidenceFactor {
 message ChainDistance {
   int64 value = 1;
 }
+
+// An identifier for a TAM2 asset type
+message AssetLabel {
+  uint64 groupHashMostSignificant = 1;
+  uint64 groupHashMoreSignificant = 2;
+  uint64 groupHashLessSignificant = 3;
+  uint64 groupHashLeastSignificant = 4;
+  uint64 seriesHashMostSignificant = 5;
+  uint64 seriesHashMoreSignificant = 6;
+  uint64 seriesHashLessSignificant = 7;
+  uint64 seriesHashLeastSignificant = 8;
+}
