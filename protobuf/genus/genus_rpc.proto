@@ -111,6 +111,32 @@ message CreateOffChainTransactionIndexRequest {
   optional Auth auth = 5;
 }
 
+// Describes a strategy for authenticating and authorizing Genus to access off-chain data.
+message Auth {
+  oneof authStrategy {
+    NullAuth public = 1;
+    OidcM2m oidcM2m = 2; // Open ID connect; machine to machine scenario.
+  }
+
+  // A strategy to authenticate and authorize for publicly available resources
+  message NullAuth {
+
+  }
+
+  // A strategy to authenticate and authorize using OIDC (Open ID Connect), machine to machine scenario
+  message OidcM2m {
+    string clientId = 1;     // Id that identifies this client
+    string clientSecret = 2; // A secret that authenticates this client
+    string idP = 3;          // The URL of an identity provider that will authenticate this client and return a token that authorizes it.
+    string audience = 4;     // This will be an IdP-specific value.
+  }
+}
+
+// The message that is sent when requesting information about the existing Genus indexes
+message GetExistingTransactionIndexesRequest {
+
+}
+
 service SubscriptionService {
   rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
 }
