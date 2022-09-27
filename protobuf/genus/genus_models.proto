@@ -81,3 +81,13 @@ message AssetLabel {
 message RecordCount {
   uint64 value = 1;
 }
+
+// A request to create an index of transaction based on their on-chain metadata
+message IndexSpec {
+  // The name of the index
+  string indexName = 1;
+  // A description of the fields to be indexed
+  IndexFieldSpec indexFieldSpec = 3;
+  // Regular expression to filter which transactions are included in the index
+  string regexFilter = 4;
+}

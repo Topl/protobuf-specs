@@ -99,6 +99,18 @@ message BoxQueryResponse {
   }
 }
 
+// A request to create an index of transaction based on their on-chain metadata
+message CreateOnChainTransactionIndexRequest {
+  IndexSpec indexSpec = 1;
+}
+
+// A request to create an index of off-chain metadata assuming that transaction metadata contains the URL of data that can be obtained with an HTTP GET.
+message CreateOffChainTransactionIndexRequest {
+  IndexSpec indexSpec = 1;
+  // Describes how Genus will get authenticated and authorized to read the contents of URLs.
+  optional Auth auth = 5;
+}
+
 service SubscriptionService {
   rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
 }
