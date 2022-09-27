@@ -4,6 +4,7 @@ syntax = "proto3";
 // Message definitions for data created by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
+import 'models/address.proto';
 import 'models/box.proto';
 
 package co.topl.proto.genus;
@@ -39,14 +40,39 @@ message ChainDistance {
   int64 value = 1;
 }
 
+// Types of assets that can be identified by an AssetLabel
+enum LabelType {
+  EMPTY = 0;
+  LVL = 1;
+  TOPL = 2;
+  V1 = 3;
+  TAM2 = 4;
+}
+
 // An identifier for a TAM2 asset type
 message AssetLabel {
-  uint64 groupHashMostSignificant = 1;
-  uint64 groupHashMoreSignificant = 2;
-  uint64 groupHashLessSignificant = 3;
-  uint64 groupHashLeastSignificant = 4;
-  uint64 seriesHashMostSignificant = 5;
-  uint64 seriesHashMoreSignificant = 6;
-  uint64 seriesHashLessSignificant = 7;
-  uint64 seriesHashLeastSignificant = 8;
+  LabelType labelType = 1;
+  oneof label {
+    Empty empty = 2; // Since this is a one-of we need to have a field to use for the label types such as LVL that don't need them.
+    V1Label v1Label = 3;
+    Tam2Label tam2Label = 4;
+  }
+
+  message Empty {};
+
+  message V1Label {
+    uint32 version = 1;
+    models.SpendingAddress mintingAddress = 2;
+  }
+
+  message Tam2Label {
+    fixed64 groupHashMostSignificant = 1;
+    fixed64 groupHashMoreSignificant = 2;
+    fixed64 groupHashLessSignificant = 3;
+    fixed64 groupHashLeastSignificant = 4;
+    fixed64 seriesHashMostSignificant = 5;
+    fixed64 seriesHashMoreSignificant = 6;
+    fixed64 seriesHashLessSignificant = 7;
+    fixed64 seriesHashLeastSignificant = 8;
+  }
 }

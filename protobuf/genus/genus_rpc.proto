@@ -63,7 +63,7 @@ message GetTransactionByIdRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-// Used to request boxes by the
+// Used to request boxes by their associated address
 message QueryByAddressRequest {
   // All the addresses of interest
   repeated models.SpendingAddress addresses = 1;
@@ -71,6 +71,11 @@ message QueryByAddressRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
+// User to request Box by their asset type
+message QueryByAssetLabelRequest {
+  string assetLabel = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
+}
 
 message BoxQueryResponse {
   // Map addresses that are Base58 encoded to boxes.
@@ -82,5 +87,5 @@ message BoxQueryResponse {
 }
 
 service SubscriptionService {
-  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse)''
+  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
 }
