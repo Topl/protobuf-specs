@@ -4,7 +4,25 @@ syntax = "proto3";
 // Message definitions for data created by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
-package co.topl.proto.models;
+import 'models/address.proto';
+import 'models/box.proto';
+import 'models/common.proto';
+import 'models/transaction.proto';
+
+package co.topl.proto.genus;
+
+// Used to identify the status of a box.
+enum BoxStatus {
+  SPENT = 0;   // The box is spent
+  UNSPENT = 1; // The box is not spent
+  PENDING = 2; // There is a transaction pending that may spend the box.
+}
+
+// A Box and its status
+message BoxState {
+  models.Box box = 1;
+  BoxStatus status = 2;
+}
 
 // Specify the order of data for indexes.
 enum SortOrder {
@@ -17,4 +35,110 @@ enum SortOrder {
 // Defaults to 0.9999999
 message ConfidenceFactor {
   double value = 1;
+}
+
+// The distance between blocks
+message ChainDistance {
+  int64 value = 1;
+}
+
+// Types of assets that can be identified by an AssetLabel
+enum LabelType {
+  EMPTY = 0;
+  LVL = 1;
+  TOPL = 2;
+  V1 = 3;
+  TAM2 = 4;
+}
+
+// An identifier for a TAM2 asset type
+message AssetLabel {
+  LabelType labelType = 1;
+  oneof label {
+    Empty empty = 2; // Since this is a one-of we need to have a field to use for the label types such as LVL that don't need them.
+    V1Label v1Label = 3;
+    Tam2Label tam2Label = 4;
+  }
+
+  message Empty {};
+
+  message V1Label {
+    uint32 version = 1;
+    models.SpendingAddress mintingAddress = 2;
+  }
+
+  message Tam2Label {
+    fixed64 groupHashMostSignificant = 1;
+    fixed64 groupHashMoreSignificant = 2;
+    fixed64 groupHashLessSignificant = 3;
+    fixed64 groupHashLeastSignificant = 4;
+    fixed64 seriesHashMostSignificant = 5;
+    fixed64 seriesHashMoreSignificant = 6;
+    fixed64 seriesHashLessSignificant = 7;
+    fixed64 seriesHashLeastSignificant = 8;
+  }
+}
+
+// Represent a quantity of database record
+message RecordCount {
+  uint64 value = 1;
+}
+
+// A request to create an index of transaction based on their on-chain metadata
+message IndexSpec {
+  // The name of the index
+  string indexName = 1;
+  // A description of the fields to be indexed
+  IndexFieldSpec indexFieldSpec = 3;
+  // Filter to determine which transactions are included in the index. Only records that match the filter will be included in the index.
+  optional IndexFilter indexFilter = 4;
+}
+
+// A specification to identify the field(s) in data to be indexed
+message IndexFieldSpec {
+  oneof spec {
+    JsonIndexSpecs jsonSpecs = 1;
+    CsvIndexSpecs csvSpecs = 2;
+    //TODO ways to specify indexes for other types of data
+  }
+}
+
+// a sequence of csv field references to identify the values in data to be indexed
+message CsvIndexSpecs {
+  repeated CsvIndexSpec specs = 1;
+  uint32 separatorChar = 2; // The character code that is used to separate fields.
+  optional uint32 quoteChar = 4; // If this is present, the specified character appears at the beginning and end of each field.
+}
+
+// a sequence of csv field references to identify the values in data to be indexed
+message CsvIndexSpec {
+  // Origin 1 field index
+  uint32 fieldIndex = 1;
+  SortOrder sortOrder = 2;
+  bool isNumeric = 3; // If this is true, the field is sorted numerically; otherwise lexically.
+}
+
+// A sequence of JSONPath strings to identify the values in data to be indexed (https://datatracker.ietf.org/doc/id/draft-goessner-dispatch-jsonpath-00.html)
+message JsonIndexSpecs {
+  repeated JsonIndexSpec specs = 1;
+}
+
+// A JSONPath string to identify a value in data to be indexed (https://datatracker.ietf.org/doc/id/draft-goessner-dispatch-jsonpath-00.html)
+message JsonIndexSpec {
+  string jsonPath = 1;
+  SortOrder sortOrder = 2;
+}
+
+// How records should be filtered to determine which ones to include in an index.
+message IndexFilter {
+  oneof filter {
+    string regexIndexFilter = 1;
+  }
+}
+
+message TransactionReceipt {
+  models.Transaction transaction = 1;
+  ConfidenceFactor confidenceFactor = 2;
+  models.BlockId blockId = 3;
+  ChainDistance depth = 4;
 }
