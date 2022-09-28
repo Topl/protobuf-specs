@@ -208,3 +208,8 @@ BenchmarkDotNet.Artifacts/
 # Clangd uses these common ephemeral files
 .cache
 compile_commands.json
+.idea
+z
+java
+js
+python
