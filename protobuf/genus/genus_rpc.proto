@@ -32,10 +32,11 @@ service TransactionService {
   // This returns the transaction when it is in the Genus database AND its confidence factor is at least the specified value.
   rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
 
-  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getTransactionByAddressStream(TransactionByAddressRequest) returns(stream TransactionReceipt);
+  // Get a stream of transactions that have an output associated with one of the specified addresses that have at least
+  // the specified confidence factor.
+  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionReceipt);
 
-  rpc getTransactionByBloomFilter();
+  //rpc getTransactionByBloomFilter();
 
   // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
   rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
@@ -67,7 +68,7 @@ service TransactionService {
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
 
   // get transactions that are in a named index and match the given value.
-  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream Transaction);
+  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionReceipt);
 }
 
 // Used to request a transaction by specifying its ID.
@@ -122,6 +123,40 @@ message GetExistingTransactionIndexesRequest {
 
 }
 
+// Specify the name of an index to be dropped
+message DropIndexRequest {
+  string indexName = 1;
+}
+
+// Return true if the requested index was dropped or false if it was not (Most likely because it did not exist).
+message DropIndexResponse {
+    bool dropped = 1;
+}
+
+// Request the use of a named index to find transactions containing data that matches specified values.
+message GetIndexedTransactionsRequest {
+  // The name of the index to search
+  string indexName = 1;
+
+  // The index value(s) to search for.
+  repeated IndexMatchValue value = 2;
+
+  // The maximum number of transactions to be returned
+  optional uint64 maxResults = 3;
+
+  // A number of transactions to be skipped. This is useful for paging results.
+  optional uint64 skipResults = 4;
+}
+
+// A value that may match a field in an index.
+message IndexMatchValue {
+  oneof value {
+    string stringValue = 1;
+    int64 intValue = 2;
+    uint64 uintValue = 3;
+  }
+}
+
 //service SubscriptionService {
-//  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvalableMessageQueueResponse);
+//  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvailableMessageQueueResponse);
 //}
