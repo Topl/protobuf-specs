@@ -49,7 +49,7 @@ service TransactionService {
   /////////////////////////////////////////////////////////////////////////////
   //
   // The following RPCs are for managing database indexes on the data fields of
-  // transactions.They allow for indexing on-chain data or off chain data.
+  // transactions.
   //
   // They also allow the indexes to be based on field values that are embedded
   // in the data. Two types of field organization are supported. One is data
