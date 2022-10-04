@@ -4,6 +4,7 @@ package co.topl.proto.user;
 
 import "genus/genus_models.proto";
 import "ledger/transaction.proto";
+import "common/utility.proto";
 
 // A box with extra information
 message AssetBox {
@@ -14,4 +15,12 @@ message AssetBox {
   // Actual content of the box
   // Contains address, minting, and value (quantity, any codes/evidence/metadata)
   co.topl.proto.ledger.Transaction.Output content = 3;
+}
+
+// Represents a request for the quantity of an asset
+message AssetRequest {
+  // The label of the desired asset
+  co.topl.proto.genus.AssetLabel assetLabel = 1;
+  // The desired quantity
+  co.topl.proto.common.Int128 quantity = 2;
 }

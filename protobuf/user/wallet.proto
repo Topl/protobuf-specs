@@ -4,6 +4,8 @@ package co.topl.proto.user;
 
 import "common/verification_key.proto";
 import "genus/genus_models.proto";
+import "common/utility.proto";
+import "user/box.proto";
 
 // Wallet information
 message Wallet {
@@ -36,4 +38,23 @@ message CredentialSet {
 
   // Mapping of human readable names to internal asset labels.
   map<string, co.topl.proto.genus.AssetLabel> assetAliases = 6;
+}
+
+// Represents an entity at the z layer of the x/y/z cartesian scheme
+// Also known as "index" or "address"
+message Z {
+
+}
+// Represents the partial result of an AssetRequest for a single Address/Z-index
+message CategorizedBoxes {
+  // The label of the desired asset
+  Z address = 1;
+  // The boxes whose entire contents will need to be spent.
+  AssetBox spendBoxes = 2;
+  // The boxes having contents that will need to be split between an amount
+  // needed to satisfy the request quantity and the rest of the contents.
+  AssetBox splitBoxes = 3;
+  // The boxes whose entire contents are unneeded to satisfy the request quantity
+  // and should be moved to a different address when this address is spent.
+  AssetBox moveBoxes = 4;
 }

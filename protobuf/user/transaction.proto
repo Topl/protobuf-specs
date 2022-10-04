@@ -28,3 +28,14 @@ message UnprovenTransaction {
     co.topl.proto.ledger.BoxValue value = 4;
   }
 }
+
+// Represents the inputs and change output necessary to satisfy an asset quantity
+message Transput {
+  // The inputs that are either required to satisfy the quantity or
+  // not required for the quantity but will be moved to prevent address reuse
+  repeated UnprovenTransaction.UnprovenInput inputs = 1;
+
+  // The outputs containing any tokens not required to satisfy the quantity
+  // Each element is dedicated for a specific type of asset
+  repeated co.topl.proto.ledger.Transaction.Output changeOutputs = 2;
+}
