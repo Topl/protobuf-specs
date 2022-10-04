@@ -6,6 +6,8 @@ import "ledger/transaction.proto";
 import "common/utility.proto";
 import "ledger/value.proto";
 import "quivr/proposition.proto";
+import "user/box.proto";
+import "user/wallet.proto";
 
 // Represents an unproven transaction
 message UnprovenTransaction {
@@ -38,4 +40,19 @@ message Transput {
   // The outputs containing any tokens not required to satisfy the quantity
   // Each element is dedicated for a specific type of asset
   repeated co.topl.proto.ledger.Transaction.Output changeOutputs = 2;
+}
+
+// Represents the partial result of an AssetRequest for a single Address/Z-index
+// Internally used to create Transput
+message CategorizedBoxes {
+  // The label of the desired asset
+  Z address = 1;
+  // The boxes whose entire contents will need to be spent.
+  AssetBox spendBoxes = 2;
+  // The boxes having contents that will need to be split between an amount
+  // needed to satisfy the request quantity and the rest of the contents.
+  AssetBox splitBoxes = 3;
+  // The boxes whose entire contents are unneeded to satisfy the request quantity
+  // and should be moved to a different address when this address is spent.
+  AssetBox moveBoxes = 4;
 }

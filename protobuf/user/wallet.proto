@@ -6,6 +6,8 @@ import "common/verification_key.proto";
 import "genus/genus_models.proto";
 import "common/utility.proto";
 import "user/box.proto";
+import "user/proposition.proto";
+import "quivr/proposition.proto";
 
 // Wallet information
 message Wallet {
@@ -40,21 +42,57 @@ message CredentialSet {
   map<string, co.topl.proto.genus.AssetLabel> assetAliases = 6;
 }
 
+// Represents an entity at the x layer of the x/y/z cartesian scheme
+// Also known as "application" or "peer" or "party"
+message X {
+  // Index of this X entity
+  uint32 idx = 1;
+
+  // Index of the next Y layer to expose
+  // TODO: May change pending discussion
+  uint32 nextYIdx = 2;
+
+  // Mapping of human readable names to Y layer.
+  map<string, uint32> yNames = 3;
+}
+
+// Represents an entity at the y layer of the x/y/z cartesian scheme
+// Also known as "contract" or "account"
+message Y {
+  // Index of this Y entity
+  uint32 idx = 1;
+
+  // Index of the next Z layer to expose
+  // TODO: May change pending discussion
+  uint32 nextZIdx = 2;
+
+  // Human readable description of this Y entity
+  string description = 3;
+
+  // The template used to create propositions for all indices in this layer
+  PropositionTemplate propositionTemplate = 4;
+}
+
 // Represents an entity at the z layer of the x/y/z cartesian scheme
 // Also known as "index" or "address"
 message Z {
+  // Human readable description of this Z entity
+  string description = 1;
 
+  // Child Key Pair: Public Verification Key
+  co.topl.proto.common.VerificationKey vKey = 2;
+  // Child Key Pair: Private Signing Key
+  // TODO: SigningKey type does not exist
+  co.topl.proto.common.VerificationKey sKey = 3;
+
+  // The proposition used for this index
+  co.topl.proto.quivr.Proposition proposition = 4;
+
+  // Boxes contained in this address
+  repeated AssetBox boxes = 5;
+
+  // Flag denoting if the address at this index could have been exposed
+  // outside of this application. Used for garbage collection
+  bool exposed = 6;
 }
-// Represents the partial result of an AssetRequest for a single Address/Z-index
-message CategorizedBoxes {
-  // The label of the desired asset
-  Z address = 1;
-  // The boxes whose entire contents will need to be spent.
-  AssetBox spendBoxes = 2;
-  // The boxes having contents that will need to be split between an amount
-  // needed to satisfy the request quantity and the rest of the contents.
-  AssetBox splitBoxes = 3;
-  // The boxes whose entire contents are unneeded to satisfy the request quantity
-  // and should be moved to a different address when this address is spent.
-  AssetBox moveBoxes = 4;
-}
+
