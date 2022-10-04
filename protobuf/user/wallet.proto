@@ -10,6 +10,7 @@ import "user/proposition.proto";
 import "quivr/proposition.proto";
 
 // Wallet information
+// DB key: w
 message Wallet {
   // Strict: 32 bytes
   bytes id = 1;
@@ -21,6 +22,7 @@ message Wallet {
 
 // Network specific information.
 // External ID will be the hash/ID of the BigBang block of the network
+// DB key: c.[External ID]
 message CredentialSet {
   // Internal ID of this credential set
   uint32 id = 1;
@@ -44,24 +46,20 @@ message CredentialSet {
 
 // Represents an entity at the x layer of the x/y/z cartesian scheme
 // Also known as "application" or "peer" or "party"
+// DB key: x.[CredentialSet.id].[X.idx]
 message X {
-  // Index of this X entity
-  uint32 idx = 1;
-
   // Index of the next Y layer to expose
   // TODO: May change pending discussion
-  uint32 nextYIdx = 2;
+  uint32 nextYIdx = 1;
 
   // Mapping of human readable names to Y layer.
-  map<string, uint32> yNames = 3;
+  map<string, uint32> yNames = 2;
 }
 
 // Represents an entity at the y layer of the x/y/z cartesian scheme
 // Also known as "contract" or "account"
+// DB key: y.[CredentialSet.id].[X.idx].[Y.idx]
 message Y {
-  // Index of this Y entity
-  uint32 idx = 1;
-
   // Index of the next Z layer to expose
   // TODO: May change pending discussion
   uint32 nextZIdx = 2;
@@ -75,6 +73,7 @@ message Y {
 
 // Represents an entity at the z layer of the x/y/z cartesian scheme
 // Also known as "index" or "address"
+// DB key: z.[CredentialSet.id].[X.idx].[Y.idx].[Z.FullAddress]
 message Z {
   // Human readable description of this Z entity
   string description = 1;
@@ -95,4 +94,3 @@ message Z {
   // outside of this application. Used for garbage collection
   bool exposed = 6;
 }
-
