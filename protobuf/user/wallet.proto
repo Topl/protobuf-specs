@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package co.topl.proto.user;
+
+import "common/verification_key.proto";
+import "genus/genus_models.proto";
+
+// Wallet information
+message Wallet {
+  // Strict: 32 bytes
+  bytes id = 1;
+  // Human readable name for the wallet
+  string name = 2;
+  // Human readable description for the wallet
+  string description = 3;
+}
+
+// Network specific information.
+// External ID will be the hash/ID of the BigBang block of the network
+message CredentialSet {
+  // Internal ID of this credential set
+  uint32 id = 1;
+
+  // Topl Main Key Pair: Public Verification Key
+  co.topl.proto.common.VerificationKey vKey = 2;
+  // Topl Main Key Pair: Private Signing Key
+  // TODO: SigningKey type does not exist
+  co.topl.proto.common.VerificationKey sKey = 3;
+
+  // Index of the next X layer to expose
+  // TODO: May change pending discussion
+  uint32 nextXIdx = 4;
+
+  // Mapping of human readable names to X layer.
+  map<string, uint32> xNames = 5;
+
+  // Mapping of human readable names to internal asset labels.
+  map<string, co.topl.proto.genus.AssetLabel> assetAliases = 6;
+}
