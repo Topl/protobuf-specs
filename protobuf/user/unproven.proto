@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package co.topl.proto.user;
+
+import "ledger/transaction.proto";
+import "common/utility.proto";
+import "ledger/value.proto";
+import "quivr/proposition.proto";
+
+// Represents an unproven transaction
+message UnprovenTransaction {
+  // The list of unproven UTxOs to consume/destroy/spend
+  repeated UnprovenInput inputs = 1;
+  // The list of new UTxOs to create
+  repeated co.topl.proto.ledger.Transaction.Output outputs = 2;
+  // Constrains when this Transaction can be included in the blockchain
+  co.topl.proto.ledger.Transaction.Schedule schedule = 3;
+  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  bytes data = 4;
+
+  // References a box to spend
+  message UnprovenInput {
+    // The previous box (reference) to spend
+    co.topl.proto.common.Box.Id boxId = 1;
+    // The Proposition which unlocks the Box.  Must result in the "spendingAddress" stamped on the referenced UTxO
+    co.topl.proto.quivr.Proposition proposition = 2;
+    // The value inside the box being spent
+    co.topl.proto.ledger.BoxValue value = 4;
+  }
+}
