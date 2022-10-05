@@ -8,11 +8,12 @@ import "common/utility.proto";
 import "user/box.proto";
 import "user/proposition.proto";
 import "quivr/proposition.proto";
+import "ledger/address.proto";
 
 // Wallet information
 // DB key: w
 message Wallet {
-  // Strict: 32 bytes
+  // Strict: 128 bytes (UUID)
   bytes id = 1;
   // Human readable name for the wallet
   string name = 2;
@@ -73,24 +74,39 @@ message Y {
 
 // Represents an entity at the z layer of the x/y/z cartesian scheme
 // Also known as "index" or "address"
-// DB key: z.[CredentialSet.id].[X.idx].[Y.idx].[Z.FullAddress]
+// DB key: z.[CredentialSet.id].[X.idx].[Y.idx].[Z.idx]
 message Z {
   // Human readable description of this Z entity
   string description = 1;
 
+  // The generated address
+  co.topl.proto.ledger.FullAddress address = 2;
+
   // Child Key Pair: Public Verification Key
-  co.topl.proto.common.VerificationKey vKey = 2;
+  co.topl.proto.common.VerificationKey vKey = 3;
   // Child Key Pair: Private Signing Key
   // TODO: SigningKey type does not exist
-  co.topl.proto.common.VerificationKey sKey = 3;
+  co.topl.proto.common.VerificationKey sKey = 4;
 
   // The proposition used for this index
-  co.topl.proto.quivr.Proposition proposition = 4;
+  co.topl.proto.quivr.Proposition proposition = 5;
 
   // Boxes contained in this address
-  repeated AssetBox boxes = 5;
+  repeated AssetBox boxes = 6;
 
   // Flag denoting if the address at this index could have been exposed
   // outside of this application. Used for garbage collection
-  bool exposed = 6;
+  bool exposed = 7;
+}
+
+// Used to map 2 different views of the z layer of the x/y/z cartesian scheme
+// This is to allow querying by an Address's FullAddress
+// DB key: a.[CredentialSet.id].[FullAddress]
+message AddressMapping {
+  // Denotes the X index that this address belongs to
+  uint32 xIdx = 1;
+  // Denotes the Y index that this address belongs to
+  uint32 yIdx = 2;
+  // Denotes the Z index that this address belongs to
+  uint32 zIdx = 3;
 }
