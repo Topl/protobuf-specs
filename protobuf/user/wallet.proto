@@ -91,8 +91,8 @@ message Z {
   // The proposition used for this index
   co.topl.proto.quivr.Proposition proposition = 5;
 
-  // Boxes contained in this address
-  repeated AssetBox boxes = 6;
+  // TxOs contained in this address
+  repeated AssetTransactionOutput txOs = 6;
 
   // Flag denoting if the address at this index could have been exposed
   // outside of this application. Used for garbage collection
