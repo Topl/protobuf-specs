@@ -2,7 +2,102 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
+import "quivr/proposition.proto";
+
+// Types of Quantifiers
+// For now we will only use existential, but in the future we could allow for universal types
+enum QuantifierType {
+  UNIVERSAL = 0;
+  EXISTENTIAL = 1;
+}
+
+// Represents a quantifier (formal parameter) to be bound to a proposition template.
+message Quantifiers{
+  string name = 1;
+  QuantifierType type = 2;
+}
+
 // Represents a template to create a proposition instance
 message PropositionTemplate {
-  // TODO: ???
+  oneof sealed_value {
+    co.topl.proto.quivr.PropositionPermanentlyLocked permanentlyLocked = 1;
+
+    PropositionSignatureCurve25519Template signatureCurve25519 = 3;
+    PropositionSignatureEd25519Template signatureEd25519 = 4;
+    PropositionSignatureExtendedEd25519Template signatureExtendedEd25519 = 5;
+
+    PropositionKnowledgeHashLockTemplate signatureHashLock = 6;
+
+    PropositionCompositionalThresholdTemplate compositionalThreshold = 7;
+    PropositionCompositionalAndTemplate compositionalAnd = 8;
+    PropositionCompositionalOrTemplate compositionalOr = 9;
+    PropositionCompositionalNotTemplate compositionalNot = 10;
+
+    PropositionContextualHeightLockTemplate contextualHeightLock = 11;
+    co.topl.proto.quivr.PropositionContextualRequiredTransactionIO contextualTransactionIO = 12;
+  }
+
+  repeated Quantifiers quantifiers = 13;
 }
+
+// A template for a proposition that can be satisfied by proving signature of a secret key corresponding to the provided Curve25519 verification key
+// @deprecated
+message PropositionSignatureCurve25519Template {
+  // The quantifier name associated to the key needed for this proposition
+  string quantifierName = 1;
+}
+
+// A template for a proposition that can be satisfied by proving signature of a secret key corresponding to the provided Ed25519 verification key
+message PropositionSignatureEd25519Template {
+  // The quantifier name associated to the key needed for this proposition
+  string quantifierName = 1;
+}
+
+// A template for a proposition that can be satisfied by proving signature of a secret key corresponding to the provided ExtendedEd25519 verification key
+message PropositionSignatureExtendedEd25519Template {
+  // The quantifier name associated to the key needed for this proposition
+  string quantifierName = 1;
+}
+
+// A template for a proposition that can be satisfied by signature of data that can be hashed to the provided digest.
+message PropositionKnowledgeHashLockTemplate {
+  // The quantifier name associated to the hashed value needed for this proposition
+  string quantifierName = 1;
+}
+
+// A template for a proposition that can be satisfied by satisfying a minimum number of sub-propositions.
+message PropositionCompositionalThresholdTemplate {
+  // The minimum number of sub-propositions that must be satisfied
+  uint32 threshold = 1;
+  // The *set* of available sub-propositions templates that can be satisfied.
+  repeated PropositionTemplate propositions = 2;
+}
+
+// A template for a proposition that can be satisfied if both sub-propositions are satisfied.
+message PropositionCompositionalAndTemplate {
+  // Proposition Template A
+  PropositionTemplate a = 1;
+  // Proposition Template B
+  PropositionTemplate b = 2;
+}
+
+// A template for a proposition that can be satisfied if either of the sub-propositions are satisfied.
+message PropositionCompositionalOrTemplate {
+  // Proposition Template A
+  PropositionTemplate a = 1;
+  // Proposition Template B
+  PropositionTemplate b = 2;
+}
+
+// A template for a proposition that can only be satisfied if the sub-proposition verifies to "false".
+message PropositionCompositionalNotTemplate {
+  // The sub-proposition Template
+  PropositionTemplate a = 1;
+}
+
+// A template for a proposition that can only be satisfied once the height of the blockchain reaches a certain value
+message PropositionContextualHeightLockTemplate {
+  // The quantifier name associated to the required minimum height of the blockchain
+  string quantifierName = 1;
+}
+
