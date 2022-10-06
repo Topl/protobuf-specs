@@ -5,7 +5,7 @@ syntax = "proto3";
 ///////////////////////////////////////////////////////////////////////////////
 
 import 'models/address.proto';
-import 'models/transaction_output.proto';
+import 'models/box.proto';
 import 'models/common.proto';
 import 'models/transaction.proto';
 
