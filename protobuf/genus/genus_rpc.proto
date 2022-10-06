@@ -97,6 +97,7 @@ message BoxQueryResponse {
   // Map addresses that are Base58 encoded to boxes.
   map<string, BoxStatuses> addressesToBoxes = 1;
 
+  // TODO: Needed to be BoxState instead of BoxStatus
   message BoxStatuses {
     repeated genus.BoxStatus boxStatus = 1;
   }

@@ -19,6 +19,7 @@ enum BoxStatus {
 }
 
 // A Box and its status
+// TODO: Needs to include BoxValue (Could be within Box)
 message BoxState {
   models.Box box = 1;
   BoxStatus status = 2;

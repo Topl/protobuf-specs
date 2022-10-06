@@ -12,10 +12,6 @@ message AssetBox {
   co.topl.proto.genus.AssetLabel assetLabel = 1;
   // Contains boxId, typed evidence of the content, and the current status of the box
   co.topl.proto.genus.BoxState boxState = 2;
-  // Actual content of the box
-  // Contains address, minting, and value (quantity, any codes/evidence/metadata)
-  // TODO: Not needed if BoxState contained BoxValue
-  co.topl.proto.ledger.Transaction.Output content = 3;
 }
 
 // Represents a request for the quantity of an asset
