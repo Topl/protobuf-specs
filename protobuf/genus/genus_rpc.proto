@@ -8,7 +8,7 @@ package co.topl.proto.genus;
 
 import 'models/address.proto';
 import 'models/block.proto';
-import 'models/box.proto';
+import 'models/transaction_output.proto';
 import 'models/common.proto';
 import 'models/transaction.proto';
 import 'genus/genus_models.proto';

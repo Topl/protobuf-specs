@@ -2,106 +2,72 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
-import "common/verification_key.proto";
 import "genus/genus_models.proto";
-import "common/utility.proto";
-import "user/box.proto";
+import "user/transaction_output.proto";
 import "user/proposition.proto";
 import "quivr/proposition.proto";
-import "ledger/address.proto";
+import "quivr/proof.proto";
 
-// Wallet information
-// DB key: w
+// Additional Wallet information
+// Each wallet in a DB is tied to a unique network that can be identified by
+// the hash/ID of the network's BigBang block
+// DB key: w.[Network ID]
 message Wallet {
   // Strict: 128 bytes (UUID)
   bytes id = 1;
   // Human readable name for the wallet
   string name = 2;
   // Human readable description for the wallet
-  string description = 3;
-}
-
-// Network specific information.
-// External ID will be the hash/ID of the BigBang block of the network
-// DB key: c.[External ID]
-message CredentialSet {
-  // Internal ID of this credential set
-  uint32 id = 1;
-
-  // Topl Main Key Pair: Public Verification Key
-  co.topl.proto.common.VerificationKey vKey = 2;
-  // Topl Main Key Pair: Private Signing Key
-  // TODO: SigningKey type does not exist
-  co.topl.proto.common.VerificationKey sKey = 3;
-
-  // Index of the next X layer to expose
-  // TODO: May change pending discussion
-  uint32 nextXIdx = 4;
-
+  optional string description = 3;
+  // Mapping of human readable names to internal asset labels.
+  map<string, co.topl.proto.genus.AssetLabel> assetAliases = 4;
   // Mapping of human readable names to X layer.
   map<string, uint32> xNames = 5;
 
-  // Mapping of human readable names to internal asset labels.
-  map<string, co.topl.proto.genus.AssetLabel> assetAliases = 6;
+  // The indices of the existing/exposed X entities within the wallet
+  repeated uint32 xExposed = 6;
 }
 
-// Represents an entity at the x layer of the x/y/z cartesian scheme
-// Also known as "application" or "peer" or "party"
-// DB key: x.[CredentialSet.id].[X.idx]
-message X {
-  // Index of the next Y layer to expose
-  // TODO: May change pending discussion
-  uint32 nextYIdx = 1;
-
+// Represents additional information associated to an entity
+// at the x layer of the x/y/z cartesian scheme.
+// DB key: x.[wallet.id].[X.idx]
+message XInfo {
+  // Human readable description of this X entity
+  optional string description = 1;
   // Mapping of human readable names to Y layer.
   map<string, uint32> yNames = 2;
 }
 
-// Represents an entity at the y layer of the x/y/z cartesian scheme
-// Also known as "contract" or "account"
-// DB key: y.[CredentialSet.id].[X.idx].[Y.idx]
-message Y {
-  // Index of the next Z layer to expose
-  // TODO: May change pending discussion
-  uint32 nextZIdx = 2;
-
+// Represents additional information associated to an entity
+// at the y layer of the x/y/z cartesian scheme.
+// DB key: y.[wallet.id].[X.idx].[Y.idx]
+message YInfo {
   // Human readable description of this Y entity
-  string description = 3;
+  optional string description = 1;
 
   // The template used to create propositions for all indices in this layer
-  PropositionTemplate propositionTemplate = 4;
+  PropositionTemplate propositionTemplate = 2;
 }
 
-// Represents an entity at the z layer of the x/y/z cartesian scheme
-// Also known as "index" or "address"
-// DB key: z.[CredentialSet.id].[X.idx].[Y.idx].[Z.idx]
-message Z {
+// Represents additional information associated to an entity
+// at the z layer of the x/y/z cartesian scheme
+// DB key: z.[wallet.id].[X.idx].[Y.idx].[Z.idx]
+message ZInfo {
   // Human readable description of this Z entity
-  string description = 1;
-
-  // The generated address
-  co.topl.proto.ledger.FullAddress address = 2;
-
-  // Child Key Pair: Public Verification Key
-  co.topl.proto.common.VerificationKey vKey = 3;
-  // Child Key Pair: Private Signing Key
-  // TODO: SigningKey type does not exist
-  co.topl.proto.common.VerificationKey sKey = 4;
+  optional string description = 1;
 
   // The proposition used for this index
-  co.topl.proto.quivr.Proposition proposition = 5;
+  co.topl.proto.quivr.Proposition proposition = 2;
+  // The proof used for this index
+  optional co.topl.proto.quivr.Proof proof = 3;
 
   // TxOs contained in this address
-  repeated AssetTransactionOutput txOs = 6;
-
-  // Flag denoting if the address at this index could have been exposed
-  // outside of this application. Used for garbage collection
-  bool exposed = 7;
+  repeated AssetTransactionOutput txOs = 4;
 }
 
 // Used to map 2 different views of the z layer of the x/y/z cartesian scheme
 // This is to allow querying by an Address's FullAddress
-// DB key: a.[CredentialSet.id].[FullAddress]
+// DB key: a.[wallet.id].[FullAddress]
 message AddressMapping {
   // Denotes the X index that this address belongs to
   uint32 xIdx = 1;
@@ -109,4 +75,8 @@ message AddressMapping {
   uint32 yIdx = 2;
   // Denotes the Z index that this address belongs to
   uint32 zIdx = 3;
+
+  // Flag denoting if this address could have been exposed
+  // outside of this application. Used for garbage collection
+  bool exposed = 4;
 }

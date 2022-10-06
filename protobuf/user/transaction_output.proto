@@ -2,12 +2,26 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
+import "genus/genus_models.proto";
 import "ledger/transaction.proto";
 import "common/utility.proto";
-import "ledger/value.proto";
-import "quivr/proposition.proto";
-import "user/box.proto";
-import "user/wallet.proto";
+import "ledger/address.proto";
+
+// A TxO with extra information
+message AssetTransactionOutput {
+  // The label of the asset contained in the TxO
+  co.topl.proto.genus.AssetLabel assetLabel = 1;
+  // Contains boxId, typed evidence of the content, and the current status of the box
+  co.topl.proto.genus.BoxState boxState = 2;
+}
+
+// Represents a request for the quantity of an asset
+message AssetRequest {
+  // The label of the desired asset
+  co.topl.proto.genus.AssetLabel assetLabel = 1;
+  // The desired quantity
+  co.topl.proto.common.Int128 quantity = 2;
+}
 
 // Represents the inputs and change output necessary to satisfy an asset quantity
 message Transput {
@@ -23,8 +37,8 @@ message Transput {
 // Represents the partial result of an AssetRequest for a single Address/Z-index
 // Internally used to create Transput
 message CategorizedTransactionOutputs {
-  // The label of the desired asset
-  Z address = 1;
+  // The address for which all the TxOs belong to
+  co.topl.proto.ledger.FullAddress address = 1;
   // The TxOs whose entire contents will need to be spent.
   AssetTransactionOutput spend = 2;
   // The TxOs having contents that will need to be split between an amount

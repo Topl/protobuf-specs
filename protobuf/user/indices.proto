@@ -1,1 +1,26 @@
 // something where we can specify the types of ways to exchange indices between participants
+syntax = "proto3";
+
+package co.topl.proto.user;
+
+// Represents an entity at the x layer of the x/y/z cartesian scheme
+// Also known as "application" or "peer" or "party"
+// DB key: i.[wallet.id].[X.idx]
+message X {
+  // The indices of the existing/exposed Y entities within this X layer
+  repeated uint32 yExposed = 1;
+}
+
+// Represents an entity at the y layer of the x/y/z cartesian scheme
+// Also known as "contract" or "account"
+// DB key: i.[wallet.id].[X.idx].[Y.idx]
+message Y {
+  // The indices of the existing/exposed Z entities within this Y layer
+  repeated uint32 zExposed = 1;
+}
+
+// Represents an entity at the z layer of the x/y/z cartesian scheme
+// Also known as "index" or "address"
+// DB key: i.[wallet.id].[X.idx].[Y.idx].[Z.idx]
+message Z {
+}
