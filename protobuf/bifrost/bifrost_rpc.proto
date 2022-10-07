@@ -25,6 +25,9 @@ service NodeRpc {
   // retrieve the Block ID associated with a height, according to the node's canonical chain
   rpc FetchBlockIdAtHeight (FetchBlockIdAtHeightReq) returns (FetchBlockIdAtHeightRes);
 
+  // retrieve the Block ID associated with a depth, according to the node's canonical chain
+  rpc FetchBlockIdAtDepth (FetchBlockIdAtDepthReq) returns (FetchBlockIdAtDepthRes);
+
 }
 
 // Request type for BroadcastTransaction
@@ -89,5 +92,17 @@ message FetchBlockIdAtHeightReq {
 // Response type for FetchBlockIdAtHeight
 message FetchBlockIdAtHeightRes {
   // The Block ID associated with the requested height.  None/null if not found.
+  optional co.topl.proto.models.BlockId blockId = 1;
+}
+
+// Request type for FetchBlockIdAtDepth
+message FetchBlockIdAtDepthReq {
+  // The depth of interest.  When depth=0, the canonical head is retrieved.
+  uint64 depth = 1;
+}
+
+// Response type for FetchBlockIdAtDepth
+message FetchBlockIdAtDepthRes {
+  // The Block ID associated with the requested depth.  None/null if not found.
   optional co.topl.proto.models.BlockId blockId = 1;
 }
