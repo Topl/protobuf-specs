@@ -11,20 +11,6 @@ message NetworkPrefix {
   uint32 value = 1;
 }
 
-// A type representing a Transaction Output's value, as well as its spending address evidence.
-message Box {
-  // The evidence of the Proposition which locks this Box
-  TypedContractEvidence contract = 1;
-  // The value inside of the Box
-  TypedValueEvidence value = 2;
-
-  // Represents an identifier or pointer to a Box
-  message Id {
-    TransactionId transactionId = 1;
-    int32 transactionOutputIndex = 2;
-  }
-}
-
 // A hash with a byte prefix indicating the data type of the original value
 message TypedContractEvidence {
   // See #ProtoByteComment
