@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
+import "common/verification_key.proto";
+import "common/secret_key.proto";
 import "common/utility.proto";
 import "genus/genus_models.proto";
 import "user/transaction_output.proto";
@@ -9,7 +11,14 @@ import "user/proposition.proto";
 import "quivr/proposition.proto";
 import "quivr/proof.proto";
 import "user/indices.proto";
-import "user/credential.proto";
+
+// A credential pair.
+message Credentials {
+  // Public Verification Key
+  co.topl.proto.common.VerificationKey vKey = 1;
+  // Private Signing Key
+  co.topl.proto.common.SecretKey sKey = 2;
+}
 
 // Additional Wallet information
 // Each wallet in a DB is tied to a unique network that can be identified by
