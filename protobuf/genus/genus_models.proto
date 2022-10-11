@@ -5,7 +5,7 @@ syntax = "proto3";
 ///////////////////////////////////////////////////////////////////////////////
 
 import 'ledger/address.proto';
-import 'ledger/box.proto';
+import 'common/box.proto';
 import 'common/utility.proto';
 import 'ledger/transaction.proto';
 
@@ -20,7 +20,7 @@ enum TxoStatus {
 
 // A Box (Transaction Output) and its status
 message TxoState {
-  co.topl.proto.ledger.Box box = 1;
+  co.topl.proto.common.Box box = 1;
   TxoStatus status = 2;
 }
 

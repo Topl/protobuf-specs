@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package co.topl.proto.ledger;
+package co.topl.proto.common;
 
 import "common/utility.proto";
 import "ledger/address.proto";

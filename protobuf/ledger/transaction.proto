@@ -3,7 +3,7 @@ syntax = "proto3";
 package co.topl.proto.ledger;
 
 import "ledger/address.proto";
-import "ledger/box.proto";
+import "common/box.proto";
 import "quivr/proof.proto";
 import "quivr/proposition.proto";
 
@@ -23,20 +23,20 @@ message Transaction {
   // References a box to spend, plus the proof that is authorized to spend it
   message Input {
     // The previous box (reference) to spend
-    co.topl.proto.ledger.Box.Id boxId = 1;
+    co.topl.proto.common.Box.Id boxId = 1;
     // The Proposition which unlocks the Box.  Must result in the "spendingAddress" stamped on the referenced UTxO
     co.topl.proto.quivr.Proposition proposition = 2;
     // A Proof which satisfies the Proposition of the Box.
     co.topl.proto.quivr.Proof proof = 3;
     // The value inside the box being spent
-    co.topl.proto.ledger.BoxValue value = 4;
+    co.topl.proto.common.BoxValue value = 4;
   }
   // A new Box
   message Output {
     // The address associated with the Box, including a commitment to a Proposition that unlocks this new Box
     co.topl.proto.ledger.FullAddress address = 1;
     // The value of the new Box
-    co.topl.proto.ledger.BoxValue value = 2;
+    co.topl.proto.common.BoxValue value = 2;
     // A flag indicating if this Output is being generated from nothing.  For users/applications, only Asset and Registration values are allowed in `value`.
     bool minting = 3;
   }
@@ -68,10 +68,10 @@ message UnprovenTransaction {
   // References a box to spend
   message UnprovenInput {
     // The previous box (reference) to spend
-    co.topl.proto.ledger.Box.Id boxId = 1;
+    co.topl.proto.common.Box.Id boxId = 1;
     // The Proposition which unlocks the Box.  Must result in the "spendingAddress" stamped on the referenced UTxO
     co.topl.proto.quivr.Proposition proposition = 2;
     // The value inside the box being spent
-    co.topl.proto.ledger.BoxValue value = 4;
+    co.topl.proto.common.BoxValue value = 4;
   }
 }

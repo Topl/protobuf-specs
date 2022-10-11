@@ -1,4 +1,6 @@
 // true quantified boolean function
+syntax = "proto3";
 
-ForAll(input: List[Proposition]): TQBF[Proposition]
-Exists(input: List[Propostiion], threshold): TQBF[Proposition]
+// Temporarily commented out to allow compilation
+// ForAll(input: List[Proposition]): TQBF[Proposition]
+// Exists(input: List[Propostiion], threshold): TQBF[Proposition]
