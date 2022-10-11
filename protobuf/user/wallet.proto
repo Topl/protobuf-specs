@@ -2,67 +2,85 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
+import "common/utility.proto";
 import "genus/genus_models.proto";
 import "user/transaction_output.proto";
 import "user/proposition.proto";
 import "quivr/proposition.proto";
 import "quivr/proof.proto";
+import "user/indices.proto";
+import "user/credential.proto";
 
 // Additional Wallet information
 // Each wallet in a DB is tied to a unique network that can be identified by
 // the hash/ID of the network's BigBang block
 // DB key: w.[Network ID]
 message Wallet {
+  // BigBangBlock's ID is the external ID used to identify the network
+  // to which this wallet belongs
+  co.topl.proto.common.BlockId bigBangId = 1;
   // Strict: 128 bytes (UUID)
-  bytes id = 1;
+  bytes id = 2;
   // Human readable name for the wallet
-  string name = 2;
+  string name = 3;
   // Human readable description for the wallet
-  optional string description = 3;
+  optional string description = 4;
   // Mapping of human readable names to internal asset labels.
-  map<string, co.topl.proto.genus.AssetLabel> assetAliases = 4;
+  map<string, co.topl.proto.genus.AssetLabel> assetAliases = 5;
   // Mapping of human readable names to X layer.
-  map<string, uint32> xNames = 5;
+  map<string, uint32> xNames = 6;
 
   // The indices of the existing/exposed X entities within the wallet
-  repeated uint32 xExposed = 6;
+  repeated uint32 xExposed = 7;
+
+  // The Topl Main Key Pair for a single wallet.
+  Credentials mainKeyPair = 8;
 }
 
 // Represents additional information associated to an entity
 // at the x layer of the x/y/z cartesian scheme.
 // DB key: x.[wallet.id].[X.idx]
 message XInfo {
+  // The X this info refers to
+  X x = 1;
   // Human readable description of this X entity
-  optional string description = 1;
+  optional string description = 2;
   // Mapping of human readable names to Y layer.
-  map<string, uint32> yNames = 2;
+  map<string, uint32> yNames = 3;
 }
 
-// Represents additional information associated to an entity
-// at the y layer of the x/y/z cartesian scheme.
+// Represents additional information associated to a
+// xy pair in the x/y/z cartesian scheme.
 // DB key: y.[wallet.id].[X.idx].[Y.idx]
-message YInfo {
+message XYInfo {
+  // The XY that this info refers to
+  XY xy = 1;
   // Human readable description of this Y entity
-  optional string description = 1;
+  optional string description = 2;
 
   // The template used to create propositions for all indices in this layer
-  PropositionTemplate propositionTemplate = 2;
+  PropositionTemplate propositionTemplate = 3;
 }
 
-// Represents additional information associated to an entity
-// at the z layer of the x/y/z cartesian scheme
+// Represents additional information associated to a
+// xyz triple in the x/y/z cartesian scheme
 // DB key: z.[wallet.id].[X.idx].[Y.idx].[Z.idx]
-message ZInfo {
+message XYZInfo {
+  // This XYZ that this info refers to
+  XYZ xyz = 1;
   // Human readable description of this Z entity
-  optional string description = 1;
+  optional string description = 2;
 
   // The proposition used for this index
-  co.topl.proto.quivr.Proposition proposition = 2;
+  co.topl.proto.quivr.Proposition proposition = 3;
   // The proof used for this index
-  optional co.topl.proto.quivr.Proof proof = 3;
+  optional co.topl.proto.quivr.Proof proof = 4;
 
   // TxOs contained in this address
-  repeated AssetTransactionOutput txOs = 4;
+  repeated AssetTransactionOutput txOs = 5;
+
+  // A Child Key Pair for an xyz triple.
+  Credentials childKeyPair = 6;
 }
 
 // Used to map 2 different views of the z layer of the x/y/z cartesian scheme

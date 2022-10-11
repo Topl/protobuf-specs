@@ -5,14 +5,14 @@ package co.topl.proto.user;
 import "quivr/proposition.proto";
 
 // Types of Quantifiers
-// For now we will only use existential, but in the future we could allow for universal types
+// For now we will only use existential quantifiers, but in the future we could allow for universal quantifiers
 enum QuantifierType {
-  UNIVERSAL = 0;
-  EXISTENTIAL = 1;
+  UNIVERSAL = 0; // For all x such that ...
+  EXISTENTIAL = 1; // For some x such that
 }
 
 // Represents a quantifier (formal parameter) to be bound to a proposition template.
-message Quantifiers{
+message Quantifier {
   string name = 1;
   QuantifierType type = 2;
 }
@@ -22,22 +22,27 @@ message PropositionTemplate {
   oneof sealed_value {
     co.topl.proto.quivr.PropositionPermanentlyLocked permanentlyLocked = 1;
 
-    PropositionSignatureCurve25519Template signatureCurve25519 = 3;
-    PropositionSignatureEd25519Template signatureEd25519 = 4;
-    PropositionSignatureExtendedEd25519Template signatureExtendedEd25519 = 5;
+    co.topl.proto.quivr.PropositionSignatureCurve25519 signatureCurve25519 = 2;
+    PropositionSignatureCurve25519Template signatureCurve25519Template = 3;
+    co.topl.proto.quivr.PropositionSignatureEd25519 signatureEd25519 = 4;
+    PropositionSignatureEd25519Template signatureEd25519Template = 5;
+    co.topl.proto.quivr.PropositionSignatureExtendedEd25519 signatureExtendedEd25519 = 6;
+    PropositionSignatureExtendedEd25519Template signatureExtendedEd25519Template = 7;
 
-    PropositionKnowledgeHashLockTemplate signatureHashLock = 6;
+    co.topl.proto.quivr.PropositionKnowledgeHashLock signatureHashLock = 8;
+    PropositionKnowledgeHashLockTemplate signatureHashLockTemplate = 9;
 
-    PropositionCompositionalThresholdTemplate compositionalThreshold = 7;
-    PropositionCompositionalAndTemplate compositionalAnd = 8;
-    PropositionCompositionalOrTemplate compositionalOr = 9;
-    PropositionCompositionalNotTemplate compositionalNot = 10;
+    PropositionCompositionalThresholdTemplate compositionalThreshold = 10;
+    PropositionCompositionalAndTemplate compositionalAnd = 11;
+    PropositionCompositionalOrTemplate compositionalOr = 12;
+    PropositionCompositionalNotTemplate compositionalNot = 13;
 
-    PropositionContextualHeightLockTemplate contextualHeightLock = 11;
-    co.topl.proto.quivr.PropositionContextualRequiredTransactionIO contextualTransactionIO = 12;
+    co.topl.proto.quivr.PropositionContextualHeightLock contextualHeightLock = 14;
+    PropositionContextualHeightLockTemplate contextualHeightLockTemplate = 15;
+    co.topl.proto.quivr.PropositionContextualRequiredTransactionIO contextualTransactionIO = 16;
   }
 
-  repeated Quantifiers quantifiers = 13;
+  repeated Quantifier quantifiers = 17;
 }
 
 // A template for a proposition that can be satisfied by proving signature of a secret key corresponding to the provided Curve25519 verification key

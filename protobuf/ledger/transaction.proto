@@ -16,8 +16,10 @@ message Transaction {
   repeated Output outputs = 2;
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
-  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  // An optional array of latin-1 encoded bytes.  Maximum length: 15K
   bytes data = 4;
+  // A hash of the data. This will be included in the transaction hash
+  bytes dataHash = 5;
 
   // References a box to spend, plus the proof that is authorized to spend it
   message Input {
@@ -58,8 +60,11 @@ message UnprovenTransaction {
   repeated Transaction.Output outputs = 2;
   // Constrains when this Transaction can be included in the blockchain
   Transaction.Schedule schedule = 3;
-  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  // An optional array of latin-1 encoded bytes.  Maximum length: 15k
   bytes data = 4;
+
+  // A hash of the data. This will be included in the transaction hash
+  bytes dataHash = 5;
 
   // References a box to spend
   message UnprovenInput {

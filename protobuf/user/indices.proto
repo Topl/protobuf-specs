@@ -7,20 +7,32 @@ package co.topl.proto.user;
 // Also known as "application" or "peer" or "party"
 // DB key: i.[wallet.id].[X.idx]
 message X {
+  // The index of this x within the cartesian scheme
+  uint32 xIdx = 1;
   // The indices of the existing/exposed Y entities within this X layer
-  repeated uint32 yExposed = 1;
+  repeated uint32 yExposed = 2;
 }
 
-// Represents an entity at the y layer of the x/y/z cartesian scheme
+// Represents an xy pair in the x/y/z cartesian scheme
 // Also known as "contract" or "account"
 // DB key: i.[wallet.id].[X.idx].[Y.idx]
-message Y {
+message XY {
+  // The x index of this pair within the cartesian scheme
+  uint32 xIdx = 1;
+  // The y index of this pair within the cartesian scheme
+  uint32 yIdx = 2;
   // The indices of the existing/exposed Z entities within this Y layer
-  repeated uint32 zExposed = 1;
+  repeated uint32 zExposed = 3;
 }
 
-// Represents an entity at the z layer of the x/y/z cartesian scheme
+// Represents an xyz triple in the x/y/z cartesian scheme
 // Also known as "index" or "address"
 // DB key: i.[wallet.id].[X.idx].[Y.idx].[Z.idx]
-message Z {
+message XYZ {
+  // The x index of this triple within the cartesian scheme
+  uint32 xIdx = 1;
+  // The y index of this triple within the cartesian scheme
+  uint32 yIdx = 2;
+  // The z index of this triple within the cartesian scheme
+  uint32 zIdx = 3;
 }

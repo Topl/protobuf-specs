@@ -37,14 +37,14 @@ message Transput {
 // Represents the partial result of an AssetRequest for a single Address/Z-index
 // Internally used to create Transput
 message CategorizedTransactionOutputs {
-  // The address for which all the TxOs belong to
+  // The address to which all the TxOs belong
   co.topl.proto.ledger.FullAddress address = 1;
   // The TxOs whose entire contents will need to be spent.
-  AssetTransactionOutput spend = 2;
+  repeated AssetTransactionOutput spend = 2;
   // The TxOs having contents that will need to be split between an amount
   // needed to satisfy the request quantity and the rest of the contents.
-  AssetTransactionOutput split = 3;
+  repeated AssetTransactionOutput split = 3;
   // The TxOs whose entire contents are unneeded to satisfy the request quantity
   // and should be moved to a different address when this address is spent.
-  AssetTransactionOutput move = 4;
+  repeated AssetTransactionOutput move = 4;
 }
