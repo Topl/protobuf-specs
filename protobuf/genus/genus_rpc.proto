@@ -6,24 +6,22 @@ syntax = "proto3";
 
 package co.topl.proto.genus;
 
-import 'models/address.proto';
-import 'models/block.proto';
-import 'models/box.proto';
-import 'models/common.proto';
-import 'models/transaction.proto';
+import 'ledger/address.proto';
+import 'node/header.proto';
+import 'common/utility.proto';
 import 'genus/genus_models.proto';
 
 // Operations related to blocks
 service GenusFullBlockService {
   // Get a GenusBlock by its hash
-  rpc getBlockById(models.BlockId) returns (models.FullBlock);
+  rpc getBlockById(co.topl.proto.common.BlockId) returns (co.topl.proto.node.FullBlock);
 
   // get a GenusBlock by its height
-  rpc getBlockByHeight(ChainDistance) returns (models.FullBlock);
+  rpc getBlockByHeight(ChainDistance) returns (co.topl.proto.node.FullBlock);
 
   // get a GenusBlock by its depth
   // Since blocks keep getting added, we expect that multiple calls to this with the same argument will return different blocks.
-  rpc getBlockByDepth(ChainDistance) returns (models.FullBlock);
+  rpc getBlockByDepth(ChainDistance) returns (co.topl.proto.node.FullBlock);
 }
 
 // Operations related to GenusBlock contents
@@ -38,13 +36,13 @@ service TransactionService {
 
   //rpc getTransactionByBloomFilter();
 
-  // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+  // Get the boxes (Transaction Outputs) currently associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getTxosByAddress(QueryByAddressRequest) returns(TxoQueryResponse);
 
-  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddressStream(QueryByAddressRequest) returns(stream BoxQueryResponse);
+  // Get a stream of boxes (Transaction Outputs) associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoQueryResponse);
 
-  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
+  rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(TxoQueryResponse);
 
   /////////////////////////////////////////////////////////////////////////////
   //
@@ -73,7 +71,7 @@ service TransactionService {
 
 // Used to request a transaction by specifying its ID.
 message GetTransactionByIdRequest {
-  models.TransactionId transactionId = 1;
+  co.topl.proto.common.TransactionId transactionId = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
 }
@@ -81,7 +79,7 @@ message GetTransactionByIdRequest {
 // Used to request boxes by their associated address
 message QueryByAddressRequest {
   // All the addresses of interest
-  repeated models.SpendingAddress addresses = 1;
+  repeated co.topl.proto.ledger.SpendingAddress addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
 }
@@ -93,13 +91,12 @@ message QueryByAssetLabelRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-message BoxQueryResponse {
+message TxoQueryResponse {
   // Map addresses that are Base58 encoded to boxes.
-  map<string, BoxStatuses> addressesToBoxes = 1;
+  map<string, TxoStates> addressesToTxos = 1;
 
-  // TODO: Needed to be BoxState instead of BoxStatus
-  message BoxStatuses {
-    repeated genus.BoxStatus boxStatus = 1;
+  message TxoStates {
+    repeated TxoState txoState = 1;
   }
 }
 

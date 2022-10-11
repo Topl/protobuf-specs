@@ -12,7 +12,7 @@ message AssetTransactionOutput {
   // The label of the asset contained in the TxO
   co.topl.proto.genus.AssetLabel assetLabel = 1;
   // Contains boxId, typed evidence of the content, and the current status of the box
-  co.topl.proto.genus.BoxState boxState = 2;
+  co.topl.proto.genus.TxoState txoState = 2;
 }
 
 // Represents a request for the quantity of an asset
