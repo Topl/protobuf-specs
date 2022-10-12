@@ -2,9 +2,8 @@ syntax = "proto3";
 
 package co.topl.proto.ledger;
 
-import "common/utility.proto";
 import "ledger/address.proto";
-import "ledger/value.proto";
+import "common/box.proto";
 import "quivr/proof.proto";
 import "quivr/proposition.proto";
 
@@ -16,8 +15,10 @@ message Transaction {
   repeated Output outputs = 2;
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
-  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  // An optional array of latin-1 encoded bytes.  Maximum length: 15K
   bytes data = 4;
+  // A hash of the data. This will be included in the transaction hash
+  bytes dataHash = 5;
 
   // References a box to spend, plus the proof that is authorized to spend it
   message Input {
@@ -28,14 +29,14 @@ message Transaction {
     // A Proof which satisfies the Proposition of the Box.
     co.topl.proto.quivr.Proof proof = 3;
     // The value inside the box being spent
-    co.topl.proto.ledger.BoxValue value = 4;
+    co.topl.proto.common.BoxValue value = 4;
   }
   // A new Box
   message Output {
     // The address associated with the Box, including a commitment to a Proposition that unlocks this new Box
     co.topl.proto.ledger.FullAddress address = 1;
     // The value of the new Box
-    co.topl.proto.ledger.BoxValue value = 2;
+    co.topl.proto.common.BoxValue value = 2;
     // A flag indicating if this Output is being generated from nothing.  For users/applications, only Asset and Registration values are allowed in `value`.
     bool minting = 3;
   }
@@ -47,5 +48,30 @@ message Transaction {
     uint64 minimumSlot = 2;
     // The maximum slot number of the block constaing this transaction.  Must be greater than `minimumSlot`.
     uint64 maximumSlot = 3;
+  }
+}
+
+// Represents an unproven transaction
+message UnprovenTransaction {
+  // The list of unproven UTxOs to consume/destroy/spend
+  repeated UnprovenInput inputs = 1;
+  // The list of new UTxOs to create
+  repeated Transaction.Output outputs = 2;
+  // Constrains when this Transaction can be included in the blockchain
+  Transaction.Schedule schedule = 3;
+  // An optional array of latin-1 encoded bytes.  Maximum length: 15k
+  bytes data = 4;
+
+  // A hash of the data. This will be included in the transaction hash
+  bytes dataHash = 5;
+
+  // References a box to spend
+  message UnprovenInput {
+    // The previous box (reference) to spend
+    co.topl.proto.common.Box.Id boxId = 1;
+    // The Proposition which unlocks the Box.  Must result in the "spendingAddress" stamped on the referenced UTxO
+    co.topl.proto.quivr.Proposition proposition = 2;
+    // The value inside the box being spent
+    co.topl.proto.common.BoxValue value = 4;
   }
 }

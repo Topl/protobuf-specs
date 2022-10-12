@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package co.topl.proto.user;
+
+import "genus/genus_models.proto";
+import "ledger/transaction.proto";
+import "common/utility.proto";
+import "ledger/address.proto";
+
+// A TxO with extra information
+message AssetTransactionOutput {
+  // The label of the asset contained in the TxO
+  co.topl.proto.genus.AssetLabel assetLabel = 1;
+  // Contains boxId, typed evidence of the content, and the current status of the box
+  co.topl.proto.genus.TxoState txoState = 2;
+}
+
+// Represents a request for the quantity of an asset
+message AssetRequest {
+  // The label of the desired asset
+  co.topl.proto.genus.AssetLabel assetLabel = 1;
+  // The desired quantity
+  co.topl.proto.common.Int128 quantity = 2;
+}
+
+// Represents the inputs and change output necessary to satisfy an asset quantity
+message Transput {
+  // The inputs that are either required to satisfy the quantity or
+  // not required for the quantity but will be moved to prevent address reuse
+  repeated co.topl.proto.ledger.UnprovenTransaction.UnprovenInput inputs = 1;
+
+  // The outputs containing any tokens not required to satisfy the quantity
+  // Each element is dedicated for a specific type of asset
+  repeated co.topl.proto.ledger.Transaction.Output changeOutputs = 2;
+}
+
+// Represents the partial result of an AssetRequest for a single Address/Z-index
+// Internally used to create Transput
+message CategorizedTransactionOutputs {
+  // The address to which all the TxOs belong
+  co.topl.proto.ledger.FullAddress address = 1;
+  // The TxOs whose entire contents will need to be spent.
+  repeated AssetTransactionOutput spend = 2;
+  // The TxOs having contents that will need to be split between an amount
+  // needed to satisfy the request quantity and the rest of the contents.
+  repeated AssetTransactionOutput split = 3;
+  // The TxOs whose entire contents are unneeded to satisfy the request quantity
+  // and should be moved to a different address when this address is spent.
+  repeated AssetTransactionOutput move = 4;
+}

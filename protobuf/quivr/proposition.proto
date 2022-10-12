@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package co.topl.proto.quivr;
 
-import "common/utility.proto";
+import "common/box.proto";
 import "common/verification_key.proto";
 
 // Captures the logic/script/contract that must be satisfied in order to spend a particular Box
