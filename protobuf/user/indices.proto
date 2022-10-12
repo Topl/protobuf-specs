@@ -3,14 +3,30 @@ syntax = "proto3";
 
 package co.topl.proto.user;
 
+// Represents a consecutive chunk of indices
+message IndexChunk {
+  // Inclusive. Range from 0 - (2^32)-1
+  uint32 start = 1;
+  // Exclusive. Range from 1 - 2^32
+  // Must be at least 1 greater than start
+  uint32 end = 2;
+}
+
+// Represents a set/grouping of index chunks
+message IndexChunkSet {
+  repeated IndexChunk chunks = 1;
+}
+
 // Represents an entity at the x layer of the x/y/z cartesian scheme
 // Also known as "application" or "peer" or "party"
 // DB key: i.[wallet.id].[X.idx]
 message X {
   // The index of this x within the cartesian scheme
   uint32 xIdx = 1;
-  // The indices of the existing/exposed Y entities within this X layer
-  repeated uint32 yExposed = 2;
+  // The chunks of y-layer indices that are used/exposed within this x layer
+  repeated IndexChunk used = 2;
+  // The y-layer index chunk sets that are proposed to be exposed within this x layer
+  repeated IndexChunkSet proposed = 3;
 }
 
 // Represents an xy pair in the x/y/z cartesian scheme
@@ -21,8 +37,10 @@ message XY {
   uint32 xIdx = 1;
   // The y index of this pair within the cartesian scheme
   uint32 yIdx = 2;
-  // The indices of the existing/exposed Z entities within this Y layer
-  repeated uint32 zExposed = 3;
+  // The chunks of z-layer indices that are used/exposed within this y layer
+  repeated IndexChunk used = 3;
+  // The z-layer index chunk sets that are proposed to be exposed within this y layer
+  repeated IndexChunkSet proposed = 4;
 }
 
 // Represents an xyz triple in the x/y/z cartesian scheme
