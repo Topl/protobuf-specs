@@ -23,10 +23,8 @@ message IndexChunkSet {
 message X {
   // The index of this x within the cartesian scheme
   uint32 xIdx = 1;
-  // The chunks of y-layer indices that are used/exposed within this x layer
+  // The chunks of xy-layer indices that are used (i.e has an assigned purpose) within this x layer
   repeated IndexChunk used = 2;
-  // The y-layer index chunk sets that are proposed to be exposed within this x layer
-  repeated IndexChunkSet proposed = 3;
 }
 
 // Represents an xy pair in the x/y/z cartesian scheme
@@ -37,9 +35,10 @@ message XY {
   uint32 xIdx = 1;
   // The y index of this pair within the cartesian scheme
   uint32 yIdx = 2;
-  // The chunks of z-layer indices that are used/exposed within this y layer
+  // The chunks of xyz-layer indices that are used/exposed (i.e associated address
+  // exposed on the blockchain or revealed to another party) within this y layer
   repeated IndexChunk used = 3;
-  // The z-layer index chunk sets that are proposed to be exposed within this y layer
+  // The xyz-layer index chunk sets that are proposed to be exposed within this y layer
   repeated IndexChunkSet proposed = 4;
 }
 

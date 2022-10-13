@@ -39,13 +39,11 @@ message Wallet {
   // Mapping of human readable names to X layer.
   map<string, uint32> xNames = 6;
 
-  // The chunks of x-layer indices that are used/exposed in the wallet
+  // The chunks of x-layer indices that are used (i.e has an assigned purpose) in the wallet
   repeated IndexChunk used = 7;
-  // The x-layer index chunk sets that are proposed to be exposed in the wallet
-  repeated IndexChunkSet proposed = 8;
 
   // The Topl Main Key Pair for a single wallet.
-  Credentials mainKeyPair = 9;
+  Credentials mainKeyPair = 8;
 }
 
 // Represents additional information associated to an entity
