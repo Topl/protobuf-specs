@@ -1,6 +1,6 @@
-# protobuf-specs
-Protobuf specifications and definitions representing blockchain data types and communication channels.
-
+# Protocol Buffer Specification
+This repository houses the protobuf-specs for the Topl ecosystem.
+This includes definitions for the core node protocol, an event-driven client-server SDK, and primary  blockchain data types and communication channels.
 
 ## Quick Start
 
