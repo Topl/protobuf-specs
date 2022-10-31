@@ -12,16 +12,18 @@ import 'models/transaction.proto';
 package co.topl.proto.genus;
 
 // Used to identify the status of a box.
-enum BoxStatus {
-  SPENT = 0;   // The box is spent
-  UNSPENT = 1; // The box is not spent
-  PENDING = 2; // There is a transaction pending that may spend the box.
+enum TxoState {
+  SPENT = 0;   // The TxO is spent
+  UNSPENT = 1; // The TxO is not spent
+  PENDING = 2; // A transaction is pending that may spend the TXO. This state should only appear in bifrost clients.
 }
 
 // A Box and its status
-message BoxState {
+message Txo {
   models.Box box = 1;
-  BoxStatus status = 2;
+  TxoState state = 2;
+  models.Box.Id id = 3;
+  models.SpendingAddress address = 4;
 }
 
 // Specify the order of data for indexes.

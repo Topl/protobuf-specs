@@ -98,7 +98,7 @@ message BoxQueryResponse {
   map<string, BoxStatuses> addressesToBoxes = 1;
 
   message BoxStatuses {
-    repeated genus.BoxStatus boxStatus = 1;
+    repeated genus.TxoState boxStatus = 1;
   }
 }
 
