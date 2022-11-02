@@ -8,9 +8,7 @@ package co.topl.proto.genus;
 
 import 'models/address.proto';
 import 'models/block.proto';
-import 'models/box.proto';
 import 'models/common.proto';
-import 'models/transaction.proto';
 import 'genus/genus_models.proto';
 
 // Operations related to blocks
@@ -38,13 +36,13 @@ service TransactionService {
 
   //rpc getTransactionByBloomFilter();
 
-  // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+  // Get the TxOs currently associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getTxosByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
 
-  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddressStream(QueryByAddressRequest) returns(stream BoxQueryResponse);
+  // Get a stream of TxOs associated with one of the specified addresses that have at least the specified confidence factor.
+  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream BoxQueryResponse);
 
-  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
+  rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
 
   /////////////////////////////////////////////////////////////////////////////
   //
