@@ -81,11 +81,6 @@ message AssetLabel {
   }
 }
 
-// Represent a quantity of database record
-message RecordCount {
-  uint64 value = 1;
-}
-
 // A request to create an index of transaction based on their on-chain metadata
 message IndexSpec {
   // The name of the index

@@ -57,7 +57,7 @@ service TransactionService {
   /////////////////////////////////////////////////////////////////////////////
 
   // Create a transaction index using on-chain data.
-  rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
+  rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (CreateOnChainTransactionIndexResponse);
 
   // Get information about existing transaction indexes
   rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexDefs);
@@ -74,6 +74,12 @@ message GetTransactionByIdRequest {
   models.TransactionId transactionId = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
+}
+
+// Response from CreateOnChainTransactionIndex request
+message CreateOnChainTransactionIndexResponse {
+  // True if index was created.
+  bool ok = 1;
 }
 
 // Used to request TxOs by their associated address
