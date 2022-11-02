@@ -109,6 +109,8 @@ message TxoQueryResponse {
 // A request to create an index of transactions based on their on-chain data
 message CreateOnChainTransactionIndexRequest {
   IndexSpec indexSpec = 1;
+  // If populate is true, then scan the existing transaction in the database to populate the index.
+  bool populate = 2;
 }
 
 // Definitions of existing database indexes.
