@@ -148,7 +148,7 @@ message GetIndexedTransactionsRequest {
   repeated IndexMatchValue value = 2;
 
   // The maximum number of transactions to be returned
-  optional uint64 maxResults = 3;
+  optional uint32 maxResults = 3;
 
   // A number of transactions to be skipped. This is useful for paging results.
   optional uint64 skipResults = 4;
@@ -161,6 +161,7 @@ message IndexMatchValue {
     int64 intValue = 2;
     uint64 uintValue = 3;
   }
+  optional string fieldName = 4;
 }
 
 //service SubscriptionService {
