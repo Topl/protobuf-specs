@@ -13,27 +13,36 @@ import 'genus/genus_models.proto';
 
 // Operations related to blocks
 service GenusFullBlockService {
-  // Get a GenusBlock by its hash
-  rpc getBlockById(models.BlockId) returns (models.FullBlock);
+  // Retrieve a block with the specified `id` from the configured Genus service. This returns its result when there is a
+  // block present in the genus service with the specified id and the confidence factor of the block is greater than or
+  // equal to the value of the `confidenceFactor` parameter.
+  rpc getBlockById(GetBlockByIdRequest) returns (models.FullBlock);
 
-  // get a GenusBlock by its height
-  rpc getBlockByHeight(ChainDistance) returns (models.FullBlock);
+  // Retrieve the block at the specified height from the configured Genus service, where the height of the genesis block
+  // is 1. This returns a result when there is a block present in the genus service at the specified height and the
+  // confidence factor of the block is greater than or equal to the value of the `confidenceFactor` parameter.
+  rpc getBlockByHeight(GetBlockByHeightRequest) returns (models.FullBlock);
 
-  // get a GenusBlock by its depth
+  // Retrieve the block at the specified depth from the configured Genus service. This returns its result immediately.
+  // The block at depth 1 is the highest block with a confidence factor that is greater than or
+  // equal to the value of the `confidenceFactor` parameter.
+  //
   // Since blocks keep getting added, we expect that multiple calls to this with the same argument will return different blocks.
-  rpc getBlockByDepth(ChainDistance) returns (models.FullBlock);
+  rpc getBlockByDepth(GetBlockByDepthRequest) returns (models.FullBlock);
 }
 
 // Operations related to GenusBlock contents
 service TransactionService {
-  // Get a transaction by its ID
-  // This returns the transaction when it is in the Genus database AND its confidence factor is at least the specified value.
+  // Retrieve a transaction with the specified `id` from the configured Genus service. This returns its result when there is
+  // a transaction present in the genus service with the specified id and the confidence factor of the block that contains
+  // the transaction is greater than or equal to the value of the `confidenceFactor` parameter.
   rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
 
   // Get a stream of transactions that have an output associated with one of the specified addresses that have at least
   // the specified confidence factor.
   rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionReceipt);
 
+  // In the future there will be a way to find transactions using a bloom filter.
   //rpc getTransactionByBloomFilter();
 
   // Get the TxOs currently associated with one of the specified addresses that have at least the specified confidence factor.
@@ -67,6 +76,21 @@ service TransactionService {
 
   // get transactions that are in a named index and match the given value.
   rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionReceipt);
+}
+
+message GetBlockByIdRequest {
+  models.BlockId blockId = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
+}
+
+message GetBlockByHeightRequest {
+  ChainDistance height = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
+}
+
+message GetBlockByDepthRequest {
+  ChainDistance depth = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
 }
 
 // Used to request a transaction by specifying its ID.
@@ -120,7 +144,7 @@ message IndexDefs {
 
 message IndexDef {
   oneof xdev {
-      CreateOnChainTransactionIndexRequest onChain = 1;
+    CreateOnChainTransactionIndexRequest onChain = 1;
   }
 }
 
@@ -136,7 +160,7 @@ message DropIndexRequest {
 
 // Return true if the requested index was dropped or false if it was not (Most likely because it did not exist).
 message DropIndexResponse {
-    bool dropped = 1;
+  bool dropped = 1;
 }
 
 // Request the use of a named index to find transactions containing data that matches specified values.
