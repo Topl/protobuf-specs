@@ -38,19 +38,27 @@ service TransactionService {
   // the transaction is greater than or equal to the value of the `confidenceFactor` parameter.
   rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
 
-  // Get a stream of transactions that have an output associated with one of the specified addresses that have at least
-  // the specified confidence factor.
+  // Retrieve transactions that have an input or output associated with any of the specified addresses from the configured
+  // Genus service. This returns a stream of existing and future transactions from the genus service with the specified id
+  // that are in a block with confidence factor greater than or equal to the value of the `confidenceFactor` parameter.
   rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionReceipt);
 
   // In the future there will be a way to find transactions using a bloom filter.
   //rpc getTransactionByBloomFilter();
 
-  // Get the TxOs currently associated with one of the specified addresses that have at least the specified confidence factor.
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
+  // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. This returns immediately.
   rpc getTxosByAddress(QueryByAddressRequest) returns(TxoQueryResponse);
 
-  // Get a stream of TxOs associated with one of the specified addresses that have at least the specified confidence factor.
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
+  // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
   rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoQueryResponse);
 
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that contain the type of asset specified by the
+  // asset label and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
   rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(stream Txo);
 
   /////////////////////////////////////////////////////////////////////////////
@@ -65,17 +73,23 @@ service TransactionService {
   //
   /////////////////////////////////////////////////////////////////////////////
 
-  // Create a transaction index using on-chain data.
+  // Create an index on transactions in the Genus database. The index will allow transactions to be found quickly based on
+  // the contents of their data field.
+  //
+  // This returns as soon as the index is created. After the index is created, if the `populate` parameter is true then Genus
+  // will asynchronously populate the index.
   rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (CreateOnChainTransactionIndexResponse);
 
-  // Get information about existing transaction indexes
-  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexDefs);
+  // Return a collection of `IndexSpec` objects, where each `IndexSpec` object corresponds to an index in the Genus database.
+  // The content of each `IndexSpec` object is the same as the `IndexSpec ` object used to create the index.
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexSpecs);
 
-  // Drop an index
-  rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
-
-  // get transactions that are in a named index and match the given value.
+  // Retrieve transactions that are included in the named index. If the `keys` parameter is supplied, then only transactions
+  // whose index records match the specified key values are included in the result.
   rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionReceipt);
+
+  // Delete an index from the Genus database.
+  rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
 }
 
 message GetBlockByIdRequest {
@@ -138,8 +152,8 @@ message CreateOnChainTransactionIndexRequest {
 }
 
 // Definitions of existing database indexes.
-message IndexDefs {
-  repeated IndexDef indexDef = 1;
+message IndexSpecs {
+  repeated IndexSpec indexSpec = 1;
 }
 
 message IndexDef {
