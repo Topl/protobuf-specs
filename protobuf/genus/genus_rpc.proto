@@ -16,19 +16,19 @@ service GenusFullBlockService {
   // Retrieve a block with the specified `id` from the configured Genus service. This returns its result when there is a
   // block present in the genus service with the specified id and the confidence factor of the block is greater than or
   // equal to the value of the `confidenceFactor` parameter.
-  rpc getBlockById(GetBlockByIdRequest) returns (models.FullBlock);
+  rpc getBlockById(GetBlockByIdRequest) returns (BlockResponse);
 
   // Retrieve the block at the specified height from the configured Genus service, where the height of the genesis block
   // is 1. This returns a result when there is a block present in the genus service at the specified height and the
   // confidence factor of the block is greater than or equal to the value of the `confidenceFactor` parameter.
-  rpc getBlockByHeight(GetBlockByHeightRequest) returns (models.FullBlock);
+  rpc getBlockByHeight(GetBlockByHeightRequest) returns (BlockResponse);
 
   // Retrieve the block at the specified depth from the configured Genus service. This returns its result immediately.
   // The block at depth 1 is the highest block with a confidence factor that is greater than or
   // equal to the value of the `confidenceFactor` parameter.
   //
   // Since blocks keep getting added, we expect that multiple calls to this with the same argument will return different blocks.
-  rpc getBlockByDepth(GetBlockByDepthRequest) returns (models.FullBlock);
+  rpc getBlockByDepth(GetBlockByDepthRequest) returns (BlockResponse);
 }
 
 // Operations related to GenusBlock contents
@@ -36,12 +36,12 @@ service TransactionService {
   // Retrieve a transaction with the specified `id` from the configured Genus service. This returns its result when there is
   // a transaction present in the genus service with the specified id and the confidence factor of the block that contains
   // the transaction is greater than or equal to the value of the `confidenceFactor` parameter.
-  rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
+  rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionResponse);
 
   // Retrieve transactions that have an input or output associated with any of the specified addresses from the configured
   // Genus service. This returns a stream of existing and future transactions from the genus service with the specified id
   // that are in a block with confidence factor greater than or equal to the value of the `confidenceFactor` parameter.
-  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionReceipt);
+  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionResponse);
 
   // In the future there will be a way to find transactions using a bloom filter.
   //rpc getTransactionByBloomFilter();
@@ -49,17 +49,17 @@ service TransactionService {
   // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. This returns immediately.
-  rpc getTxosByAddress(QueryByAddressRequest) returns(TxoQueryResponse);
+  rpc getTxosByAddress(QueryByAddressRequest) returns(TxoAddressResponse);
 
   // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
-  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoQueryResponse);
+  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoAddressResponse);
 
   // Retrieve from the configured Genus service TxOs (spent or unspent) that contain the type of asset specified by the
   // asset label and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
-  rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(stream Txo);
+  rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(stream TxoResponse);
 
   /////////////////////////////////////////////////////////////////////////////
   //
@@ -82,14 +82,30 @@ service TransactionService {
 
   // Return a collection of `IndexSpec` objects, where each `IndexSpec` object corresponds to an index in the Genus database.
   // The content of each `IndexSpec` object is the same as the `IndexSpec ` object used to create the index.
-  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexSpecs);
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (GetExistingTransactionIndexesResponse);
 
   // Retrieve transactions that are included in the named index. If the `keys` parameter is supplied, then only transactions
   // whose index records match the specified key values are included in the result.
-  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionReceipt);
+  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionResponse);
 
   // Delete an index from the Genus database.
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
+}
+
+message GetExistingTransactionIndexesResponse {
+  IndexSpecs indexSpecs = 1;
+}
+
+message BlockResponse {
+  models.FullBlock block = 1;
+}
+
+message TransactionResponse {
+  TransactionReceipt transactionReceipt = 1;
+}
+
+message TxoResponse {
+  Txo txo = 1;
 }
 
 message GetBlockByIdRequest {
@@ -135,7 +151,7 @@ message QueryByAssetLabelRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-message TxoQueryResponse {
+message TxoAddressResponse {
   // Map Base58 encoded addresses to TxOs.
   map<string, Txo> addressesToTxos = 1;
 
