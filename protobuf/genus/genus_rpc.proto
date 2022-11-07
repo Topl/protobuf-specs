@@ -8,43 +8,58 @@ package co.topl.proto.genus;
 
 import 'models/address.proto';
 import 'models/block.proto';
-import 'models/box.proto';
 import 'models/common.proto';
-import 'models/transaction.proto';
 import 'genus/genus_models.proto';
 
 // Operations related to blocks
 service GenusFullBlockService {
-  // Get a GenusBlock by its hash
-  rpc getBlockById(models.BlockId) returns (models.FullBlock);
+  // Retrieve a block with the specified `id` from the configured Genus service. This returns its result when there is a
+  // block present in the genus service with the specified id and the confidence factor of the block is greater than or
+  // equal to the value of the `confidenceFactor` parameter.
+  rpc getBlockById(GetBlockByIdRequest) returns (BlockResponse);
 
-  // get a GenusBlock by its height
-  rpc getBlockByHeight(ChainDistance) returns (models.FullBlock);
+  // Retrieve the block at the specified height from the configured Genus service, where the height of the genesis block
+  // is 1. This returns a result when there is a block present in the genus service at the specified height and the
+  // confidence factor of the block is greater than or equal to the value of the `confidenceFactor` parameter.
+  rpc getBlockByHeight(GetBlockByHeightRequest) returns (BlockResponse);
 
-  // get a GenusBlock by its depth
+  // Retrieve the block at the specified depth from the configured Genus service. This returns its result immediately.
+  // The block at depth 1 is the highest block with a confidence factor that is greater than or
+  // equal to the value of the `confidenceFactor` parameter.
+  //
   // Since blocks keep getting added, we expect that multiple calls to this with the same argument will return different blocks.
-  rpc getBlockByDepth(ChainDistance) returns (models.FullBlock);
+  rpc getBlockByDepth(GetBlockByDepthRequest) returns (BlockResponse);
 }
 
 // Operations related to GenusBlock contents
 service TransactionService {
-  // Get a transaction by its ID
-  // This returns the transaction when it is in the Genus database AND its confidence factor is at least the specified value.
-  rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionReceipt);
+  // Retrieve a transaction with the specified `id` from the configured Genus service. This returns its result when there is
+  // a transaction present in the genus service with the specified id and the confidence factor of the block that contains
+  // the transaction is greater than or equal to the value of the `confidenceFactor` parameter.
+  rpc getTransactionById(GetTransactionByIdRequest) returns (TransactionResponse);
 
-  // Get a stream of transactions that have an output associated with one of the specified addresses that have at least
-  // the specified confidence factor.
-  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionReceipt);
+  // Retrieve transactions that have an input or output associated with any of the specified addresses from the configured
+  // Genus service. This returns a stream of existing and future transactions from the genus service with the specified id
+  // that are in a block with confidence factor greater than or equal to the value of the `confidenceFactor` parameter.
+  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionResponse);
 
+  // In the future there will be a way to find transactions using a bloom filter.
   //rpc getTransactionByBloomFilter();
 
-  // Get the boxes currently associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddress(QueryByAddressRequest) returns(BoxQueryResponse);
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
+  // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. This returns immediately.
+  rpc getTxosByAddress(QueryByAddressRequest) returns(TxoAddressResponse);
 
-  // Get a stream of boxes associated with one of the specified addresses that have at least the specified confidence factor.
-  rpc getBoxesByAddressStream(QueryByAddressRequest) returns(stream BoxQueryResponse);
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
+  // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
+  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoAddressResponse);
 
-  rpc getBoxesByAssetLabel(QueryByAssetLabelRequest) returns(BoxQueryResponse);
+  // Retrieve from the configured Genus service TxOs (spent or unspent) that contain the type of asset specified by the
+  // asset label and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
+  // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
+  rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(stream TxoResponse);
 
   /////////////////////////////////////////////////////////////////////////////
   //
@@ -58,17 +73,54 @@ service TransactionService {
   //
   /////////////////////////////////////////////////////////////////////////////
 
-  // Create a transaction index using on-chain data.
-  rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (RecordCount);
+  // Create an index on transactions in the Genus database. The index will allow transactions to be found quickly based on
+  // the contents of their data field.
+  //
+  // This returns as soon as the index is created. After the index is created, if the `populate` parameter is true then Genus
+  // will asynchronously populate the index.
+  rpc createOnChainTransactionIndex(CreateOnChainTransactionIndexRequest) returns (CreateOnChainTransactionIndexResponse);
 
-  // Get information about existing transaction indexes
-  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (IndexDefs);
+  // Return a collection of `IndexSpec` objects, where each `IndexSpec` object corresponds to an index in the Genus database.
+  // The content of each `IndexSpec` object is the same as the `IndexSpec ` object used to create the index.
+  rpc getExistingTransactionIndexes(GetExistingTransactionIndexesRequest) returns (GetExistingTransactionIndexesResponse);
 
-  // Drop an index
+  // Retrieve transactions that are included in the named index. If the `keys` parameter is supplied, then only transactions
+  // whose index records match the specified key values are included in the result.
+  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionResponse);
+
+  // Delete an index from the Genus database.
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
+}
 
-  // get transactions that are in a named index and match the given value.
-  rpc getIndexedTransactions(GetIndexedTransactionsRequest) returns(stream TransactionReceipt);
+message GetExistingTransactionIndexesResponse {
+  IndexSpecs indexSpecs = 1;
+}
+
+message BlockResponse {
+  models.FullBlock block = 1;
+}
+
+message TransactionResponse {
+  TransactionReceipt transactionReceipt = 1;
+}
+
+message TxoResponse {
+  Txo txo = 1;
+}
+
+message GetBlockByIdRequest {
+  models.BlockId blockId = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
+}
+
+message GetBlockByHeightRequest {
+  ChainDistance height = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
+}
+
+message GetBlockByDepthRequest {
+  ChainDistance depth = 1;
+  optional ConfidenceFactor confidenceFactor = 2;
 }
 
 // Used to request a transaction by specifying its ID.
@@ -78,7 +130,13 @@ message GetTransactionByIdRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-// Used to request boxes by their associated address
+// Response from CreateOnChainTransactionIndex request
+message CreateOnChainTransactionIndexResponse {
+  // True if index was created.
+  bool ok = 1;
+}
+
+// Used to request TxOs by their associated address
 message QueryByAddressRequest {
   // All the addresses of interest
   repeated models.SpendingAddress addresses = 1;
@@ -86,35 +144,37 @@ message QueryByAddressRequest {
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-// User to request Box by their asset type
+// User to request TxOs by their asset type
 message QueryByAssetLabelRequest {
   AssetLabel assetLabel = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   optional ConfidenceFactor confidenceFactor = 2;
 }
 
-message BoxQueryResponse {
-  // Map addresses that are Base58 encoded to boxes.
-  map<string, BoxStatuses> addressesToBoxes = 1;
+message TxoAddressResponse {
+  // Map Base58 encoded addresses to TxOs.
+  map<string, Txo> addressesToTxos = 1;
 
-  message BoxStatuses {
-    repeated genus.TxoState boxStatus = 1;
+  message Txos {
+    repeated genus.Txo txo = 1;
   }
 }
 
 // A request to create an index of transactions based on their on-chain data
 message CreateOnChainTransactionIndexRequest {
   IndexSpec indexSpec = 1;
+  // If populate is true, then scan the existing transaction in the database to populate the index.
+  bool populate = 2;
 }
 
 // Definitions of existing database indexes.
-message IndexDefs {
-  repeated IndexDef indexDef = 1;
+message IndexSpecs {
+  repeated IndexSpec indexSpec = 1;
 }
 
 message IndexDef {
   oneof xdev {
-      CreateOnChainTransactionIndexRequest onChain = 1;
+    CreateOnChainTransactionIndexRequest onChain = 1;
   }
 }
 
@@ -130,7 +190,7 @@ message DropIndexRequest {
 
 // Return true if the requested index was dropped or false if it was not (Most likely because it did not exist).
 message DropIndexResponse {
-    bool dropped = 1;
+  bool dropped = 1;
 }
 
 // Request the use of a named index to find transactions containing data that matches specified values.
@@ -142,7 +202,7 @@ message GetIndexedTransactionsRequest {
   repeated IndexMatchValue value = 2;
 
   // The maximum number of transactions to be returned
-  optional uint64 maxResults = 3;
+  optional uint32 maxResults = 3;
 
   // A number of transactions to be skipped. This is useful for paging results.
   optional uint64 skipResults = 4;
@@ -155,6 +215,7 @@ message IndexMatchValue {
     int64 intValue = 2;
     uint64 uintValue = 3;
   }
+  optional string fieldName = 4;
 }
 
 //service SubscriptionService {
