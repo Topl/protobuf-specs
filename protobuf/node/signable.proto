@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package co.topl.proto.node;
+
+// This is defined as a protobuf so that there is a common definition for all implementation languages.
+// This should never be used in an Rpc!
+message SignableBytes {
+  // This should be an Array type (see descriptions of collection types at https://topl.github.io/sdk-spec/docs/Overview/Assumptions#collections)
+  // Consider implementing this to return a smart return type that will avoid unnecessary copying when a composite
+  // object computes its signable bytes from the signable bytes of component objects.
+  bytes preimage = 1;
+}
