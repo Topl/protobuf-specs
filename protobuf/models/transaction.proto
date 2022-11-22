@@ -15,7 +15,7 @@ message Transaction {
   repeated Output outputs = 2;
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
-  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  // An optional array of bytes.
   optional bytes data = 4;
 
   // References a box to spend, plus the proof that is authorized to spend it
