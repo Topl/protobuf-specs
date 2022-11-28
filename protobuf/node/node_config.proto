@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package co.topl.proto.node;
+
+// Contains the configurations of the node over time
+message NodeConfigMap {
+  // Map slot numbers to node configurations. The key in the map is the first slot number that the configuration is effective.
+  map <uint64, NodeConfig> slotConfigMap = 1;
+}
+
+// The configuration of the node the client is working with. There should be more fields in this.
+message NodeConfig {
+  // the configured duration of
+  uint32 slotDurationMillis = 1;
+}

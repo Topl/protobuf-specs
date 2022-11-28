@@ -12,10 +12,10 @@ message Transaction {
   // The list of UTxOs to consume/destroy/spend
   repeated Input inputs = 1;
   // The list of new UTxOs to create
-  repeated Output outputs = 2;
+  repeated UnspentOutput outputs = 2;
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
-  // An optional array of latin-1 encoded bytes.  Maximum length: 127
+  // An optional array of bytes.
   optional bytes data = 4;
 
   // References a box to spend, plus the proof that is authorized to spend it
@@ -30,14 +30,14 @@ message Transaction {
     BoxValue value = 4;
   }
   // A new Box
-  message Output {
+  message UnspentOutput {
     // The address associated with the Box, including a commitment to a Proposition that unlocks this new Box
     FullAddress address = 1;
     // The value of the new Box
     BoxValue value = 2;
-    // A flag indicating if this Output is being generated from nothing.  For users/applications, only Asset and Registration values are allowed in `value`.
-    bool minting = 3;
+    optional bytes metadata = 3;
   }
+
   // Represents constraints on when a Transaction can be included in the blockchain
   message Schedule {
     // A UNIX timestamp (ms) of the transaction's original creation.  User-defined with no impact on the protocol.  Must be positive.
