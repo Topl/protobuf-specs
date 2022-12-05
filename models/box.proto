@@ -60,6 +60,8 @@ message AssetV1BoxValue {
     SpendingAddress issuerAddress = 1;
     // A name for this Asset.  Must be latin-1 encoded.  Must be at most 8 bytes in length.
     bytes shortName = 2;
+    // minting
+    bool minting = 3;
   }
 }
 // Represents a proof-of-stake registration for an Operator (Block Producer)
