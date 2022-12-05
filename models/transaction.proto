@@ -35,16 +35,18 @@ message Transaction {
     FullAddress address = 1;
     // The value of the new Box
     BoxValue value = 2;
-    optional bytes metadata = 3;
+    // Minting
+    bool minting = 3;
+    optional bytes metadata = 4;
   }
 
   // Represents constraints on when a Transaction can be included in the blockchain
   message Schedule {
     // A UNIX timestamp (ms) of the transaction's original creation.  User-defined with no impact on the protocol.  Must be positive.
     uint64 creation = 1;
-    // The minimum slot number of the block containing this transaction
+    // The minimum slot number when this transaction may be included in a new block.
     uint64 minimumSlot = 2;
-    // The maximum slot number of the block constaing this transaction.  Must be greater than `minimumSlot`.
+    // The maximum slot number when this transaction may be included in a new block.  Must be greater than `minimumSlot`.
     uint64 maximumSlot = 3;
   }
 }
