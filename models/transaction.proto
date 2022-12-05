@@ -46,7 +46,7 @@ message Transaction {
     uint64 creation = 1;
     // The minimum slot number when this transaction may be included in a new block.
     uint64 minimumSlot = 2;
-    // The maximum slot number of the block containing this transaction.  Must be greater than `minimumSlot`.
+    // The maximum slot number when this transaction may be included in a new block.  Must be greater than `minimumSlot`.
     uint64 maximumSlot = 3;
   }
 }
