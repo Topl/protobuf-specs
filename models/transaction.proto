@@ -35,7 +35,9 @@ message Transaction {
     FullAddress address = 1;
     // The value of the new Box
     BoxValue value = 2;
-    optional bytes metadata = 3;
+    // Minting
+    bool minting = 3;
+    optional bytes metadata = 4;
   }
 
   // Represents constraints on when a Transaction can be included in the blockchain
@@ -44,7 +46,7 @@ message Transaction {
     uint64 creation = 1;
     // The minimum slot number of the block containing this transaction
     uint64 minimumSlot = 2;
-    // The maximum slot number of the block constaing this transaction.  Must be greater than `minimumSlot`.
+    // The maximum slot number of the block containing this transaction.  Must be greater than `minimumSlot`.
     uint64 maximumSlot = 3;
   }
 }
