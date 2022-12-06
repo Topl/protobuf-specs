@@ -16,7 +16,7 @@ jobs:
 
       - name: Setup Protoc
         run: |
-          apt install -y protobuf-compiler
+          sudo apt install -y protobuf-compiler
 
       - name: git-restore-mtime
         uses: chetan/git-restore-mtime-action@v1
