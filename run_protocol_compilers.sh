@@ -7,5 +7,9 @@ mkdir generated/python 2>>log
 # --experimental_allow_proto3_optional
 # ➜  protobuf-specs git:(main) ✗ protoc --version -> libprotoc 3.12.4
 
-protoc --experimental_allow_proto3_optional --python_out=generated/python --java_out=generated/java node/bifrost_rpc.proto genus/genus_rpc.proto
-
+protoc \
+    --experimental_allow_proto3_optional \
+    --python_out=generated/python \
+    --java_out=generated/java \
+    -Iproto/ \
+    $(find . -iname "*.proto")

@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package co.topl.node.models;
+
+import 'common/models/shared.proto';
+import 'node/models/known_identifier.proto';
+
+// Events are uniquely identifiable occurrences of state mutations within the blockchain protocol.
+// Each event is associated with certain data that may be updated every tick.
+message Event {
+    oneof value {
+        Eon eon = 1;
+        Era era = 2;
+        Epoch epoch = 3;
+        Header header = 4;
+        IoTransaction ioTransaction = 5;
+        SpentTransactionOutput spentTransactionOutput = 6;
+        UnspentTransactionOutput unspentTransactionOutput = 7;
+        co.topl.common.models.Root root = 8;
+    }
+
+    message Eon {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Era {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Epoch {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Header {
+        uint64 height = 1;
+    }
+
+    message IoTransaction {
+        co.topl.node.models.transaction.IOTransaction.Schedule schedule = 1;
+        repeated KnownIdentifier.TransactionOutput32 = 2;
+        repeated KnownIdentifier.TransactionOutput64 = 3;
+        co.topl.common.models.SmallData metadata = 4;
+    }
+
+    message SpentTransactionOutput {
+        repeated KnownReference.Predicate references = 1;
+        co.topl.common.models.SmallData metadata = 2;
+    }
+
+    message UnspentTransactionOutput {
+        repeated KnownReference.Blob references = 1;
+        co.topl.common.models.SmallData metadata = 2;
+    }
+
+    message Root {
+        co.topl.common.models.Root value = 1;
+    }
+}

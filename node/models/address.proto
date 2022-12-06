@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package co.topl.node.models;
+
+import 'node/models/identifier.proto';
+
+// An address is a location specific (network + ledger) path to a certain Identitier
+message Address {
+    // the chain an Address will settle to (targets the security behind an Addresses usage)
+    uint32 network = 1;
+    // the application an Address interacts with directly
+    uint32 ledger = 2;
+    // the tagged, unique value targeted by a given Address
+    Identifier identifier = 3;
+}

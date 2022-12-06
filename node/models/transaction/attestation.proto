@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package co.topl.node.models.transaction;
+
+
+import 'node/models/box/lock.proto';
+import 'quivr/models/proposition.proto';
+import 'quivr/models/proof.proto';
+
+message Attestation {
+    oneof value {
+        Predicate predicate = 1;
+        Image32 image32 = 2;
+        Image64 image64 = 3;
+        Commitment32 commitment32 = 4;
+        Commitment64 commitment64 = 5;
+    }
+
+    message Predicate {
+        co.topl.node.models.box.Lock.Predicate lock = 1;
+        // list of optional values
+        repeated co.topl.quivr.models.Proof responses = 2;
+    }
+    message Image32 {
+        co.topl.node.models.box.Lock.Image32 lock = 1;
+        // list of optional values
+        repeated co.topl.quivr.models.Proposition known = 2;
+        // list of optional values
+        repeated co.topl.quivr.models.Proof responses = 3;
+    }
+    message Image64 {
+        co.topl.node.models.box.Lock.Image64 lock = 1;
+        // list of optional values
+        repeated co.topl.quivr.models.Proposition known = 2;
+        // list of optional values
+        repeated co.topl.quivr.models.Proof responses = 3;
+    }
+    message Commitment32 {
+        co.topl.node.models.box.Lock.Commitment32 lock = 1;
+        // list of optional values
+        repeated co.topl.quivr.models.Proposition known = 2;
+        // list of optional values
+        repeated co.topl.quivr.models.Proof responses = 3;
+    }
+    message Commitment64 {
+        co.topl.node.models.box.Lock.Commitment64 lock = 1;
+        // list of optional values
+        repeated co.topl.quivr.models.Proposition known = 2;
+        // list of optional values
+        repeated co.topl.quivr.models.Proof responses = 3;
+    }
+    
+}

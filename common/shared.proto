@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package co.topl.common.models;
+
+message Data {
+    bytes value = 1;
+}
+
+message SmallData {
+    // Maximum length = 64
+    bytes value = 1;
+}
+
+message Root {
+    oneof value {
+        bytes root32 = 1;
+        bytes root64 = 2;
+    }
+}
+
+message Preimage {
+    bytes input = 1;
+    bytes salt = 2;
+}
+
+message Digest {
+    oneof value {
+        Digest32 digest32 = 1;
+        Digest64 digest64 = 2;
+    }
+
+    message Digest32 {
+        bytes value = 1;
+    }
+
+    message Digest64 {
+        bytes value = 1;
+    }
+}
+
+message DigestVerification {
+    Digest digest = 1;
+    Preimage preimage = 2;
+}
+
+message Message {
+    bytes value = 1;
+}
+
+message Witness {
+    bytes value = 1;
+}
+
+message SignatureVerification {
+    VerificationKey verificationKey = 1;
+    Witness signature = 2;
+    Message message = 3;
+}
+
+message SignableBytes {
+    bytes value = 1;
+}
+
+message TxBind {
+    bytes value = 2;
+}
