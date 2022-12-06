@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package co.topl.node.models.box;
 
-import 'node/models/shared.proto';
-import 'node/models/box/blob.dart';
+import 'common/models/shared.proto';
+import 'node/models/box/blob.proto';
 
 message Value {
     oneof value {
@@ -21,7 +21,7 @@ message Value {
         string label = 1;
         // TODO: Int128?
         uint64 quantity = 2;
-        co.topl.node.models.SmallData metadata = 3;
+        co.topl.common.models.SmallData metadata = 3;
         // list of optional values
         repeated Blob blobs = 4;
     }

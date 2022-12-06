@@ -33,7 +33,7 @@ message Proposition {
     
     message DigitalSignature {
         string routine = 1;
-        co.topl.common.models.VerificationKey = 2;
+        co.topl.common.models.VerificationKey verificationKey = 2;
     }
 
     message HeightRange {

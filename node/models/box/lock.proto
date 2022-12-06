@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package co.topl.node.models.box;
 
+
+import 'node/models/identifier.proto';
+import 'quivr/models/proposition.proto';
+
 // should be able to calculate or retrieve the root of the Lock
 // - from Predicate -> Image -> Commitment
 // - from Image -> Commitment

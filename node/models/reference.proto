@@ -3,6 +3,7 @@ syntax = "proto3";
 package co.topl.node.models;
 
 import 'node/models/event.proto';
+import 'node/models/datum.proto';
 
 message Reference {
     oneof value {

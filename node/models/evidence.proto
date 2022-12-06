@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package co.topl.node.models;
 
-import 'node/models/digest.proto';
+import 'common/models/shared.proto';
 
  // Evidence should be a succinct, unique set of bytes used to distinguish between any two data objects.
  // Evidence is also meant to have a minimal amount of structure such that other domains may provide
@@ -15,9 +15,9 @@ message Evidence {
     }
 
     message Sized32 {
-        Digest32 digest = 1;
+        co.topl.common.models.Digest.Digest32 digest = 1;
     }
     message Sized64 {
-        Digest64 digest = 1;
+        co.topl.common.models.Digest.Digest64 digest = 1;
     }
 }

@@ -43,6 +43,10 @@ message DigestVerification {
     Preimage preimage = 2;
 }
 
+message VerificationKey {
+    bytes value = 1;
+}
+
 message Message {
     bytes value = 1;
 }

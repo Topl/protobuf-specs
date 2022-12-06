@@ -4,6 +4,8 @@ package co.topl.node.models;
 
 import 'common/models/shared.proto';
 import 'node/models/known_identifier.proto';
+// import 'node/models/known_reference.proto'; // TODO: cyclical import
+import 'node/models/transaction/schedule.proto';
 
 // Events are uniquely identifiable occurrences of state mutations within the blockchain protocol.
 // Each event is associated with certain data that may be updated every tick.
@@ -39,19 +41,19 @@ message Event {
     }
 
     message IoTransaction {
-        co.topl.node.models.transaction.IOTransaction.Schedule schedule = 1;
-        repeated KnownIdentifier.TransactionOutput32 = 2;
-        repeated KnownIdentifier.TransactionOutput64 = 3;
+        co.topl.node.models.transaction.Schedule schedule = 1;
+        repeated KnownIdentifier.TransactionOutput32 references32 = 2;
+        repeated KnownIdentifier.TransactionOutput64 references64 = 3;
         co.topl.common.models.SmallData metadata = 4;
     }
 
     message SpentTransactionOutput {
-        repeated KnownReference.Predicate references = 1;
+        // repeated KnownReference.Predicate references = 1; // TODO: cyclical import
         co.topl.common.models.SmallData metadata = 2;
     }
 
     message UnspentTransactionOutput {
-        repeated KnownReference.Blob references = 1;
+        // repeated KnownReference.Blob references = 1; // TODO: cyclical import
         co.topl.common.models.SmallData metadata = 2;
     }
 
