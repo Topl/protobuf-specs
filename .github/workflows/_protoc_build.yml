@@ -1,0 +1,25 @@
+name: Protoc Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Protoc Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Need full history to update last modified time.
+          submodules: true
+
+      - name: Setup Protoc
+        run: |
+          apt install -y protobuf-compiler
+
+      - name: git-restore-mtime
+        uses: chetan/git-restore-mtime-action@v1
+
+      - name: Compile and Test
+        run: sh run_protocol_compilers.sh
