@@ -2,6 +2,7 @@ mkdir generated 2>>log
 mkdir generated/java 2>>log
 mkdir generated/js 2>>log
 mkdir generated/python 2>>log
+mkdir generated/dart 2>>log
 
 # TODO --js_out=js generation is not allowed with optionals
 # --experimental_allow_proto3_optional
@@ -11,5 +12,6 @@ protoc \
     --experimental_allow_proto3_optional \
     --python_out=generated/python \
     --java_out=generated/java \
+    --dart_out=generated/dart \
     -Iproto/ \
     $(find . -iname "*.proto")
