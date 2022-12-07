@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package co.topl.quivr.models;
+package quivr.models;
 
-import 'common/models/shared.proto';
+import 'quivr/models/shared.proto';
 
 message Proof {
     oneof value {
@@ -28,69 +28,69 @@ message Proof {
 
     // token = "digest"
     message Digest {
-        co.topl.common.models.TxBind transactionBind = 1;
-        co.topl.common.models.Preimage preimage = 2;
+        TxBind transactionBind = 1;
+        Preimage preimage = 2;
     }
     
     // token = "digital_signature"
     message DigitalSignature {
-        co.topl.common.models.TxBind transactionBind = 1;
-        co.topl.common.models.Witness witness = 2;
+        TxBind transactionBind = 1;
+        Witness witness = 2;
     }
 
     // token = "height_range"
     message HeightRange {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "tick_range"
     message TickRange {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "exact_match"
     message ExactMatch {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "less_than"
     message LessThan {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "greater_than"
     message GreaterThan {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "equal_to"
     message EqualTo {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
     }
 
     // token = "threshold"
     message Threshold {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
         // set of optional values
         repeated Proof responses = 2;
     }
 
     // token = "not"
     message Not {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
         Proof proof = 2;
     }
 
     // token = "and"
     message And {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
         Proof left = 2;
         Proof right = 3;
     }
 
     // token = "or"
     message Or {
-        co.topl.common.models.TxBind transactionBind = 1;
+        TxBind transactionBind = 1;
         Proof left = 2;
         Proof right = 3;
     }

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package co.topl.quivr.models;
+package quivr.models;
 
-import 'common/models/shared.proto';
+import 'quivr/models/shared.proto';
 
 message Proposition {
     oneof value {
@@ -23,17 +23,17 @@ message Proposition {
 
     message Locked {
         // Optional
-        co.topl.common.models.Data data = 1;
+        Data data = 1;
     }
 
     message Digest {
         string routine = 1;
-        co.topl.common.models.Digest digest = 2;
+        Digest digest = 2;
     }
     
     message DigitalSignature {
         string routine = 1;
-        co.topl.common.models.VerificationKey verificationKey = 2;
+        VerificationKey verificationKey = 2;
     }
 
     message HeightRange {

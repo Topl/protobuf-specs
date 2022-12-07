@@ -24,7 +24,7 @@ message Lock {
     // Private information
     message Predicate {
         // this should probably be a non-empty chain, but how to enforce across other languages?
-        repeated co.topl.quivr.models.Proposition challenges = 1;
+        repeated quivr.models.Proposition challenges = 1;
         uint32 threshold = 2;
     }
     

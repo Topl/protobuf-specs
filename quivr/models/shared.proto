@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package co.topl.common.models;
+package quivr.models;
 
 message Data {
     bytes value = 1;
@@ -30,10 +30,12 @@ message Digest {
     }
 
     message Digest32 {
+        // strict length = 32
         bytes value = 1;
     }
 
     message Digest64 {
+        // strict length = 64
         bytes value = 1;
     }
 }
