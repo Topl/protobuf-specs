@@ -88,7 +88,8 @@ message IndexSpec {
   // A description of the fields to be indexed
   IndexFieldSpec indexFieldSpec = 3;
   // Filter to determine which transactions are included in the index. Only records that match the filter will be included in the index.
-  optional IndexFilter indexFilter = 4;
+  // optional
+  IndexFilter indexFilter = 4;
 }
 
 // A specification to identify the field(s) in data to be indexed
@@ -104,7 +105,8 @@ message IndexFieldSpec {
 message CsvIndexSpecs {
   repeated CsvIndexSpec specs = 1;
   uint32 separatorChar = 2; // The character code that is used to separate fields.
-  optional uint32 quoteChar = 4; // If this is present, the specified character appears at the beginning and end of each field.
+  // optional
+  uint32 quoteChar = 4; // If this is present, the specified character appears at the beginning and end of each field.
 }
 
 // a sequence of csv field references to identify the values in data to be indexed

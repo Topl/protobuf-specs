@@ -52,7 +52,8 @@ message AssetV1BoxValue {
   // Optional user/application commitment data.  Strict: 32 bytes
   bytes securityRoot = 3;
   // Optional user/application metadata.  Must be latin-1 encoded.  Must be at most 127 bytes in length.
-  optional bytes metadata = 4;
+  // optional
+  bytes metadata = 4;
 
   // An identifier for a collection of Assets
   message Code {

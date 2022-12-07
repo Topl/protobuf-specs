@@ -16,7 +16,8 @@ message Transaction {
   // Constrains when this Transaction can be included in the blockchain
   Schedule schedule = 3;
   // An optional array of bytes.
-  optional bytes data = 4;
+  // optional
+  bytes data = 4;
 
   // References a box to spend, plus the proof that is authorized to spend it
   message Input {
@@ -37,7 +38,8 @@ message Transaction {
     BoxValue value = 2;
     // Minting
     bool minting = 3;
-    optional bytes metadata = 4;
+    // optional
+    bytes metadata = 4;
   }
 
   // Represents constraints on when a Transaction can be included in the blockchain
