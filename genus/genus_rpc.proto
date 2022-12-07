@@ -110,24 +110,28 @@ message TxoResponse {
 
 message GetBlockByIdRequest {
   models.BlockId blockId = 1;
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 message GetBlockByHeightRequest {
   ChainDistance height = 1;
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 message GetBlockByDepthRequest {
   ChainDistance depth = 1;
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 // Used to request a transaction by specifying its ID.
 message GetTransactionByIdRequest {
   models.TransactionId transactionId = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 // Response from CreateOnChainTransactionIndex request
@@ -141,14 +145,16 @@ message QueryByAddressRequest {
   // All the addresses of interest
   repeated models.SpendingAddress addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 // User to request TxOs by their asset type
 message QueryByAssetLabelRequest {
   AssetLabel assetLabel = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  optional ConfidenceFactor confidenceFactor = 2;
+  // optional
+  ConfidenceFactor confidenceFactor = 2;
 }
 
 message TxoAddressResponse {
@@ -202,10 +208,12 @@ message GetIndexedTransactionsRequest {
   repeated IndexMatchValue value = 2;
 
   // The maximum number of transactions to be returned
-  optional uint32 maxResults = 3;
+  // optional
+  uint32 maxResults = 3;
 
   // A number of transactions to be skipped. This is useful for paging results.
-  optional uint64 skipResults = 4;
+  // optional
+  uint64 skipResults = 4;
 }
 
 // A value that may match a field in an index.
@@ -215,7 +223,8 @@ message IndexMatchValue {
     int64 intValue = 2;
     uint64 uintValue = 3;
   }
-  optional string fieldName = 4;
+  // optional
+  string fieldName = 4;
 }
 
 //service SubscriptionService {

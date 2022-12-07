@@ -28,7 +28,8 @@ message BlockHeader {
   // A certificate indicating the operator's commitment to this block
   OperationalCertificate operationalCertificate = 9;
   // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
-  optional bytes metadata = 10;
+  // optional
+  bytes metadata = 10;
   // The operator's staking address
   StakingAddressOperator address = 11;
 }

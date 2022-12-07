@@ -59,7 +59,8 @@ message FetchBlockHeaderReq {
 // Response type for FetchBlockHeader
 message FetchBlockHeaderRes {
   // The Block Header associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.models.BlockHeader header = 1;
+  // optional
+  co.topl.proto.models.BlockHeader header = 1;
 }
 
 // Request type for FetchBlockBody
@@ -71,7 +72,8 @@ message FetchBlockBodyReq {
 // Response type for FetchBlockBody
 message FetchBlockBodyRes {
   // The Block Body associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.models.BlockBody body = 1;
+  // optional
+  co.topl.proto.models.BlockBody body = 1;
 }
 
 // Request type for FetchTransaction
@@ -82,7 +84,8 @@ message FetchTransactionReq {
 // Response type for FetchTransaction
 message FetchTransactionRes {
   // The Transaction associated with the requested ID.  None/null if not found.
-  optional co.topl.proto.models.Transaction transaction = 1;
+  // optional
+  co.topl.proto.models.Transaction transaction = 1;
 }
 
 // Request type for FetchBlockIdAtHeight
@@ -94,7 +97,8 @@ message FetchBlockIdAtHeightReq {
 // Response type for FetchBlockIdAtHeight
 message FetchBlockIdAtHeightRes {
   // The Block ID associated with the requested height.  None/null if not found.
-  optional co.topl.proto.models.BlockId blockId = 1;
+  // optional
+  co.topl.proto.models.BlockId blockId = 1;
 }
 
 // Request type for FetchBlockIdAtDepth
@@ -106,7 +110,8 @@ message FetchBlockIdAtDepthReq {
 // Response type for FetchBlockIdAtDepth
 message FetchBlockIdAtDepthRes {
   // The Block ID associated with the requested depth.  None/null if not found.
-  optional co.topl.proto.models.BlockId blockId = 1;
+  // optional
+  co.topl.proto.models.BlockId blockId = 1;
 }
 
 // Request type for SynchronizationTraversal
