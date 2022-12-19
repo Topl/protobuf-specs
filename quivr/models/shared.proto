@@ -70,3 +70,9 @@ message SignableBytes {
 message TxBind {
     bytes value = 2;
 }
+
+// Represents a 128-bit integer
+message Int128 {
+    // Java BigInt Representation: two's-complement, big-endian
+    bytes value = 1;
+}

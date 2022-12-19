@@ -12,15 +12,13 @@ message Value {
     }
 
     message Token {
-        // TODO: Int128?
-        uint64 quantity = 1;
+        quivr.models.Int128 quantity = 1;
         // list of optional values
         repeated Blob blobs = 2;
     }
     message Asset {
         string label = 1;
-        // TODO: Int128?
-        uint64 quantity = 2;
+        quivr.models.Int128 quantity = 2;
         quivr.models.SmallData metadata = 3;
         // list of optional values
         repeated Blob blobs = 4;

@@ -54,20 +54,17 @@ message Proposition {
 
     message LessThan {
         string location = 1;
-        // TODO: Int128?  Signed?
-        int64 compareTo = 2;
+        Int128 compareTo = 2;
     }
 
     message GreaterThan {
         string location = 1;
-        // TODO: Int128?  Signed?
-        int64 compareTo = 2;
+        Int128 compareTo = 2;
     }
 
     message EqualTo {
         string location = 1;
-        // TODO: Int128?  Signed?
-        int64 compareTo = 2;
+        Int128 compareTo = 2;
     }
 
     message Threshold {
