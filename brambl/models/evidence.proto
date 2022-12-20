@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package co.topl.node.models;
+package co.topl.brambl.models;
 
 import 'quivr/models/shared.proto';
 

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package co.topl.node.models.transaction;
+package co.topl.brambl.models.transaction;
 
 message Schedule {
     uint64 min = 1;

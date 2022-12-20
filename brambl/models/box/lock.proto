@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package co.topl.node.models.box;
+package co.topl.brambl.models.box;
 
 
-import 'node/models/identifier.proto';
+import 'brambl/models/identifier.proto';
 import 'quivr/models/proposition.proto';
 
 // should be able to calculate or retrieve the root of the Lock
@@ -31,11 +31,11 @@ message Lock {
     // Semi-public information
     // The most commonly shared construction between parties
     message Image32 {
-        repeated co.topl.node.models.Identifier.Lock32 leaves = 1;
+        repeated co.topl.brambl.models.Identifier.Lock32 leaves = 1;
         uint32 threshold = 2;
     }
     message Image64 {
-        repeated co.topl.node.models.Identifier.Lock64 leaves = 1;
+        repeated co.topl.brambl.models.Identifier.Lock64 leaves = 1;
         uint32 threshold = 2;
     }
 
@@ -43,11 +43,11 @@ message Lock {
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions
     message Commitment32 {
-        repeated co.topl.node.models.Identifier.AccumulatorRoot32 root = 1;
+        repeated co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
         uint32 threshold = 2;
     }
     message Commitment64 {
-        repeated co.topl.node.models.Identifier.AccumulatorRoot64 root = 1;
+        repeated co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
         uint32 threshold = 2;
     }
 }

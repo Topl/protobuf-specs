@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package co.topl.node.models;
+package co.topl.brambl.models;
 
-import 'node/models/identifier.proto';
+import 'brambl/models/identifier.proto';
 
 //  Reference combine an Identifier and an index. They are meant to refer to a specific element (or elements)
  // of a certain type (denoted by the Identifier) available at a specific location (network + ledger)

@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package co.topl.node.models.box;
-
-message Blob {
-    // Up to 15kb
-    bytes value = 1;
-}

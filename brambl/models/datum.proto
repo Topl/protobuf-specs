@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package co.topl.node.models;
+package co.topl.brambl.models;
 
-import 'node/models/event.proto';
+import 'brambl/models/event.proto';
 
 // Datums represent a queryable product value of the arguments available from a certain Event. Datum may be
 // evaluated during the Quivr protocol execution by providing events as Datum in a Dynamic Context.
