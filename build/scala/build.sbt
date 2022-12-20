@@ -65,6 +65,8 @@ lazy val protobuf =
       protobufCats
     )
 
+lazy val copyProtobufTask = TaskKey[Unit]("copyProtobufTask", "Copy protobuf files from repository root")
+
 lazy val protobufCats =
   project
     .in(file("protobuf-cats"))
@@ -74,6 +76,18 @@ lazy val protobufCats =
       commonSettings,
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-      buildInfoPackage := "co.topl.buildinfo.protobufcats",
-      Compile / PB.protoSources := Seq(new java.io.File("../.."))
+      buildInfoPackage := "co.topl.buildinfo.protobufcats",      
+      copyProtobufTask := {
+        import java.nio.file._
+        import scala.jdk.CollectionConverters._
+        val repoRoot = Paths.get("../..").toAbsolutePath
+        Files.walk(repoRoot).iterator()
+          .asScala.filter(_.endsWith(".proto"))
+          .map(_.toAbsolutePath)
+          .toList
+          .foreach(protoFile =>
+            Files.copy(protoFile, Paths.get("protobuf-cats", "src", "main", "protobuf", protoFile.toString.drop(repoRoot.toString.length + 1)))
+          )
+      },
+      (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value
     )
