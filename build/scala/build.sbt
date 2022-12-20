@@ -62,32 +62,49 @@ lazy val protobuf =
       crossScalaVersions := Nil
     )
     .aggregate(
-      protobufCats
+      protobufFs2
     )
 
 lazy val copyProtobufTask = TaskKey[Unit]("copyProtobufTask", "Copy protobuf files from repository root")
 
-lazy val protobufCats =
+lazy val protobufFs2 =
   project
-    .in(file("protobuf-cats"))
+    .in(file("protobuf-fs2"))
     .enablePlugins(BuildInfoPlugin, Fs2Grpc)
     .settings(
-      name := "protobuf-cats",
+      name := "protobuf-fs2",
       commonSettings,
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-      buildInfoPackage := "co.topl.buildinfo.protobufcats",      
+      buildInfoPackage := "co.topl.buildinfo.protobuffs2",
       copyProtobufTask := {
         import java.nio.file._
         import scala.jdk.CollectionConverters._
-        val repoRoot = Paths.get("../..").toAbsolutePath
-        Files.walk(repoRoot).iterator()
-          .asScala.filter(_.endsWith(".proto"))
-          .map(_.toAbsolutePath)
-          .toList
-          .foreach(protoFile =>
-            Files.copy(protoFile, Paths.get("protobuf-cats", "src", "main", "protobuf", protoFile.toString.drop(repoRoot.toString.length + 1)))
-          )
+        val destinationBase = Paths.get((Compile / target).value.toString, "protobuf-tmp")
+        sLog.value.debug(s"Clearing protobuf-tmp directory=$destinationBase")
+        if (Files.exists(destinationBase)) {
+          Files.walk(destinationBase).sorted(java.util.Comparator.reverseOrder[Path]())
+            .iterator()
+            .asScala
+            .foreach(Files.delete)
+        }
+        val repoRoot = Paths.get("").toAbsolutePath.getParent.getParent
+        val allFiles =
+          Files.walk(repoRoot).iterator()
+            .asScala
+            .map(_.toAbsolutePath)
+            .toList
+        val protoFiles =
+          allFiles.filter(_.toString.endsWith(".proto"))
+        sLog.value.info(s"Copying ${protoFiles.length} protobuf files to target/protobuf-tmp directory")
+        protoFiles
+          .foreach { protoFile =>
+            val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(repoRoot.toString.length + 1))
+            sLog.value.debug(s"Copying from $protoFile to $destination")
+            Files.createDirectories(destination.getParent)
+            Files.copy(protoFile, destination)
+          }
       },
-      (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value
+      (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
+      Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp"))
     )
