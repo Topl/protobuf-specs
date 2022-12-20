@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package co.topl.node.models;
+
+import 'crypto/models/ed25519.proto';
+import 'node/models/kes.proto';
+import 'node/models/vrf.proto';
+
+// A certificate which commits an operator to a linear key, which is then used to sign the block
+message OperationalCertificate {
+  // The KES VK of the parent key (forward-secure) (hour+minute hands)
+  VerificationKeyKesProduct parentVK = 1;
+  // Signs the `childVK` using the `parentSK`
+  SignatureKesProduct parentSignature = 2;
+  // The linear VK
+  co.topl.crypto.models.VerificationKeyEd25519 childVK = 3;
+  // The signature of the block
+  co.topl.crypto.models.SignatureEd25519 childSignature = 4;
+}
+
+// A certificate proving the operator's election
+message EligibilityCertificate {
+  // Signs `eta ++ slot` using the `vrfSK`
+  SignatureVrfEd25519 vrfSig = 1;
+  // The VRF VK
+  VerificationKeyVrfEd25519 vrfVK = 2;
+  // A 32-byte blake2b256 hash of the operator's `threshold`
+  bytes thresholdEvidence = 3;
+  // The epoch's randomness, 32-bytes
+  bytes eta = 4;
+}
