@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.transaction;
+
+import 'brambl/models/datum.proto';
+import 'brambl/models/transaction/spent_transaction_output.proto';
+import 'brambl/models/transaction/unspent_transaction_output.proto';
+
+message IoTransaction {
+    repeated SpentTransactionOutput inputs = 1;
+    repeated UnspentTransactionOutput outputs = 2;
+    co.topl.brambl.models.Datum.IoTransaction datum = 3;
+}

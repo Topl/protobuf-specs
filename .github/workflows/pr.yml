@@ -1,0 +1,9 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  compile-protobufs:
+    uses: ./.github/workflows/_protoc_build.yml

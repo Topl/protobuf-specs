@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package co.topl.brambl.models;
+
+import 'quivr/models/shared.proto';
+
+ // Evidence should be a succinct, unique set of bytes used to distinguish between any two data objects.
+ // Evidence is also meant to have a minimal amount of structure such that other domains may provide
+ // their own similarly unique & succinct values. Quivr can cast such external domain "evidence" into Topl evidence
+ // through the use of ContainsSignable[Evidence[_]]
+message Evidence {
+    oneof value {
+        Sized32 sized32 = 1;
+        Sized64 sized64 = 2;
+    }
+
+    message Sized32 {
+        quivr.models.Digest.Digest32 digest = 1;
+    }
+    message Sized64 {
+        quivr.models.Digest.Digest64 digest = 1;
+    }
+}

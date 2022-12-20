@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package co.topl.brambl.models;
+
+import 'brambl/models/event.proto';
+
+// Datums represent a queryable product value of the arguments available from a certain Event. Datum may be
+// evaluated during the Quivr protocol execution by providing events as Datum in a Dynamic Context.
+message Datum {
+    oneof value {
+        Eon eon = 1;
+        Era era = 2;
+        Epoch epoch = 3;
+        Header header = 4;
+        Root root = 5;
+        IoTransaction ioTransaction = 6;
+        SpentOutput spentOutput = 7;
+        UnspentOutput unspentOutput = 8;
+    }
+
+    message Eon {
+        Event.Eon event = 1;
+    }
+    message Era {
+        Event.Era event = 1;
+    }
+    message Epoch {
+        Event.Epoch event = 1;
+    }
+    message Header {
+        Event.Header event = 1;
+    }
+    message Root {
+        Event.Root event = 1;
+    }
+    message IoTransaction {
+        Event.IoTransaction event = 1;
+    }
+    message SpentOutput {
+        Event.SpentTransactionOutput event = 1;
+    }
+    message UnspentOutput {
+        Event.UnspentTransactionOutput event = 1;
+    }
+}

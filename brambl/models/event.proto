@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package co.topl.brambl.models;
+
+import 'quivr/models/shared.proto';
+import 'brambl/models/known_identifier.proto';
+// import 'brambl/models/known_reference.proto'; // TODO: cyclical import
+import 'brambl/models/transaction/schedule.proto';
+
+// Events are uniquely identifiable occurrences of state mutations within the blockchain protocol.
+// Each event is associated with certain data that may be updated every tick.
+message Event {
+    oneof value {
+        Eon eon = 1;
+        Era era = 2;
+        Epoch epoch = 3;
+        Header header = 4;
+        IoTransaction ioTransaction = 5;
+        SpentTransactionOutput spentTransactionOutput = 6;
+        UnspentTransactionOutput unspentTransactionOutput = 7;
+        quivr.models.Root root = 8;
+    }
+
+    message Eon {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Era {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Epoch {
+        uint64 beginSlot = 1;
+        uint64 height = 2;
+    }
+
+    message Header {
+        uint64 height = 1;
+    }
+
+    message IoTransaction {
+        co.topl.brambl.models.transaction.Schedule schedule = 1;
+        repeated KnownIdentifier.TransactionOutput32 references32 = 2;
+        repeated KnownIdentifier.TransactionOutput64 references64 = 3;
+        quivr.models.SmallData metadata = 4;
+    }
+
+    message SpentTransactionOutput {
+        quivr.models.SmallData metadata = 1;
+    }
+
+    message UnspentTransactionOutput {
+        quivr.models.SmallData metadata = 1;
+    }
+
+    message Root {
+        quivr.models.Root value = 1;
+    }
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.transaction;
+
+import 'brambl/models/known_identifier.proto';
+import 'brambl/models/datum.proto';
+import 'brambl/models/box/value.proto';
+import 'brambl/models/box/lock.proto';
+import 'brambl/models/transaction/attestation.proto';
+
+message SpentTransactionOutput {
+    co.topl.brambl.models.KnownIdentifier KnownIdentifier = 1;
+    Attestation attestation = 2;
+    co.topl.brambl.models.box.Value value = 3;
+    co.topl.brambl.models.Datum.SpentOutput datum = 4;
+    // list of optional values
+    repeated co.topl.brambl.models.box.Lock opts = 5;
+}

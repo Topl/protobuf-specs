@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+import 'quivr/models/shared.proto';
+
+message Value {
+    oneof value {
+        Token token = 1;
+        Asset asset = 2;
+    }
+
+    message Token {
+        quivr.models.Int128 quantity = 1;
+    }
+    message Asset {
+        string label = 1;
+        quivr.models.Int128 quantity = 2;
+        quivr.models.SmallData metadata = 3;
+    }
+}

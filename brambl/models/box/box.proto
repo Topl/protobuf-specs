@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+import 'brambl/models/box/lock.proto';
+import 'brambl/models/box/value.proto';
+
+message Box {
+    Lock lock = 1;
+    Value value = 2;
+}

@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package quivr.models;
+
+import 'quivr/models/shared.proto';
+
+message Proposition {
+    oneof value {
+        Locked locked = 1;
+        Digest digest = 2;
+        DigitalSignature digitalSignature = 3;
+        HeightRange heightRange = 4;
+        TickRange tickRange = 5;
+        ExactMatch exactMatch = 6;
+        LessThan lessThan = 7;
+        GreaterThan greaterThan = 8;
+        EqualTo equalTo = 9;
+        Threshold threshold = 10;
+        Not not = 11;
+        And and = 12;
+        Or or = 13;
+    }
+
+    message Locked {
+        // Optional
+        Data data = 1;
+    }
+
+    message Digest {
+        string routine = 1;
+        Digest digest = 2;
+    }
+    
+    message DigitalSignature {
+        string routine = 1;
+        VerificationKey verificationKey = 2;
+    }
+
+    message HeightRange {
+        string chain = 1;
+        uint64 min = 2;
+        uint64 max = 3;
+    }
+
+    message TickRange {
+        uint64 min = 1;
+        uint64 max = 2;
+    }
+
+    message ExactMatch {
+        string location = 1;
+        bytes compareTo = 2;
+    }
+
+    message LessThan {
+        string location = 1;
+        Int128 compareTo = 2;
+    }
+
+    message GreaterThan {
+        string location = 1;
+        Int128 compareTo = 2;
+    }
+
+    message EqualTo {
+        string location = 1;
+        Int128 compareTo = 2;
+    }
+
+    message Threshold {
+        repeated Proposition challenges = 1;
+        uint32 threshold = 2;
+    }
+    message Not {
+        Proposition proposition = 1;
+    }
+    message And {
+        Proposition left = 1;
+        Proposition right = 2;
+    }
+    message Or {
+        Proposition left = 1;
+        Proposition right = 2;
+    }
+}

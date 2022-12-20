@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package quivr.models;
+
+import 'quivr/models/shared.proto';
+
+message Proof {
+    oneof value {
+        Locked locked = 1;
+        Digest digest = 2;
+        DigitalSignature digitalSignature = 3;
+        HeightRange heightRange = 4;
+        TickRange tickRange = 5;
+        ExactMatch exactMatch = 6;
+        LessThan lessThan = 7;
+        GreaterThan greaterThan = 8;
+        EqualTo equalTo = 9;
+        Threshold threshold = 10;
+        Not not = 11;
+        And and = 12;
+        Or or = 13;
+    }
+
+    // token = "locked"
+    message Locked {
+        // txBind = [0]
+    }
+
+    // token = "digest"
+    message Digest {
+        TxBind transactionBind = 1;
+        Preimage preimage = 2;
+    }
+    
+    // token = "digital_signature"
+    message DigitalSignature {
+        TxBind transactionBind = 1;
+        Witness witness = 2;
+    }
+
+    // token = "height_range"
+    message HeightRange {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "tick_range"
+    message TickRange {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "exact_match"
+    message ExactMatch {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "less_than"
+    message LessThan {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "greater_than"
+    message GreaterThan {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "equal_to"
+    message EqualTo {
+        TxBind transactionBind = 1;
+    }
+
+    // token = "threshold"
+    message Threshold {
+        TxBind transactionBind = 1;
+        // set of optional values
+        repeated Proof responses = 2;
+    }
+
+    // token = "not"
+    message Not {
+        TxBind transactionBind = 1;
+        Proof proof = 2;
+    }
+
+    // token = "and"
+    message And {
+        TxBind transactionBind = 1;
+        Proof left = 2;
+        Proof right = 3;
+    }
+
+    // token = "or"
+    message Or {
+        TxBind transactionBind = 1;
+        Proof left = 2;
+        Proof right = 3;
+    }
+}
