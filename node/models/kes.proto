@@ -53,15 +53,20 @@ message KesBinaryTree {
 }
 
 message KesBinaryTreeMerkleNode {
+    // length = 32
     bytes seed = 1;
+    // length = 32
     bytes witnessLeft = 2;
+    // length = 32
     bytes witnessRight = 3;
     KesBinaryTree left = 4;
     KesBinaryTree right = 5;
 }
 
 message KesBinaryTreeSigningLeaf {
+    // length = 32
     bytes sk = 1;
+    // length = 32
     bytes vk = 2;
 }
 

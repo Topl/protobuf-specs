@@ -24,8 +24,11 @@ message EligibilityCertificate {
   SignatureVrfEd25519 vrfSig = 1;
   // The VRF VK
   VerificationKeyVrfEd25519 vrfVK = 2;
-  // A 32-byte blake2b256 hash of the operator's `threshold`
+  // Hash of the operator's `threshold`
+  // routine = blake2b256
+  // length = 32
   bytes thresholdEvidence = 3;
-  // The epoch's randomness, 32-bytes
+  // The epoch's randomness
+  // length = 32
   bytes eta = 4;
 }
