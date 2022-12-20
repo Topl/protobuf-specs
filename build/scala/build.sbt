@@ -75,5 +75,5 @@ lazy val protobufCats =
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobufcats",
-      Compile / PB.protoSources := "../.."
+      Compile / PB.protoSources := Seq(new java.io.File("../.."))
     )
