@@ -39,3 +39,25 @@ jobs:
       - name: Compile and Test
         run: sbt publishLocal
         working-directory: build/scala
+  build-dart:
+    name: Dart Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1.3
+
+      - name: Setup Dart protoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y protobuf-compiler
+          dart pub global activate protoc_plugin
+
+      - name: Compile and Test
+        run: |
+          ./compile_protos.sh
+          dart pub get
+          dart test
+        working-directory: build/dart
