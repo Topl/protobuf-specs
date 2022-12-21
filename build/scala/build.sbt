@@ -77,10 +77,13 @@ lazy val protobufFs2 =
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobuffs2",
+      // This task copies all .proto files from the repository root into a directory that can be referenced by ScalaPB
       copyProtobufTask := {
         import java.nio.file._
         import scala.jdk.CollectionConverters._
+        // The files will be copied into protobuf-fs2/target/protobuf-tmp
         val destinationBase = Paths.get((Compile / target).value.toString, "protobuf-tmp")
+        // First, delete the existing tmp directory
         sLog.value.debug(s"Clearing protobuf-tmp directory=$destinationBase")
         if (Files.exists(destinationBase)) {
           Files.walk(destinationBase).sorted(java.util.Comparator.reverseOrder[Path]())
@@ -88,6 +91,7 @@ lazy val protobufFs2 =
             .asScala
             .foreach(Files.delete)
         }
+        // Now, assemble a list of all of the .proto files in the repository root
         val repoRoot = Paths.get("").toAbsolutePath.getParent.getParent
         val allFiles =
           Files.walk(repoRoot).iterator()
@@ -96,9 +100,11 @@ lazy val protobufFs2 =
             .toList
         val protoFiles =
           allFiles.filter(_.toString.endsWith(".proto"))
+        // Copy each of the .proto files into the tmp directory
         sLog.value.info(s"Copying ${protoFiles.length} protobuf files to target/protobuf-tmp directory")
         protoFiles
           .foreach { protoFile =>
+            // Preserve the directory structure when copying
             val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(repoRoot.toString.length + 1))
             sLog.value.debug(s"Copying from $protoFile to $destination")
             Files.createDirectories(destination.getParent)
@@ -106,5 +112,6 @@ lazy val protobufFs2 =
           }
       },
       (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
+      // Consume the copied files from the task above
       Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp"))
     )
