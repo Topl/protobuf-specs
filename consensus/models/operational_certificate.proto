@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+import 'crypto/models/ed25519.proto';
+
+// A certificate which commits an operator to a linear key, which is then used to sign the block
+message OperationalCertificate {
+  // The KES VK of the parent key (forward-secure) (hour+minute hands)
+  VerificationKeyKesProduct parentVK = 1;
+  // Signs the `childVK` using the `parentSK`
+  SignatureKesProduct parentSignature = 2;
+  // The linear VK
+  co.topl.crypto.models.VerificationKeyEd25519 childVK = 3;
+  // The signature of the block
+  co.topl.crypto.models.SignatureEd25519 childSignature = 4;
+}
+
+message VerificationKeyKesProduct {
+    // length = 32
+    bytes value = 1;
+    uint32 step = 2;
+}
+
+message SignatureKesSum {
+    co.topl.crypto.models.VerificationKeyEd25519 verificationKey = 1;
+    co.topl.crypto.models.SignatureEd25519 signature = 2;
+    // item length = 32
+    repeated bytes witness = 3;
+}
+
+message SignatureKesProduct {
+    SignatureKesSum superSignature = 1;
+    SignatureKesSum subSignature = 2;
+    // length = 32
+    bytes subRoot = 3;
+}
