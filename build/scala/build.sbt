@@ -66,6 +66,7 @@ lazy val protobufFs2 =
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobuffs2",
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
       // This task copies all .proto files from the repository root into a directory that can be referenced by ScalaPB
       copyProtobufTask := {
         import java.nio.file._
