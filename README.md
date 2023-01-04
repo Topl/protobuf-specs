@@ -12,3 +12,5 @@ Protobuf specifications and definitions representing blockchain data types and c
     > TODO
 - Linux: 
     > sh ./run_protocol_compilers.sh
+
+> testing dummy commit, remove line
