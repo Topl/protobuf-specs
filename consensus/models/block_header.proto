@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+import 'consensus/models/eligibility_certificate.proto';
+import 'consensus/models/operational_certificate.proto';
+
+// Captures a block producer's consensus-commitment to a new block
+message BlockHeader {
+  // The parent block's ID.  Each header builds from a single parent.
+  // length = 32
+  bytes parentHeaderId = 1;
+  // The slot of the parent block
+  uint64 parentSlot = 2;
+  // The commitment/accumulator of the block body
+  bytes txRoot = 3;
+  // A fuzzy search for addresses associated with this block
+  bytes bloomFilter = 4;
+  // The UTC UNIX timestamp (ms) when the block was created
+  uint64 timestamp = 5;
+  // The 1-based index of this block in the blockchain
+  uint64 height = 6;
+  // The time-slot in which the block producer created the block
+  uint64 slot = 7;
+  // A certificate indicating that the block producer was eligible to make this block
+  EligibilityCertificate eligibilityCertificate = 8;
+  // A certificate indicating the operator's commitment to this block
+  OperationalCertificate operationalCertificate = 9;
+  // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
+  // optional
+  bytes metadata = 10;
+  // The operator's staking address
+  // length = 32
+  bytes address = 11;
+}

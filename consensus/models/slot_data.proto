@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+// Represents a "mini" block header, containing just a subset of its data needed to quickly inspect consensus characteristics of a block
+message SlotData {
+    // The slot ID corresponding to "this" block
+    SlotId slotId = 1;
+    // The slot ID corresponding to "this" block's parent
+    SlotId parentSlotId = 2;
+    // The "rho" corresponding to "this" block
+    // length = 64
+    bytes rho = 3;
+    // The "eta" corresponding to "this" block
+    // length = 32
+    bytes eta = 4;
+    // The height of "this" block
+    uint64 height = 5;
+}
+
+// A glorified tuple
+message SlotId {
+    // The slot in which a block was created
+    uint64 slot = 1;
+    // The ID of the block
+    bytes blockId = 2;
+}
