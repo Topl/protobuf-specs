@@ -43,11 +43,11 @@ message Lock {
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions
     message Commitment32 {
-        repeated co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
+        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
         uint32 threshold = 2;
     }
     message Commitment64 {
-        repeated co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
+        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
         uint32 threshold = 2;
     }
 }
