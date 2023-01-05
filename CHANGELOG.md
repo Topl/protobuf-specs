@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Event Root ADT error
+
+### Fixed
 - quivr Digest proposition recursive self-reference
 
 ### Added 
