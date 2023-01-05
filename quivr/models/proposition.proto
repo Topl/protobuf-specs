@@ -28,7 +28,7 @@ message Proposition {
 
     message Digest {
         string routine = 1;
-        Digest digest = 2;
+        quivr.models.Digest digest = 2;
     }
     
     message DigitalSignature {
