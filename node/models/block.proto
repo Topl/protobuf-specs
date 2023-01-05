@@ -19,6 +19,14 @@ message FullBlockBody {
 }
 
 // Captures the header and all transactions in a block
+message Block {
+  // The block's header
+  co.topl.consensus.models.BlockHeader header = 1;
+  // The block's body
+  BlockBody body = 2;
+}
+
+// Captures the header and all transactions in a block
 message FullBlock {
   // The block's header
   co.topl.consensus.models.BlockHeader header = 1;
