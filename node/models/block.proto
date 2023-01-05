@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package co.topl.node.models;
+
+import 'consensus/models/block_header.proto';
+import 'brambl/models/transaction/io_transaction.proto';
+import 'brambl/models/identifier.proto';
+
+// Captures the ordering of transaction IDs within a block
+message BlockBody {
+  // A list of Transaction IDs included in this block
+  repeated co.topl.brambl.models.Identifier.IoTransaction32 transactionIds = 1;
+}
+
+// Captures the ordering of transactions (not just IDs) within a block
+message FullBlockBody {
+  // A list of Transactions included in this block
+  repeated co.topl.brambl.models.transaction.IoTransaction transaction = 1;
+}
+
+// Captures the header and all transactions in a block
+message Block {
+  // The block's header
+  co.topl.consensus.models.BlockHeader header = 1;
+  // The block's body
+  BlockBody body = 2;
+}
+
+// Captures the header and all transactions in a block
+message FullBlock {
+  // The block's header
+  co.topl.consensus.models.BlockHeader header = 1;
+  // The block's full body
+  FullBlockBody fullBody = 2;
+}
