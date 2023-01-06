@@ -3,6 +3,7 @@ syntax = "proto3";
 package co.topl.node.services;
 
 import 'models/transaction.proto';
+import 'consensus/models/block_id.proto';
 import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
 import 'brambl/models/identifier.proto';
@@ -55,8 +56,7 @@ message CurrentMempoolRes {
 // Request type for FetchBlockHeader
 message FetchBlockHeaderReq {
   // The ID of the block to retrieve
-  // length = 32
-  bytes blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1;
 }
 
 // Response type for FetchBlockHeader
@@ -69,8 +69,7 @@ message FetchBlockHeaderRes {
 // Request type for FetchBlockBody
 message FetchBlockBodyReq {
   // The ID of the block to retrieve
-  // length = 32
-  bytes blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1;
 }
 
 // Response type for FetchBlockBody
@@ -103,8 +102,7 @@ message FetchBlockIdAtHeightReq {
 message FetchBlockIdAtHeightRes {
   // The Block ID associated with the requested height.  None/null if not found.
   // optional
-  // length = 32
-  bytes blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1;
 }
 
 // Request type for FetchBlockIdAtDepth
@@ -117,8 +115,7 @@ message FetchBlockIdAtDepthReq {
 message FetchBlockIdAtDepthRes {
   // The Block ID associated with the requested depth.  None/null if not found.
   // optional
-  // length = 32
-  bytes blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1;
 }
 
 // Request type for SynchronizationTraversal
