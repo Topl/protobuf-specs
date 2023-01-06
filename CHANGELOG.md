@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- co.topl.consensus.models.BlockId message
+
 ### Fixed
 - Commitment32/Commitment64 root repeated
 

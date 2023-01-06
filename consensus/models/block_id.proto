@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+message BlockId {
+    // length = 32
+    bytes value = 1;
+}
