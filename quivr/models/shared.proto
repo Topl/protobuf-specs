@@ -49,6 +49,15 @@ message VerificationKey {
     bytes value = 1;
 }
 
+message SigningKey {
+    bytes value = 1;
+}
+
+message KeyPair{
+    VerificationKey vk = 1;
+    SigningKey sk = 2;
+}
+
 message Message {
     bytes value = 1;
 }

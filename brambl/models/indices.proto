@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package co.topl.brambl.models;
+
+message Indices {
+    uint32 x = 1;
+    uint32 y = 2;
+    uint32 z = 3;
+}
