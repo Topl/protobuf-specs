@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.builders;
+
+import 'quivr/models/shared.proto';
+import 'brambl/models/known_identifier.proto';
+import 'brambl/models/box/lock.proto';
+import 'brambl/models/box/value.proto';
+
+
+// Data required to build a transaction output (UnspentTransactionOutput)
+message OutputBuildRequest{
+  co.topl.brambl.models.box.Lock lock = 1;
+  co.topl.brambl.models.box.Value value = 2;
+  quivr.models.SmallData metadata = 3;
+}
+
+// Data required to build a transaction input (SpentTransactionOutput)
+message InputBuildRequest{
+  co.topl.brambl.models.KnownIdentifier id = 1;
+  quivr.models.SmallData metadata = 2;
+}
