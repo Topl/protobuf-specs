@@ -103,5 +103,12 @@ lazy val protobufFs2 =
       },
       (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
       // Consume the copied files from the task above
-      Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp"))
+      Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp")),
+      // By default, "managed sources" (the generated protobuf scala files) do not publish their source code,
+      // so this step includes generated sources in the published package
+      Compile / packageSrc / mappings ++= {
+        val base = (Compile / sourceManaged).value
+        val files = (Compile / managedSources).value
+        files.map { f => (f, f.relativeTo(base).get.getPath) }
+      }
     )
