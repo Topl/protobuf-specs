@@ -124,9 +124,9 @@ message SynchronizationTraversalReq {}
 // Response type for SynchronizationTraversal
 message SynchronizationTraversalRes {
   oneof status {
-    // length = 32
-    bytes applied = 1;
-    // length = 32
-    bytes unapplied = 2;
+    // Block ID applied
+    co.topl.consensus.models.BlockId applied = 1;
+    // Block ID unapplied
+    co.topl.consensus.models.BlockId unapplied = 2;
   }
 }
