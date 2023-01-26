@@ -87,8 +87,8 @@ lazy val protobufFs2 =
         // Now, assemble a list of all of the .proto files in the repository root
         val repoRoot = Paths.get("").toAbsolutePath.getParent.getParent
         val allFiles =
-          Files.walk(repoRoot).iterator()
-            .asScala
+          Files.list(repoRoot).iterator().asScala.filterNot(_.endsWith("external"))
+            .flatMap(Files.walk(_).iterator().asScala)
             .map(_.toAbsolutePath)
             .toList
         val protoFiles =
