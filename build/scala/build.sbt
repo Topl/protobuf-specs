@@ -66,6 +66,12 @@ lazy val protobufFs2 =
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobuffs2",
+      libraryDependencies ++= Seq(
+        "com.thesamet.scalapb" %% "compilerplugin"           % "0.11.11",
+        "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "0.3.1",
+        "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version % "protobuf"
+
+      ),
       scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
       // This task copies all .proto files from the repository root into a directory that can be referenced by ScalaPB
       copyProtobufTask := {
@@ -110,5 +116,9 @@ lazy val protobufFs2 =
         val base = (Compile / sourceManaged).value
         val files = (Compile / managedSources).value
         files.map { f => (f, f.relativeTo(base).get.getPath) }
-      }
+      },
+      Compile / PB.targets := Seq(
+        scalapb.gen() -> (Compile / sourceManaged).value / "scalapb",
+        scalapb.validate.gen() -> (Compile / sourceManaged).value / "scalapb"
+      )
     )
