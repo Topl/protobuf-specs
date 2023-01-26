@@ -98,7 +98,7 @@ lazy val protobufFs2 =
         protoFiles
           .foreach { protoFile =>
             // Preserve the directory structure when copying
-            val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(repoRoot.toString.length + 1))
+            val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(protosRoot.toString.length + 1))
             sLog.value.debug(s"Copying from $protoFile to $destination")
             Files.createDirectories(destination.getParent)
             Files.copy(protoFile, destination)
