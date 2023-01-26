@@ -3,6 +3,8 @@ syntax = "proto3";
 package co.topl.consensus.models;
 
 import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
 
 // A certificate proving the operator's election
 message EligibilityCertificate {
@@ -30,6 +32,9 @@ message SignatureVrfEd25519 {
 }
 
 option (scalapb.options) = {
+  [scalapb.validate.file] {
+      validate_at_construction: true
+  }
   field_transformations: [
       {
           when: {options: {[validate.rules] {message: {required: true}}}}

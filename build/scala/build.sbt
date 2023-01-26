@@ -67,12 +67,9 @@ lazy val protobufFs2 =
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobuffs2",
       libraryDependencies ++= Seq(
-        "com.thesamet.scalapb" %% "compilerplugin"           % "0.11.11",
-        "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "0.3.1",
+        "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
         "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version % "protobuf"
-
       ),
-      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
       // This task copies all .proto files from the repository root into a directory that can be referenced by ScalaPB
       copyProtobufTask := {
         import java.nio.file._
@@ -108,6 +105,7 @@ lazy val protobufFs2 =
           }
       },
       (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
+      (Compile / buildInfo) := (Compile / buildInfo).dependsOn(Compile / PB.generate).value,
       // Consume the copied files from the task above
       Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp")),
       // By default, "managed sources" (the generated protobuf scala files) do not publish their source code,
@@ -117,8 +115,8 @@ lazy val protobufFs2 =
         val files = (Compile / managedSources).value
         files.map { f => (f, f.relativeTo(base).get.getPath) }
       },
-      Compile / PB.targets := Seq(
-        scalapb.gen() -> (Compile / sourceManaged).value / "scalapb",
-        scalapb.validate.gen() -> (Compile / sourceManaged).value / "scalapb"
-      )
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      Compile / PB.targets := scalapbCodeGenerators.value
+        .map(_.copy(outputPath = (Compile / sourceManaged).value))
+        .:+(scalapb.validate.gen(scalapb.GeneratorOption.FlatPackage) -> (Compile / sourceManaged).value: protocbridge.Target)
     )

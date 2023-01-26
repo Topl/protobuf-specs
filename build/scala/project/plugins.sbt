@@ -6,3 +6,8 @@ Seq(
   "org.typelevel"           % "sbt-fs2-grpc"              % "2.4.12",
   "com.thesamet"            % "sbt-protoc"                % "1.0.3"
 ).map(addSbtPlugin)
+
+libraryDependencies ++= Seq(
+  "com.thesamet.scalapb" %% "compilerplugin"           % "0.11.11",
+  "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "0.3.1"
+)
