@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
+// A certificate proving the operator's election
+message EligibilityCertificate {
+  // Signs `eta ++ slot` using the `vrfSK`
+  SignatureVrfEd25519 vrfSig = 1 [(validate.rules).message.required = true];
+  // The VRF VK
+  VerificationKeyVrfEd25519 vrfVK = 2 [(validate.rules).message.required = true];
+  // Hash of the operator's `threshold`
+  // routine = blake2b256
+  // length = 32
+  bytes thresholdEvidence = 3 [(validate.rules).bytes.len = 32];
+  // The epoch's randomness
+  // length = 32
+  bytes eta = 4 [(validate.rules).bytes.len = 32];
+}
+
+message VerificationKeyVrfEd25519 {
+    // length = 32
+    bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+message SignatureVrfEd25519 {
+  // length = 80
+  bytes value = 1 [(validate.rules).bytes.len = 80];
+}
+
+option (scalapb.options) = {
+  [scalapb.validate.file] {
+      validate_at_construction: true
+  }
+  field_transformations: [
+      {
+          when: {options: {[validate.rules] {message: {required: true}}}}
+          set: {
+            [scalapb.field] {
+              required: true
+            }
+          }
+      }
+  ]
+};

@@ -66,7 +66,10 @@ lazy val protobufFs2 =
       publishSettings,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "co.topl.buildinfo.protobuffs2",
-      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      libraryDependencies ++= Seq(
+        "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
+        "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version % "protobuf"
+      ),
       // This task copies all .proto files from the repository root into a directory that can be referenced by ScalaPB
       copyProtobufTask := {
         import java.nio.file._
@@ -82,9 +85,9 @@ lazy val protobufFs2 =
             .foreach(Files.delete)
         }
         // Now, assemble a list of all of the .proto files in the repository root
-        val repoRoot = Paths.get("").toAbsolutePath.getParent.getParent
+        val protosRoot = Paths.get(Paths.get("").toAbsolutePath.getParent.getParent.toString, "proto")
         val allFiles =
-          Files.walk(repoRoot).iterator()
+          Files.walk(protosRoot).iterator()
             .asScala
             .map(_.toAbsolutePath)
             .toList
@@ -95,13 +98,14 @@ lazy val protobufFs2 =
         protoFiles
           .foreach { protoFile =>
             // Preserve the directory structure when copying
-            val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(repoRoot.toString.length + 1))
+            val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(protosRoot.toString.length + 1))
             sLog.value.debug(s"Copying from $protoFile to $destination")
             Files.createDirectories(destination.getParent)
             Files.copy(protoFile, destination)
           }
       },
       (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
+      (Compile / buildInfo) := (Compile / buildInfo).dependsOn(Compile / PB.generate).value,
       // Consume the copied files from the task above
       Compile / PB.protoSources := Seq(new java.io.File(s"${(Compile / target).value.toString}/protobuf-tmp")),
       // By default, "managed sources" (the generated protobuf scala files) do not publish their source code,
@@ -110,5 +114,9 @@ lazy val protobufFs2 =
         val base = (Compile / sourceManaged).value
         val files = (Compile / managedSources).value
         files.map { f => (f, f.relativeTo(base).get.getPath) }
-      }
+      },
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      Compile / PB.targets := scalapbCodeGenerators.value
+        .map(_.copy(outputPath = (Compile / sourceManaged).value))
+        .:+(scalapb.validate.gen(scalapb.GeneratorOption.FlatPackage) -> (Compile / sourceManaged).value: protocbridge.Target)
     )

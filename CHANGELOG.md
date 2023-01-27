@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Moved Topl domain protos to `proto` directory
+
+### Changed
+- Use protoc-gen-validate in EligibilityCertificate model
+
+### Changed
 - [BN-813](https://topl.atlassian.net/browse/BN-813) bifrost_rpc.proto Synchronization Traversal Response Status returns applied and unapplied Block Ids
 
 ### Added
