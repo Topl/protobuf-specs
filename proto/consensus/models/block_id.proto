@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package co.topl.consensus.models;
 
+import "validate/validate.proto";
+
 message BlockId {
     // length = 32
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
