@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.common;
+
+// Immutable byte representation of a value
+message ImmutableBytes {
+  bytes value = 1;
+}
