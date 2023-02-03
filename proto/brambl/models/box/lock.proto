@@ -6,6 +6,7 @@ package co.topl.brambl.models.box;
 import 'brambl/models/identifier.proto';
 import 'quivr/models/proposition.proto';
 
+// used to lock a box value and needs to be satisfied in order for the value of the box to be spent
 // should be able to calculate or retrieve the root of the Lock
 // - from Predicate -> Image -> Commitment
 // - from Image -> Commitment
@@ -22,6 +23,7 @@ message Lock {
     // Predicate -> Image -> Commitment -> Signable -> Evidence -> Identifier -> Address -> Reference
 
     // Private information
+    // a Predicate is a type of lock that will be satisfied if at least the threshold number of the contained proposition are satisfied
     message Predicate {
         // this should probably be a non-empty chain, but how to enforce across other languages?
         repeated quivr.models.Proposition challenges = 1;
