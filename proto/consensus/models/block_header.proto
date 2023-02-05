@@ -18,9 +18,11 @@ message BlockHeader {
   // The slot of the parent block
   uint64 parentSlot = 2;
   // The commitment/accumulator of the block body
-  bytes txRoot = 3;
+  // length = 32
+  bytes txRoot = 3 [(validate.rules).bytes.len = 32];
   // A fuzzy search for addresses associated with this block
-  bytes bloomFilter = 4;
+  // length = 256
+  bytes bloomFilter = 4[(validate.rules).bytes.len = 256];
   // The UTC UNIX timestamp (ms) when the block was created
   uint64 timestamp = 5;
   // The 1-based index of this block in the blockchain
@@ -33,7 +35,7 @@ message BlockHeader {
   OperationalCertificate operationalCertificate = 9 [(validate.rules).message.required = true];
   // Optional metadata stamped by the operator.  Must be latin-1 encoded, and must be at most 32 bytes in length.
   // optional
-  bytes metadata = 10;
+  bytes metadata = 10 [(validate.rules).bytes.max_len = 32];
   // The operator's staking address
   // length = 32
   bytes address = 11 [(validate.rules).bytes.len = 32];
