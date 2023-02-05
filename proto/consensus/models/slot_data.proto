@@ -4,18 +4,22 @@ package co.topl.consensus.models;
 
 import 'consensus/models/block_id.proto';
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
 // Represents a "mini" block header, containing just a subset of its data needed to quickly inspect consensus characteristics of a block
 message SlotData {
     // The slot ID corresponding to "this" block
-    SlotId slotId = 1;
+    SlotId slotId = 1 [(validate.rules).message.required = true];
     // The slot ID corresponding to "this" block's parent
-    SlotId parentSlotId = 2;
+    SlotId parentSlotId = 2 [(validate.rules).message.required = true];
     // The "rho" corresponding to "this" block
     // length = 64
-    bytes rho = 3;
+    bytes rho = 3 [(validate.rules).bytes.len = 64];
     // The "eta" corresponding to "this" block
     // length = 32
-    bytes eta = 4;
+    bytes eta = 4 [(validate.rules).bytes.len = 32];
     // The height of "this" block
     uint64 height = 5;
 }
@@ -25,5 +29,21 @@ message SlotId {
     // The slot in which a block was created
     uint64 slot = 1;
     // The ID of the block
-    BlockId blockId = 2;
+    BlockId blockId = 2 [(validate.rules).message.required = true];
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};
