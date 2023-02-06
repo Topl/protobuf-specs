@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package co.topl.brambl.models;
 
+import 'validate/validate.proto';
+import 'scalapb/scalapb.proto';
+import 'scalapb/validate.proto';
+
 import 'brambl/models/evidence.proto';
 
 // Identifiers are tagged evidence
@@ -20,34 +24,50 @@ message Identifier {
 
     // tag = box_lock_32
     message Lock32 {
-        Evidence.Sized32 evidence = 1;
+        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = box_lock_64
     message Lock64 {
-        Evidence.Sized64 evidence = 1;
+        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = box_value_32
     message BoxValue32 {
-        Evidence.Sized32 evidence = 1;
+        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = box_value_64
     message BoxValue64 {
-        Evidence.Sized64 evidence = 1;
+        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = iotx_32
     message IoTransaction32 {
-        Evidence.Sized32 evidence = 1;
+        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = iotx_64
     message IoTransaction64 {
-        Evidence.Sized64 evidence = 1;
+        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = acc_root_32
     message AccumulatorRoot32 {
-        Evidence.Sized32 evidence = 1;
+        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
     }
     // tag = acc_root_64
     message AccumulatorRoot64 {
-        Evidence.Sized64 evidence = 1;
+        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
     }
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};

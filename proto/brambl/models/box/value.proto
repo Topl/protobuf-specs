@@ -20,7 +20,7 @@ message Value {
     message Asset {
         string label = 1;
         quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
-        quivr.models.SmallData metadata = 3;
+        quivr.models.SmallData metadata = 3 [(validate.rules).message.required = true];
     }
 }
 

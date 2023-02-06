@@ -11,7 +11,9 @@ import 'brambl/models/transaction/spent_transaction_output.proto';
 import 'brambl/models/transaction/unspent_transaction_output.proto';
 
 message IoTransaction {
+    // 0-to-many list of inputs
     repeated SpentTransactionOutput inputs = 1;
+    // 0-to-many list of outputs
     repeated UnspentTransactionOutput outputs = 2;
     co.topl.brambl.models.Datum.IoTransaction datum = 3 [(validate.rules).message.required = true];
 }

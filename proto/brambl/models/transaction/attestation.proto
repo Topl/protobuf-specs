@@ -25,28 +25,28 @@ message Attestation {
         repeated quivr.models.Proof responses = 2;
     }
     message Image32 {
-        co.topl.brambl.models.box.Lock.Image32 lock = 1;
+        co.topl.brambl.models.box.Lock.Image32 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
         repeated quivr.models.Proposition known = 2;
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
     message Image64 {
-        co.topl.brambl.models.box.Lock.Image64 lock = 1;
+        co.topl.brambl.models.box.Lock.Image64 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
         repeated quivr.models.Proposition known = 2;
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
     message Commitment32 {
-        co.topl.brambl.models.box.Lock.Commitment32 lock = 1;
+        co.topl.brambl.models.box.Lock.Commitment32 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
         repeated quivr.models.Proposition known = 2;
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
     message Commitment64 {
-        co.topl.brambl.models.box.Lock.Commitment64 lock = 1;
+        co.topl.brambl.models.box.Lock.Commitment64 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
         repeated quivr.models.Proposition known = 2;
         // list of optional values

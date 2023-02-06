@@ -23,28 +23,28 @@ message Datum {
     }
 
     message Eon {
-        Event.Eon event = 1;
+        Event.Eon event = 1 [(validate.rules).message.required = true];
     }
     message Era {
-        Event.Era event = 1;
+        Event.Era event = 1 [(validate.rules).message.required = true];
     }
     message Epoch {
-        Event.Epoch event = 1;
+        Event.Epoch event = 1 [(validate.rules).message.required = true];
     }
     message Header {
-        Event.Header event = 1;
+        Event.Header event = 1 [(validate.rules).message.required = true];
     }
     message Root {
-        Event.Root event = 1;
+        Event.Root event = 1 [(validate.rules).message.required = true];
     }
     message IoTransaction {
         Event.IoTransaction event = 1 [(validate.rules).message.required = true];
     }
     message SpentOutput {
-        Event.SpentTransactionOutput event = 1;
+        Event.SpentTransactionOutput event = 1 [(validate.rules).message.required = true];
     }
     message UnspentOutput {
-        Event.UnspentTransactionOutput event = 1;
+        Event.UnspentTransactionOutput event = 1 [(validate.rules).message.required = true];
     }
 }
 

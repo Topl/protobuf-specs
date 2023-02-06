@@ -16,9 +16,8 @@ message SpentTransactionOutput {
     co.topl.brambl.models.KnownIdentifier KnownIdentifier = 1 [(validate.rules).message.required = true];
     Attestation attestation = 2 [(validate.rules).message.required = true];
     co.topl.brambl.models.box.Value value = 3 [(validate.rules).message.required = true];
-    co.topl.brambl.models.Datum.SpentOutput datum = 4;
-    // list of optional values
-    repeated co.topl.brambl.models.box.Lock opts = 5;
+    co.topl.brambl.models.Datum.SpentOutput datum = 4 [(validate.rules).message.required = true];
+    repeated co.topl.brambl.models.box.Lock opts = 5; // optional list of values
 }
 
 option (scalapb.options) = {

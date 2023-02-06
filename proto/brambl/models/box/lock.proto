@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package co.topl.brambl.models.box;
 
+import 'validate/validate.proto';
+import 'scalapb/scalapb.proto';
+import 'scalapb/validate.proto';
 
 import 'brambl/models/identifier.proto';
 import 'quivr/models/proposition.proto';
@@ -43,11 +46,27 @@ message Lock {
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions
     message Commitment32 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
+        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1 [(validate.rules).message.required = true];
         uint32 threshold = 2;
     }
     message Commitment64 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
+        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1 [(validate.rules).message.required = true];
         uint32 threshold = 2;
     }
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};
