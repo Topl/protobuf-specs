@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package co.topl.brambl.models.box;
 
+import 'validate/validate.proto';
+import 'scalapb/scalapb.proto';
+import 'scalapb/validate.proto';
+
 import 'quivr/models/shared.proto';
 
 message Value {
@@ -11,11 +15,27 @@ message Value {
     }
 
     message Token {
-        quivr.models.Int128 quantity = 1;
+        quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
     }
     message Asset {
         string label = 1;
-        quivr.models.Int128 quantity = 2;
+        quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 3;
     }
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};

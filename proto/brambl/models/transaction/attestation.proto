@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package co.topl.brambl.models.transaction;
 
+import 'validate/validate.proto';
+import 'scalapb/scalapb.proto';
+import 'scalapb/validate.proto';
 
 import 'brambl/models/box/lock.proto';
 import 'quivr/models/proposition.proto';
@@ -17,7 +20,7 @@ message Attestation {
     }
 
     message Predicate {
-        co.topl.brambl.models.box.Lock.Predicate lock = 1;
+        co.topl.brambl.models.box.Lock.Predicate lock = 1 [(validate.rules).message.required = true];
         // list of optional values
         repeated quivr.models.Proof responses = 2;
     }
@@ -51,3 +54,19 @@ message Attestation {
     }
     
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};

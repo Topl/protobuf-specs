@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package co.topl.brambl.models;
 
+import 'validate/validate.proto';
+import 'scalapb/scalapb.proto';
+import 'scalapb/validate.proto';
+
 import 'quivr/models/shared.proto';
 import 'brambl/models/known_identifier.proto';
 // import 'brambl/models/known_reference.proto'; // TODO: cyclical import
@@ -41,7 +45,7 @@ message Event {
     }
 
     message IoTransaction {
-        co.topl.brambl.models.transaction.Schedule schedule = 1;
+        co.topl.brambl.models.transaction.Schedule schedule = 1 [(validate.rules).message.required = true];
         repeated KnownIdentifier.TransactionOutput32 references32 = 2;
         repeated KnownIdentifier.TransactionOutput64 references64 = 3;
         quivr.models.SmallData metadata = 4;
@@ -59,3 +63,19 @@ message Event {
         quivr.models.Root value = 1;
     }
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};
