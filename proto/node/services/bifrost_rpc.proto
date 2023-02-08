@@ -8,6 +8,10 @@ import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
 import 'brambl/models/identifier.proto';
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
 service NodeRpc {
   // Submit a proven Transaction to the node
   rpc BroadcastTransaction (BroadcastTransactionReq) returns (BroadcastTransactionRes);
@@ -23,7 +27,6 @@ service NodeRpc {
   // retrieve a Transaction by its ID
   rpc FetchTransaction (FetchTransactionReq) returns (FetchTransactionRes);
 
-
   // retrieve the Block ID associated with a height, according to the node's canonical chain
   rpc FetchBlockIdAtHeight (FetchBlockIdAtHeightReq) returns (FetchBlockIdAtHeightRes);
 
@@ -38,7 +41,7 @@ service NodeRpc {
 message BroadcastTransactionReq {
   // TODO: Replace with Brambl's IoTransaction
   // A "proven" Transaction that is meant to be included in the blockchain
-  co.topl.proto.models.Transaction transaction = 1;
+  co.topl.proto.models.Transaction transaction = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for BroadcastTransaction
@@ -56,7 +59,7 @@ message CurrentMempoolRes {
 // Request type for FetchBlockHeader
 message FetchBlockHeaderReq {
   // The ID of the block to retrieve
-  co.topl.consensus.models.BlockId blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for FetchBlockHeader
@@ -69,7 +72,7 @@ message FetchBlockHeaderRes {
 // Request type for FetchBlockBody
 message FetchBlockBodyReq {
   // The ID of the block to retrieve
-  co.topl.consensus.models.BlockId blockId = 1;
+  co.topl.consensus.models.BlockId blockId = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for FetchBlockBody
@@ -81,7 +84,7 @@ message FetchBlockBodyRes {
 
 // Request type for FetchTransaction
 message FetchTransactionReq {
-  co.topl.brambl.models.Identifier.IoTransaction32 transactionId = 1;
+  co.topl.brambl.models.Identifier.IoTransaction32 transactionId = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for FetchTransaction
@@ -130,3 +133,19 @@ message SynchronizationTraversalRes {
     co.topl.consensus.models.BlockId unapplied = 2;
   }
 }
+
+option (scalapb.options) = {
+  [scalapb.validate.file] {
+    validate_at_construction: true
+  }
+  field_transformations: [
+    {
+      when: {options: {[validate.rules] {message: {required: true}}}}
+      set: {
+        [scalapb.field] {
+          required: true
+        }
+      }
+    }
+  ]
+};
