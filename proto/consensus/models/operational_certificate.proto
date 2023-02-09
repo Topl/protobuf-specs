@@ -6,8 +6,6 @@ import "validate/validate.proto";
 import "scalapb/scalapb.proto";
 import "scalapb/validate.proto";
 
-import 'crypto/models/ed25519.proto';
-
 // A certificate which commits an operator to a linear key, which is then used to sign the block
 message OperationalCertificate {
   // The KES VK of the parent key (forward-secure) (hour+minute hands)
@@ -15,9 +13,9 @@ message OperationalCertificate {
   // Signs the `childVK` using the `parentSK`
   SignatureKesProduct parentSignature = 2 [(validate.rules).message.required = true];
   // The linear VK
-  co.topl.crypto.models.VerificationKeyEd25519 childVK = 3 [(validate.rules).message.required = true];
+  VerificationKeyEd25519 childVK = 3 [(validate.rules).message.required = true];
   // The signature of the block
-  co.topl.crypto.models.SignatureEd25519 childSignature = 4 [(validate.rules).message.required = true];
+  SignatureEd25519 childSignature = 4 [(validate.rules).message.required = true];
 }
 
 message VerificationKeyKesProduct {
@@ -27,8 +25,8 @@ message VerificationKeyKesProduct {
 }
 
 message SignatureKesSum {
-    co.topl.crypto.models.VerificationKeyEd25519 verificationKey = 1 [(validate.rules).message.required = true];
-    co.topl.crypto.models.SignatureEd25519 signature = 2 [(validate.rules).message.required = true];
+    VerificationKeyEd25519 verificationKey = 1 [(validate.rules).message.required = true];
+    SignatureEd25519 signature = 2 [(validate.rules).message.required = true];
     // item length = 32
     repeated bytes witness = 3 [(validate.rules).repeated.items.bytes.len = 32];
 }
@@ -38,6 +36,27 @@ message SignatureKesProduct {
     SignatureKesSum subSignature = 2 [(validate.rules).message.required = true];
     // length = 32
     bytes subRoot = 3 [(validate.rules).bytes.len = 32];
+}
+
+// A semi-public verification key using Ed25519
+message VerificationKeyEd25519 {
+  // The bytes of the key
+  // length = 32
+  bytes value = 1[(validate.rules).bytes.len = 32];
+}
+
+// A privately-held secret key using Ed25519
+message SecretKeyEd25519 {
+  // The bytes of the key
+  // length = 32
+  bytes value = 1[(validate.rules).bytes.len = 32];
+}
+
+// A signature generated using Ed25519
+message SignatureEd25519 {
+  // The bytes of the signature
+  // length = 64
+  bytes value = 1[(validate.rules).bytes.len = 64];
 }
 
 option (scalapb.options) = {
