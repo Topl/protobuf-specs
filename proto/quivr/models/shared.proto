@@ -2,25 +2,29 @@ syntax = "proto3";
 
 package quivr.models;
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
 message Data {
-    bytes value = 1;
+    bytes value = 1;  // ask if we need len or max len rule
 }
 
 message SmallData {
     // Maximum length = 64
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.max_len = 64];
 }
 
 message Root {
     oneof value {
-        bytes root32 = 1;
-        bytes root64 = 2;
+        bytes root32 = 1 [(validate.rules).bytes.len = 32];
+        bytes root64 = 2 [(validate.rules).bytes.len = 64];
     }
 }
 
 message Preimage {
-    bytes input = 1;
-    bytes salt = 2;
+    bytes input = 1; // ask if we need len or max len rule
+    bytes salt = 2;  // ask if we need len or max len rule
 }
 
 message Digest {
@@ -31,57 +35,73 @@ message Digest {
 
     message Digest32 {
         // strict length = 32
-        bytes value = 1;
+        bytes value = 1 [(validate.rules).bytes.len = 32];
     }
 
     message Digest64 {
         // strict length = 64
-        bytes value = 1;
+        bytes value = 1 [(validate.rules).bytes.len = 64];
     }
 }
 
 message DigestVerification {
-    Digest digest = 1;
-    Preimage preimage = 2;
+    Digest digest = 1 [(validate.rules).message.required = true];
+    Preimage preimage = 2 [(validate.rules).message.required = true];
 }
 
 message VerificationKey {
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 message SigningKey {
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 message KeyPair{
-    VerificationKey vk = 1;
-    SigningKey sk = 2;
+    VerificationKey vk = 1 [(validate.rules).message.required = true];
+    SigningKey sk = 2 [(validate.rules).message.required = true];
 }
 
 message Message {
-    bytes value = 1;
+    bytes value = 1; // ask if we need len or max len rule
 }
 
 message Witness {
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 message SignatureVerification {
-    VerificationKey verificationKey = 1;
-    Witness signature = 2;
-    Message message = 3;
+    VerificationKey verificationKey = 1 [(validate.rules).message.required = true];
+    Witness signature = 2 [(validate.rules).message.required = true];
+    Message message = 3 [(validate.rules).message.required = true];
 }
 
 message SignableBytes {
-    bytes value = 1;
+    bytes value = 1;  // ask help for len, max len rule
 }
 
 message TxBind {
-    bytes value = 2;
+    bytes value = 2; //  ask help for len, max len rule, index should be 1?
 }
 
 // Represents a 128-bit integer
 message Int128 {
     // Java BigInt Representation: two's-complement, big-endian
-    bytes value = 1;
+    bytes value = 1 [(validate.rules).bytes.max_len = 16];
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};
