@@ -8,41 +8,33 @@ import 'scalapb/validate.proto';
 
 import 'brambl/models/identifier.proto';
 
-//  Reference combine an Identifier and an index. They are meant to refer to a specific element (or elements)
- // of a certain type (denoted by the Identifier) available at a specific location (network + ledger)
+//  Reference combine an Identifier and an index. They are meant to refer to a
+//  specific element (or elements)
+// of a certain type (denoted by the Identifier) available at a specific
+// location (network + ledger)
 message KnownIdentifier {
-    oneof value {
-        TransactionOutput32 transactionOutput32 = 1;
-        TransactionOutput64 transactionOutput64 = 2;
-    }
+  oneof value {
+    TransactionOutput32 transactionOutput32 = 1;
+    TransactionOutput64 transactionOutput64 = 2;
+  }
 
-    message TransactionOutput32 {
-        uint32 network = 1;
-        uint32 ledger = 2;
-        uint32 index = 3;
-        Identifier.IoTransaction32 id = 4 [(validate.rules).message.required = true];
-    }
+  message TransactionOutput32 {
+    Identifier.IoTransaction32 id = 1
+        [ (validate.rules).message.required = true ];
+    uint32 index = 2;
+  }
 
-    message TransactionOutput64 {
-        uint32 network = 1;
-        uint32 ledger = 2;
-        uint32 index = 3;
-        Identifier.IoTransaction64 id = 4 [(validate.rules).message.required = true];
-    }
+  message TransactionOutput64 {
+    Identifier.IoTransaction64 id = 1
+        [ (validate.rules).message.required = true ];
+    uint32 index = 2;
+  }
 }
 
 option (scalapb.options) = {
-    [scalapb.validate.file] {
-        validate_at_construction: true
-    }
-    field_transformations: [
-        {
-            when: {options: {[validate.rules] {message: {required: true}}}}
-            set: {
-                [scalapb.field] {
-                    required: true
-                }
-            }
-        }
-    ]
+  [ scalapb.validate.file ]{validate_at_construction : true}
+  field_transformations : [ {
+    when : {options : {[ validate.rules ]{message : {required : true}}}}
+    set : {[ scalapb.field ]{required : true}}
+  } ]
 };

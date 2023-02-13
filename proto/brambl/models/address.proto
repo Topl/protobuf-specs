@@ -7,15 +7,19 @@ import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'brambl/models/identifier.proto';
+import 'brambl/models/known_identifier.proto';
 
 // An address is a location specific (network + ledger) path to a certain Identitier
 message Address {
     // the chain an Address will settle to (targets the security behind an Addresses usage)
-    uint32 network = 1;
+    uint32 network = 1 [(validate.rules).message.required = true];
     // the application an Address interacts with directly
-    uint32 ledger = 2;
+    uint32 ledger = 2 [(validate.rules).message.required = true];
     // the tagged, unique value targeted by a given Address
-    Identifier identifier = 3 [(validate.rules).message.required = true];
+    oneof value {
+        Identifier identifier = 3;
+        KnownIdentifier knownIdentifier = 4;
+    }
 }
 
 option (scalapb.options) = {
