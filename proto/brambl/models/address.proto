@@ -12,11 +12,11 @@ import 'brambl/models/known_identifier.proto';
 // An address is a location specific (network + ledger) path to a certain Identitier
 message Address {
     // the chain an Address will settle to (targets the security behind an Addresses usage)
-    uint32 network = 1 [(validate.rules).message.required = true];
+    uint32 network = 1;
     // the application an Address interacts with directly
-    uint32 ledger = 2 [(validate.rules).message.required = true];
-    // the tagged, unique value targeted by a given Address
-    oneof value {
+    uint32 ledger = 2;
+    // determines whether this is a SpendableAddress -> (id => KnownIdentifier) or an IdentifiedAddress -> (id => Identifier)
+    oneof id {
         Identifier identifier = 3;
         KnownIdentifier knownIdentifier = 4;
     }

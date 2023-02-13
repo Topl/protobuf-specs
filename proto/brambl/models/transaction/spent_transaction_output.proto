@@ -13,10 +13,10 @@ import 'brambl/models/box/lock.proto';
 import 'brambl/models/transaction/attestation.proto';
 
 message SpentTransactionOutput {
-    KnownIdentifier knownIdentifier = 1 [(validate.rules).message.required = true];
+    co.topl.brambl.models.KnownIdentifier knownIdentifier = 1 [(validate.rules).message.required = true];
     Attestation attestation = 2 [(validate.rules).message.required = true];
-    Value value = 3 [(validate.rules).message.required = true];
-    Datum.SpentOutput datum = 4 [(validate.rules).message.required = true];
+    co.topl.brambl.models.box.Value value = 3 [(validate.rules).message.required = true];
+    co.topl.brambl.models.Datum.SpentOutput datum = 4 [(validate.rules).message.required = true];
 }
 
 option (scalapb.options) = {

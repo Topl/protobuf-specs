@@ -8,10 +8,8 @@ import 'scalapb/validate.proto';
 
 import 'brambl/models/identifier.proto';
 
-//  Reference combine an Identifier and an index. They are meant to refer to a
-//  specific element (or elements)
-// of a certain type (denoted by the Identifier) available at a specific
-// location (network + ledger)
+// KnownIdentifier combines an Identifier and an index. They are meant to refer to a
+// specific element (or elements) of a certain type (denoted by the Identifier) 
 message KnownIdentifier {
   oneof value {
     TransactionOutput32 transactionOutput32 = 1;
