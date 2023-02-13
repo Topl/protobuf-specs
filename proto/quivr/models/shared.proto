@@ -23,8 +23,8 @@ message Root {
 }
 
 message Preimage {
-    bytes input = 1; // ask if we need len or max len rule
-    bytes salt = 2;  // ask if we need len or max len rule
+    bytes input = 1 [(validate.rules).bytes.max_len = 16384];
+    bytes salt = 2 [(validate.rules).bytes.max_len = 16384];
 }
 
 message Digest {
@@ -77,7 +77,7 @@ message SignatureVerification {
 }
 
 message SignableBytes {
-    bytes value = 1;  // ask help for len, max len rule
+    bytes value = 1;
 }
 
 message TxBind {

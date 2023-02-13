@@ -54,7 +54,7 @@ message Proposition {
 
     message ExactMatch {
         string location = 1;
-        bytes compareTo = 2; // ask if we need len or max len rule
+        bytes compareTo = 2 [(validate.rules).bytes.max_len = 64];
     }
 
     message LessThan {
