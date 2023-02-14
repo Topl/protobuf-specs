@@ -4,12 +4,13 @@ syntax = "proto3";
 // Services provided by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
-package co.topl.proto.genus;
+package co.topl.genus.services;
 
-import 'models/address.proto';
-import 'models/block.proto';
-import 'models/common.proto';
+import 'brambl/models/address.proto';
+import 'brambl/models/identifier.proto';
+import 'consensus/models/block_id.proto';
 import 'genus/genus_models.proto';
+import 'node/models/block.proto';
 
 // Operations related to blocks
 service GenusFullBlockService {
@@ -97,7 +98,7 @@ message GetExistingTransactionIndexesResponse {
 }
 
 message BlockResponse {
-  models.FullBlock block = 1;
+  node.models.FullBlock block = 1;
 }
 
 message TransactionResponse {
@@ -109,7 +110,7 @@ message TxoResponse {
 }
 
 message GetBlockByIdRequest {
-  models.BlockId blockId = 1;
+  consensus.models.BlockId blockId = 1;
   // optional
   ConfidenceFactor confidenceFactor = 2;
 }
@@ -128,7 +129,7 @@ message GetBlockByDepthRequest {
 
 // Used to request a transaction by specifying its ID.
 message GetTransactionByIdRequest {
-  models.TransactionId transactionId = 1;
+  brambl.models.Identifier.IoTransaction32 transactionId = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   // optional
   ConfidenceFactor confidenceFactor = 2;
@@ -143,7 +144,7 @@ message CreateOnChainTransactionIndexResponse {
 // Used to request TxOs by their associated address
 message QueryByAddressRequest {
   // All the addresses of interest
-  repeated models.SpendingAddress addresses = 1;
+  repeated brambl.models.Address addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   // optional
   ConfidenceFactor confidenceFactor = 2;
@@ -162,7 +163,7 @@ message TxoAddressResponse {
   map<string, Txo> addressesToTxos = 1;
 
   message Txos {
-    repeated genus.Txo txo = 1;
+    repeated genus.services.Txo txo = 1;
   }
 }
 

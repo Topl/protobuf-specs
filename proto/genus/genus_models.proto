@@ -5,11 +5,15 @@ syntax = "proto3";
 ///////////////////////////////////////////////////////////////////////////////
 
 import 'models/address.proto';
-import 'models/box.proto';
+import 'brambl/models/address.proto';
+import 'brambl/models/box/box.proto';
+import 'brambl/models/known_identifier.proto';
+import 'brambl/models/transaction/io_transaction.proto';
+import 'consensus/models/block_id.proto';
 import 'models/common.proto';
 import 'models/transaction.proto';
 
-package co.topl.proto.genus;
+package co.topl.genus.services;
 
 // Used to identify the status of a box.
 enum TxoState {
@@ -20,10 +24,10 @@ enum TxoState {
 
 // A Box and its status
 message Txo {
-  models.Box box = 1;
+  brambl.models.box.Box box = 1;
   TxoState state = 2;
-  models.Box.Id id = 3;
-  models.SpendingAddress address = 4;
+  brambl.models.KnownIdentifier.TransactionOutput32 id = 3;
+  brambl.models.Address address = 4;
 }
 
 // Specify the order of data for indexes.
@@ -66,7 +70,7 @@ message AssetLabel {
 
   message V1Label {
     uint32 version = 1;
-    models.SpendingAddress mintingAddress = 2;
+    brambl.models.Address mintingAddress = 2;
   }
 
   message Tam2Label {
@@ -136,8 +140,8 @@ message IndexFilter {
 }
 
 message TransactionReceipt {
-  models.Transaction transaction = 1;
+  brambl.models.transaction.IoTransaction transaction = 1;
   ConfidenceFactor confidenceFactor = 2;
-  models.BlockId blockId = 3;
+  consensus.models.BlockId blockId = 3;
   ChainDistance depth = 4;
 }
