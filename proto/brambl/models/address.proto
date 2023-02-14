@@ -16,10 +16,10 @@ message Address {
     // the application an Address interacts with directly
     uint32 ledger = 2;
     // determines whether this is a SpendableAddress -> (id => KnownIdentifier) or an IdentifiedAddress -> (id => Identifier)
-    oneof id {
+    oneof value {
         Identifier identifier = 3;
         KnownIdentifier knownIdentifier = 4;
-    }
+    };
 }
 
 option (scalapb.options) = {

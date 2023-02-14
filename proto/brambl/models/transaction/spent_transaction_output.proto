@@ -9,7 +9,6 @@ import 'scalapb/validate.proto';
 import 'brambl/models/known_identifier.proto';
 import 'brambl/models/datum.proto';
 import 'brambl/models/box/value.proto';
-import 'brambl/models/box/lock.proto';
 import 'brambl/models/transaction/attestation.proto';
 
 message SpentTransactionOutput {
