@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Node models: Block, and FullBlockBody constraints validations. [TODO: commit]
+
+### Changed[c920f90]
+- Consensus OperationalCertificate includes VerificationKeyEd25519, SecretKeyEd25519, SignatureEd25519 with constraints validations.
+
+### Changed[53c5f3a]
+- Node services Rpc constraints validations.
+
+### Changed[f2b8a87]
+- Added the required PB scala validation rules to some IoTransaction models
+- Added scala PB validation rules to all brambl models
+
+### Changed[948dc20]
+- Consensus Block Header constraints validations
+
+### Changed[437d117]
+- Consensus SlotData constraints validations
+
 ### Changed
 - Moved Topl domain protos to `proto` directory
 
