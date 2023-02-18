@@ -20,9 +20,6 @@ message Event {
         Epoch epoch = 3;
         Header header = 4;
         IoTransaction ioTransaction = 5;
-        SpentTransactionOutput spentTransactionOutput = 6;
-        UnspentTransactionOutput unspentTransactionOutput = 7;
-        Root root = 8;
     }
 
     message Eon {
@@ -46,21 +43,7 @@ message Event {
 
     message IoTransaction {
         co.topl.brambl.models.transaction.Schedule schedule = 1 [(validate.rules).message.required = true];
-        repeated KnownIdentifier.TransactionOutput32 references32 = 2; // optional list of references
-        repeated KnownIdentifier.TransactionOutput64 references64 = 3; // optional list of references
-        quivr.models.SmallData metadata = 4 [(validate.rules).message.required = true];
-    }
-
-    message SpentTransactionOutput {
-        quivr.models.SmallData metadata = 1 [(validate.rules).message.required = true];
-    }
-
-    message UnspentTransactionOutput {
-        quivr.models.SmallData metadata = 1 [(validate.rules).message.required = true];
-    }
-
-    message Root {
-        quivr.models.Root value = 1 [(validate.rules).message.required = true];
+        quivr.models.SmallData metadata = 2 [(validate.rules).message.required = true];
     }
 }
 

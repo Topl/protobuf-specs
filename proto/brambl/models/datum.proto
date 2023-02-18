@@ -18,8 +18,6 @@ message Datum {
         Header header = 4;
         Root root = 5;
         IoTransaction ioTransaction = 6;
-        SpentOutput spentOutput = 7;
-        UnspentOutput unspentOutput = 8;
     }
 
     message Eon {
@@ -39,12 +37,6 @@ message Datum {
     }
     message IoTransaction {
         Event.IoTransaction event = 1 [(validate.rules).message.required = true];
-    }
-    message SpentOutput {
-        Event.SpentTransactionOutput event = 1 [(validate.rules).message.required = true];
-    }
-    message UnspentOutput {
-        Event.UnspentTransactionOutput event = 1 [(validate.rules).message.required = true];
     }
 }
 

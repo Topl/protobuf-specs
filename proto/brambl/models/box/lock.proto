@@ -15,11 +15,9 @@ message Lock {
         Predicate predicate = 1;
         Image32 image32 = 2;
         Image64 image64 = 3;
-        Commitment32 commitment32 = 4;
-        Commitment64 commitment64 = 5;
+        // Commitment32 commitment32 = 4;
+        // Commitment64 commitment64 = 5;
     }
-
-    // Predicate -> Image -> Commitment -> Signable -> Evidence -> Identifier -> Address -> Reference
 
     // Private information
     message Predicate {
@@ -39,15 +37,16 @@ message Lock {
         uint32 threshold = 2;
     }
 
-    // Public information
-    // Predicate Commitments are used to encumber boxes
-    // use a Root here so we can provide a membership proof of the conditions
-    message Commitment32 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
-        uint32 threshold = 2;
-    }
-    message Commitment64 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
-        uint32 threshold = 2;
-    }
+    // todo: jaa - Can add back in once we know how to provide the needed witness in the attestation
+    // // Public information
+    // // Predicate Commitments are used to encumber boxes
+    // // use a Root here so we can provide a membership proof of the conditions
+    // message Commitment32 {
+    //     co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
+    //     uint32 threshold = 2;
+    // }
+    // message Commitment64 {
+    //     co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
+    //     uint32 threshold = 2;
+    // }
 }
