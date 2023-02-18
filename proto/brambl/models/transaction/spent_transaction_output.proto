@@ -7,9 +7,8 @@ import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'brambl/models/address.proto';
-import 'brambl/models/datum.proto';
 import 'brambl/models/box/value.proto';
-import 'brambl/models/transaction/attestation.proto';
+import 'brambl/models/box/attestation.proto';
 
 message SpentTransactionOutput {
     co.topl.brambl.models.TransactionOutputAddress address = 1 [(validate.rules).message.required = true];

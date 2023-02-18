@@ -6,7 +6,6 @@ import 'validate/validate.proto';
 import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
-import 'brambl/models/datum.proto';
 import 'brambl/models/address.proto';
 import 'brambl/models/box/value.proto';
 
