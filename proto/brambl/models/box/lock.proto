@@ -4,25 +4,23 @@ package co.topl.brambl.models.box;
 
 
 import 'brambl/models/identifier.proto';
-import 'quivr/models/proposition.proto';
+import 'brambl/models/box/challenge.proto';
 
 // should be able to calculate or retrieve the root of the Lock
-// - from Predicate -> Image -> Commitment
-// - from Image -> Commitment
-// - from Commitment -> _.root
+// - from Predicate -> Image -> Commitment -> Signable -> Evidence
 message Lock {
     oneof value {
         Predicate predicate = 1;
         Image32 image32 = 2;
         Image64 image64 = 3;
-        // Commitment32 commitment32 = 4;
-        // Commitment64 commitment64 = 5;
+        Commitment32 commitment32 = 4;
+        Commitment64 commitment64 = 5;
     }
 
     // Private information
     message Predicate {
-        // this should probably be a non-empty chain, but how to enforce across other languages?
-        repeated quivr.models.Proposition challenges = 1;
+        // this should probably be a non-empty chain
+        repeated Challenge challenges = 1;
         uint32 threshold = 2;
     }
     
@@ -37,16 +35,15 @@ message Lock {
         uint32 threshold = 2;
     }
 
-    // todo: jaa - should disable ot figure out how to provide the needed witness in the attestation
     // Public information
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions
-    // message Commitment32 {
-    //     co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
-    //     uint32 threshold = 2;
-    // }
-    // message Commitment64 {
-    //     co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
-    //     uint32 threshold = 2;
-    // }
+    message Commitment32 {
+        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
+        uint32 threshold = 2;
+    }
+    message Commitment64 {
+        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
+        uint32 threshold = 2;
+    }
 }
