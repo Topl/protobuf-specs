@@ -7,7 +7,7 @@ import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'quivr/models/shared.proto';
-import 'brambl/models/known_identifier.proto';
+import 'brambl/models/address.proto';
 import 'brambl/models/box/lock.proto';
 import 'brambl/models/box/value.proto';
 
@@ -21,7 +21,7 @@ message OutputBuildRequest{
 
 // Data required to build a transaction input (SpentTransactionOutput)
 message InputBuildRequest{
-  co.topl.brambl.models.KnownIdentifier id = 1 [(validate.rules).message.required = true];
+  co.topl.brambl.models.TransactionOutputAddress address = 1 [(validate.rules).message.required = true];
   quivr.models.SmallData metadata = 2; // metadata can optionally be provided
 }
 
