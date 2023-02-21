@@ -11,11 +11,42 @@ import 'brambl/models/identifier.proto';
 // An address is a location specific (network + ledger) path to a certain Identitier
 message Address {
     // the chain an Address will settle to (targets the security behind an Addresses usage)
-    uint32 network = 1;
+    uint32 network = 1 [ (validate.rules).message.required = true ];
     // the application an Address interacts with directly
-    uint32 ledger = 2;
-    // the tagged, unique value targeted by a given Address
-    Identifier identifier = 3 [(validate.rules).message.required = true];
+    uint32 ledger = 2 [ (validate.rules).message.required = true ];
+    // optional index of another identifier possibly contained in an Event
+    uint32 index = 3;
+    // identifier of valid data with the context of (network, ledger)
+    Identifier id = 4 [(validate.rules).message.required = true ];
+}
+
+message LockAddress {
+    uint32 network = 1 [ (validate.rules).message.required = true ];
+    uint32 ledger = 2 [ (validate.rules).message.required = true ];
+    oneof id {
+        Identifier.Lock32 lock32 = 3;
+        Identifier.Lock64 lock64 = 4;
+    }
+}
+
+message TransactionOutputAddress {
+    uint32 network = 1 [ (validate.rules).message.required = true ];
+    uint32 ledger = 2 [ (validate.rules).message.required = true ];
+    uint32 index = 3 [(validate.rules).message.required = true ];
+    oneof id {
+        Identifier.IoTransaction32 ioTransaction32 = 4;
+        Identifier.IoTransaction64 ioTransaction64 = 5;
+    }
+}
+
+message TransactionInputAddress {
+    uint32 network = 1 [ (validate.rules).message.required = true ];
+    uint32 ledger = 2 [ (validate.rules).message.required = true ];
+    uint32 index = 3 [(validate.rules).message.required = true ];
+    oneof id {
+        Identifier.IoTransaction32 ioTransaction32 = 4;
+        Identifier.IoTransaction64 ioTransaction64 = 5;
+    }
 }
 
 option (scalapb.options) = {

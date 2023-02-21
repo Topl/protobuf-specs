@@ -7,8 +7,6 @@ import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'quivr/models/shared.proto';
-import 'brambl/models/known_identifier.proto';
-// import 'brambl/models/known_reference.proto'; // TODO: cyclical import
 import 'brambl/models/transaction/schedule.proto';
 
 // Events are uniquely identifiable occurrences of state mutations within the blockchain protocol.
@@ -30,6 +28,7 @@ message Event {
         // IO Transaction Output was created
         UnspentTransactionOutput unspentTransactionOutput = 7;
         Root root = 8;
+
     }
 
     message Eon {
@@ -54,8 +53,6 @@ message Event {
     message IoTransaction {
         //the range of acceptable slots the transaction can be accepted into
         co.topl.brambl.models.transaction.Schedule schedule = 1 [(validate.rules).message.required = true];
-        repeated KnownIdentifier.TransactionOutput32 references32 = 2; // optional list of references
-        repeated KnownIdentifier.TransactionOutput64 references64 = 3; // optional list of references
         quivr.models.SmallData metadata = 4 [(validate.rules).message.required = true];
     }
 

@@ -46,7 +46,7 @@ lazy val protobuf =
     .settings(
       moduleName := "protobuf",
       commonSettings,
-      publish / skip := true,
+      // publish / skip := true,
       crossScalaVersions := Nil
     )
     .aggregate(

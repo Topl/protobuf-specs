@@ -8,7 +8,7 @@ import 'scalapb/validate.proto';
 
 import 'brambl/models/evidence.proto';
 
-// Identifiers are tagged evidence
+// Identifiers are tagged evidence of valid data with the context of (network, ledger)
 message Identifier {
     oneof value {
         Lock32 lock32 = 1;
@@ -20,8 +20,6 @@ message Identifier {
         AccumulatorRoot32 accumulatorRoot32 = 7;
         AccumulatorRoot64 accumulatorRoot64 = 8;
     }
-
-
     // tag = box_lock_32
     message Lock32 {
         Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
