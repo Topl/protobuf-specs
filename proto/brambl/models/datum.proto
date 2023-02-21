@@ -12,10 +12,7 @@ message Datum {
         Era era = 2;
         Epoch epoch = 3;
         Header header = 4;
-        Root root = 5;
-        IoTransaction ioTransaction = 6;
-        SpentOutput spentOutput = 7;
-        UnspentOutput unspentOutput = 8;
+        IoTransaction ioTransaction = 5;
     }
 
     message Eon {
@@ -30,17 +27,8 @@ message Datum {
     message Header {
         Event.Header event = 1 [(validate.rules).message.required = true];
     }
-    message Root {
-        Event.Root event = 1 [(validate.rules).message.required = true];
-    }
     message IoTransaction {
         Event.IoTransaction event = 1 [(validate.rules).message.required = true];
-    }
-    message SpentOutput {
-        Event.SpentTransactionOutput event = 1 [(validate.rules).message.required = true];
-    }
-    message UnspentOutput {
-        Event.UnspentTransactionOutput event = 1 [(validate.rules).message.required = true];
     }
 }
 

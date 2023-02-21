@@ -15,8 +15,8 @@ message Attestation {
         Predicate predicate = 1;
         Image32 image32 = 2;
         Image64 image64 = 3;
-        Commitment32 commitment32 = 4;
-        Commitment64 commitment64 = 5;
+        // Commitment32 commitment32 = 4;
+        // Commitment64 commitment64 = 5;
     }
 
     message Predicate {
@@ -38,20 +38,20 @@ message Attestation {
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
-    message Commitment32 {
-        co.topl.brambl.models.box.Lock.Commitment32 lock = 1 [(validate.rules).message.required = true];
-        // list of optional values
-        repeated quivr.models.Proposition known = 2;
-        // list of optional values
-        repeated quivr.models.Proof responses = 3;
-    }
-    message Commitment64 {
-        co.topl.brambl.models.box.Lock.Commitment64 lock = 1 [(validate.rules).message.required = true];
-        // list of optional values
-        repeated quivr.models.Proposition known = 2;
-        // list of optional values
-        repeated quivr.models.Proof responses = 3;
-    }
+    // message Commitment32 {
+    //     co.topl.brambl.models.box.Lock.Commitment32 lock = 1 [(validate.rules).message.required = true];
+    //     // list of optional values
+    //     repeated quivr.models.Proposition known = 2;
+    //     // list of optional values
+    //     repeated quivr.models.Proof responses = 3;
+    // }
+    // message Commitment64 {
+    //     co.topl.brambl.models.box.Lock.Commitment64 lock = 1 [(validate.rules).message.required = true];
+    //     // list of optional values
+    //     repeated quivr.models.Proposition known = 2;
+    //     // list of optional values
+    //     repeated quivr.models.Proof responses = 3;
+    // }
     
 }
 
