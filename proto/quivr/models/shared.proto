@@ -7,7 +7,7 @@ import "scalapb/scalapb.proto";
 import "scalapb/validate.proto";
 
 message Data {
-    bytes value = 1;  // ask if we need len or max len rule
+    bytes value = 1;
 }
 
 message SmallData {
@@ -81,7 +81,7 @@ message SignableBytes {
 }
 
 message TxBind {
-    bytes value = 2; //  ask help for len, max len rule, index should be 1?
+    bytes value = 2 [(validate.rules).bytes.len = 32];
 }
 
 // Represents a 128-bit integer
