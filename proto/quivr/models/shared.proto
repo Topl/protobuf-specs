@@ -63,11 +63,11 @@ message KeyPair{
 }
 
 message Message {
-    bytes value = 1; // ask if we need len or max len rule
+    bytes value = 1;
 }
 
 message Witness {
-    bytes value = 1 [(validate.rules).bytes.len = 32];
+    bytes value = 1 [(validate.rules).bytes.len = 64];
 }
 
 message SignatureVerification {
