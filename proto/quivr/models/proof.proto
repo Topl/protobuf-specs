@@ -6,7 +6,7 @@ import 'quivr/models/shared.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // Proofs that are used to satisfy propositions
 message Proof {

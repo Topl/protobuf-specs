@@ -4,7 +4,7 @@ package quivr.models;
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // General purpose data
 message Data {

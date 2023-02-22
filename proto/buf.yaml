@@ -1,0 +1,19 @@
+version: v1
+name: "buf.build/seancheatham/topl-protobuf-specs"
+deps: 
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/scalapb/scalapb
+  - buf.build/scalapb/scalapb-validate
+build:
+  excludes: []
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
+  enum_zero_value_suffix: _UNSPECIFIED
+  rpc_allow_same_request_response: false
+  rpc_allow_google_protobuf_empty_requests: false
+  rpc_allow_google_protobuf_empty_responses: false
+  service_suffix: Service

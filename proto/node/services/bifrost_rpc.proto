@@ -10,7 +10,7 @@ import 'brambl/models/transaction/io_transaction.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 service NodeRpc {
   // Submit a proven Transaction to the node

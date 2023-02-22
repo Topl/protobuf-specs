@@ -9,7 +9,7 @@ import 'consensus/models/staking_address.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // Captures a block producer's consensus-commitment to a new block
 message BlockHeader {

@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "scalapb/scalapb.proto";
 
 package co.topl.node.models;
 
@@ -7,8 +8,7 @@ import 'brambl/models/transaction/io_transaction.proto';
 import 'brambl/models/identifier.proto';
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // Captures the ordering of transaction IDs within a block
 message BlockBody {

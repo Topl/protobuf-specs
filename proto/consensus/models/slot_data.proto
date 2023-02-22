@@ -6,7 +6,7 @@ import 'consensus/models/block_id.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // Represents a "mini" block header, containing just a subset of its data needed to quickly inspect consensus characteristics of a block
 message SlotData {

@@ -4,7 +4,7 @@ package co.topl.consensus.models;
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
+import "scalapb/validate/validate.proto";
 
 // A certificate which commits an operator to a linear key, which is then used to sign the block
 message OperationalCertificate {

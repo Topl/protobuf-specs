@@ -4,7 +4,7 @@ package co.topl.brambl.models.box;
 
 import 'validate/validate.proto';
 import 'scalapb/scalapb.proto';
-import 'scalapb/validate.proto';
+import 'scalapb/validate/validate.proto';
 
 import 'quivr/models/shared.proto';
 import 'consensus/models/operational_certificate.proto';
