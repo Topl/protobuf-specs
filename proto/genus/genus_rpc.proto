@@ -10,6 +10,7 @@ import 'brambl/models/address.proto';
 import 'brambl/models/identifier.proto';
 import 'consensus/models/block_id.proto';
 import 'genus/genus_models.proto';
+import 'google/protobuf/wrappers.proto';
 import 'node/models/block.proto';
 
 import "validate/validate.proto";
@@ -220,8 +221,7 @@ message IndexMatchValue {
     int64 intValue = 2;
     uint64 uintValue = 3;
   }
-  // optional
-  string fieldName = 4;
+  google.protobuf.StringValue fieldName = 4;
 }
 
 //service SubscriptionService {
