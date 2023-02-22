@@ -4,14 +4,15 @@ syntax = "proto3";
 // Message definitions for data created by Genus
 ///////////////////////////////////////////////////////////////////////////////
 
-import 'models/address.proto';
 import 'brambl/models/address.proto';
 import 'brambl/models/box/box.proto';
 import 'brambl/models/known_identifier.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 import 'consensus/models/block_id.proto';
-import 'models/common.proto';
-import 'models/transaction.proto';
+
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
 
 package co.topl.genus.services;
 
@@ -24,10 +25,10 @@ enum TxoState {
 
 // A Box and its status
 message Txo {
-  brambl.models.box.Box box = 1;
+  brambl.models.box.Box box = 1 [(validate.rules).message.required = true];
   TxoState state = 2;
-  brambl.models.KnownIdentifier.TransactionOutput32 id = 3;
-  brambl.models.Address address = 4;
+  brambl.models.KnownIdentifier.TransactionOutput32 id = 3 [(validate.rules).message.required = true];
+  brambl.models.Address address = 4 [(validate.rules).message.required = true];
 }
 
 // Specify the order of data for indexes.
@@ -70,7 +71,7 @@ message AssetLabel {
 
   message V1Label {
     uint32 version = 1;
-    brambl.models.Address mintingAddress = 2;
+    brambl.models.Address mintingAddress = 2 [(validate.rules).message.required = true];
   }
 
   message Tam2Label {
@@ -90,10 +91,10 @@ message IndexSpec {
   // The name of the index
   string indexName = 1;
   // A description of the fields to be indexed
-  IndexFieldSpec indexFieldSpec = 3;
+  IndexFieldSpec indexFieldSpec = 3 [(validate.rules).message.required = true];
   // Filter to determine which transactions are included in the index. Only records that match the filter will be included in the index.
   // optional
-  IndexFilter indexFilter = 4;
+  IndexFilter indexFilter = 4 [(validate.rules).message.required = true];
 }
 
 // A specification to identify the field(s) in data to be indexed
@@ -140,8 +141,24 @@ message IndexFilter {
 }
 
 message TransactionReceipt {
-  brambl.models.transaction.IoTransaction transaction = 1;
-  ConfidenceFactor confidenceFactor = 2;
-  consensus.models.BlockId blockId = 3;
-  ChainDistance depth = 4;
+  brambl.models.transaction.IoTransaction transaction = 1 [(validate.rules).message.required = true];
+  ConfidenceFactor confidenceFactor = 2 [(validate.rules).message.required = true];
+  consensus.models.BlockId blockId = 3 [(validate.rules).message.required = true];
+  ChainDistance depth = 4 [(validate.rules).message.required = true];
 }
+
+option (scalapb.options) = {
+  [scalapb.validate.file] {
+    validate_at_construction: true
+  }
+  field_transformations: [
+    {
+      when: {options: {[validate.rules] {message: {required: true}}}}
+      set: {
+        [scalapb.field] {
+          required: true
+        }
+      }
+    }
+  ]
+};

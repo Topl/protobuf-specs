@@ -12,6 +12,10 @@ import 'consensus/models/block_id.proto';
 import 'genus/genus_models.proto';
 import 'node/models/block.proto';
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
 // Operations related to blocks
 service GenusFullBlockService {
   // Retrieve a block with the specified `id` from the configured Genus service. This returns its result when there is a
@@ -94,44 +98,40 @@ service TransactionService {
 }
 
 message GetExistingTransactionIndexesResponse {
-  IndexSpecs indexSpecs = 1;
+  IndexSpecs indexSpecs = 1 [(validate.rules).message.required = true];
 }
 
 message BlockResponse {
-  node.models.FullBlock block = 1;
+  node.models.FullBlock block = 1 [(validate.rules).message.required = true];
 }
 
 message TransactionResponse {
-  TransactionReceipt transactionReceipt = 1;
+  TransactionReceipt transactionReceipt = 1 [(validate.rules).message.required = true];
 }
 
 message TxoResponse {
-  Txo txo = 1;
+  Txo txo = 1 [(validate.rules).message.required = true];
 }
 
 message GetBlockByIdRequest {
-  consensus.models.BlockId blockId = 1;
-  // optional
+  consensus.models.BlockId blockId = 1 [(validate.rules).message.required = true];
   ConfidenceFactor confidenceFactor = 2;
 }
 
 message GetBlockByHeightRequest {
-  ChainDistance height = 1;
-  // optional
+  ChainDistance height = 1 [(validate.rules).message.required = true];
   ConfidenceFactor confidenceFactor = 2;
 }
 
 message GetBlockByDepthRequest {
-  ChainDistance depth = 1;
-  // optional
+  ChainDistance depth = 1 [(validate.rules).message.required = true];
   ConfidenceFactor confidenceFactor = 2;
 }
 
 // Used to request a transaction by specifying its ID.
 message GetTransactionByIdRequest {
-  brambl.models.Identifier.IoTransaction32 transactionId = 1;
+  brambl.models.Identifier.IoTransaction32 transactionId = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  // optional
   ConfidenceFactor confidenceFactor = 2;
 }
 
@@ -146,15 +146,13 @@ message QueryByAddressRequest {
   // All the addresses of interest
   repeated brambl.models.Address addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  // optional
   ConfidenceFactor confidenceFactor = 2;
 }
 
 // User to request TxOs by their asset type
 message QueryByAssetLabelRequest {
-  AssetLabel assetLabel = 1;
+  AssetLabel assetLabel = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
-  // optional
   ConfidenceFactor confidenceFactor = 2;
 }
 
@@ -169,7 +167,7 @@ message TxoAddressResponse {
 
 // A request to create an index of transactions based on their on-chain data
 message CreateOnChainTransactionIndexRequest {
-  IndexSpec indexSpec = 1;
+  IndexSpec indexSpec = 1 [(validate.rules).message.required = true];
   // If populate is true, then scan the existing transaction in the database to populate the index.
   bool populate = 2;
 }
@@ -209,11 +207,9 @@ message GetIndexedTransactionsRequest {
   repeated IndexMatchValue value = 2;
 
   // The maximum number of transactions to be returned
-  // optional
   uint32 maxResults = 3;
 
   // A number of transactions to be skipped. This is useful for paging results.
-  // optional
   uint64 skipResults = 4;
 }
 
@@ -231,3 +227,19 @@ message IndexMatchValue {
 //service SubscriptionService {
 //  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvailableMessageQueueResponse);
 //}
+
+option (scalapb.options) = {
+  [scalapb.validate.file] {
+    validate_at_construction: true
+  }
+  field_transformations: [
+    {
+      when: {options: {[validate.rules] {message: {required: true}}}}
+      set: {
+        [scalapb.field] {
+          required: true
+        }
+      }
+    }
+  ]
+};
