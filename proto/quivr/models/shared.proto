@@ -3,8 +3,6 @@ syntax = "proto3";
 package quivr.models;
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate/validate.proto";
 
 // General purpose data
 message Data {
@@ -129,19 +127,3 @@ message Int128 {
     // Java BigInt Representation: two's-complement, big-endian
     bytes value = 1 [(validate.rules).bytes.max_len = 16];
 }
-
-option (scalapb.options) = {
-    [scalapb.validate.file] {
-        validate_at_construction: true
-    }
-    field_transformations: [
-        {
-            when: {options: {[validate.rules] {message: {required: true}}}}
-            set: {
-                [scalapb.field] {
-                    required: true
-                }
-            }
-        }
-    ]
-};

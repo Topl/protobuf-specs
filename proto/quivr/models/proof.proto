@@ -5,8 +5,6 @@ package quivr.models;
 import 'quivr/models/shared.proto';
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate/validate.proto";
 
 // Proofs that are used to satisfy propositions
 message Proof {
@@ -100,19 +98,3 @@ message Proof {
         Proof right = 3 [(validate.rules).message.required = true];
     }
 }
-
-option (scalapb.options) = {
-    [scalapb.validate.file] {
-        validate_at_construction: true
-    }
-    field_transformations: [
-        {
-            when: {options: {[validate.rules] {message: {required: true}}}}
-            set: {
-                [scalapb.field] {
-                    required: true
-                }
-            }
-        }
-    ]
-};

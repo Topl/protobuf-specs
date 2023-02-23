@@ -5,8 +5,6 @@ package co.topl.consensus.models;
 import 'consensus/models/block_id.proto';
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate/validate.proto";
 
 // Represents a "mini" block header, containing just a subset of its data needed to quickly inspect consensus characteristics of a block
 message SlotData {
@@ -31,19 +29,3 @@ message SlotId {
     // The ID of the block
     BlockId blockId = 2 [(validate.rules).message.required = true];
 }
-
-option (scalapb.options) = {
-    [scalapb.validate.file] {
-        validate_at_construction: true
-    }
-    field_transformations: [
-        {
-            when: {options: {[validate.rules] {message: {required: true}}}}
-            set: {
-                [scalapb.field] {
-                    required: true
-                }
-            }
-        }
-    ]
-};

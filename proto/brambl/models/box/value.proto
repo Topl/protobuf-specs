@@ -3,8 +3,6 @@ syntax = "proto3";
 package co.topl.brambl.models.box;
 
 import 'validate/validate.proto';
-import 'scalapb/scalapb.proto';
-import 'scalapb/validate/validate.proto';
 
 import 'quivr/models/shared.proto';
 import 'consensus/models/operational_certificate.proto';
@@ -40,21 +38,3 @@ message Value {
         co.topl.consensus.models.StakingAddress stakingAddress = 2 [(validate.rules).message.required = true];
     }
 }
-
-// add in root and tam2?
-
-option (scalapb.options) = {
-    [scalapb.validate.file] {
-        validate_at_construction: true
-    }
-    field_transformations: [
-        {
-            when: {options: {[validate.rules] {message: {required: true}}}}
-            set: {
-                [scalapb.field] {
-                    required: true
-                }
-            }
-        }
-    ]
-};

@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "scalapb/scalapb.proto";
 
 package co.topl.node.models;
 
@@ -8,7 +7,6 @@ import 'brambl/models/transaction/io_transaction.proto';
 import 'brambl/models/identifier.proto';
 
 import "validate/validate.proto";
-import "scalapb/validate/validate.proto";
 
 // Captures the ordering of transaction IDs within a block
 message BlockBody {
@@ -37,19 +35,3 @@ message FullBlock {
   // The block's full body
   FullBlockBody fullBody = 2 [(validate.rules).message.required = true];
 }
-
-option (scalapb.options) = {
-  [scalapb.validate.file] {
-    validate_at_construction: true
-  }
-  field_transformations: [
-    {
-      when: {options: {[validate.rules] {message: {required: true}}}}
-      set: {
-        [scalapb.field] {
-          required: true
-        }
-      }
-    }
-  ]
-};

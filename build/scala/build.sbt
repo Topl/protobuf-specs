@@ -135,7 +135,8 @@ def modifyProtoContents(contents: String): String = {
     require(index >= 0, s"Could not find $syntaxStr in protobuf file")
       s"""${contents.substring(0, index)}$syntaxStr
          |import "scalapb/scalapb.proto";
-         |import "scalapb/validate/validate.proto";
+         |import "scalapb/validate.proto";
+         |${if(!contents.contains("validate/validate.proto")) "import \"validate/validate.proto\";" else ""}
          |${contents.substring(index + syntaxStr.length)}
          |option (scalapb.options) = {
          |  [scalapb.validate.file] {
