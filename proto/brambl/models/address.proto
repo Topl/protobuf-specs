@@ -20,6 +20,7 @@ message Address {
     Identifier id = 4 [(validate.rules).message.required = true ];
 }
 
+// Used in UTXOs
 message LockAddress {
     uint32 network = 1;
     uint32 ledger = 2;
