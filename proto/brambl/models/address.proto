@@ -30,6 +30,7 @@ message LockAddress {
     }
 }
 
+// Used in STXOs
 message TransactionOutputAddress {
     uint32 network = 1;
     uint32 ledger = 2;
