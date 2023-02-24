@@ -41,6 +41,7 @@ message TransactionOutputAddress {
     }
 }
 
+// Used in Challenge.PreviousProposition
 message TransactionInputAddress {
     uint32 network = 1;
     uint32 ledger = 2;
