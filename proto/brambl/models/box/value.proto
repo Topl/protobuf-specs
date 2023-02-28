@@ -8,6 +8,7 @@ import 'scalapb/validate.proto';
 
 import 'quivr/models/shared.proto';
 
+// The value contained in a box
 message Value {
     oneof value {
         Token token = 1;

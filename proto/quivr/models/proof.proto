@@ -8,6 +8,7 @@ import "validate/validate.proto";
 import "scalapb/scalapb.proto";
 import "scalapb/validate.proto";
 
+// Proofs that are used to satisfy propositions
 message Proof {
     oneof value {
         Locked locked = 1;
