@@ -13,9 +13,9 @@ message OperationalCertificate {
   // Signs the `childVK` using the `parentSK`
   SignatureKesProduct parentSignature = 2 [(validate.rules).message.required = true];
   // The linear VK
-  VerificationKeyEd25519 childVK = 3 [(validate.rules).message.required = true];
+  bytes childVK = 3 [(validate.rules).bytes.len = 32];
   // The signature of the block
-  SignatureEd25519 childSignature = 4 [(validate.rules).message.required = true];
+  bytes childSignature = 4 [(validate.rules).bytes.len = 64];
 }
 
 message VerificationKeyKesProduct {
@@ -25,8 +25,8 @@ message VerificationKeyKesProduct {
 }
 
 message SignatureKesSum {
-    VerificationKeyEd25519 verificationKey = 1 [(validate.rules).message.required = true];
-    SignatureEd25519 signature = 2 [(validate.rules).message.required = true];
+    bytes verificationKey = 1 [(validate.rules).bytes.len = 32];
+    bytes signature = 2 [(validate.rules).bytes.len = 64];
     // item length = 32
     repeated bytes witness = 3 [(validate.rules).repeated.items.bytes.len = 32];
 }
@@ -36,27 +36,6 @@ message SignatureKesProduct {
     SignatureKesSum subSignature = 2 [(validate.rules).message.required = true];
     // length = 32
     bytes subRoot = 3 [(validate.rules).bytes.len = 32];
-}
-
-// A semi-public verification key using Ed25519
-message VerificationKeyEd25519 {
-  // The bytes of the key
-  // length = 32
-  bytes value = 1[(validate.rules).bytes.len = 32];
-}
-
-// A privately-held secret key using Ed25519
-message SecretKeyEd25519 {
-  // The bytes of the key
-  // length = 32
-  bytes value = 1[(validate.rules).bytes.len = 32];
-}
-
-// A signature generated using Ed25519
-message SignatureEd25519 {
-  // The bytes of the signature
-  // length = 64
-  bytes value = 1[(validate.rules).bytes.len = 64];
 }
 
 option (scalapb.options) = {
