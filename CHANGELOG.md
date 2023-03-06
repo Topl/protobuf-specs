@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Node models: Block, and FullBlockBody constraints validations. [TODO: commit]
+
+### Changed[7d2ba5c]
+- Quivr4s model, Witness value len rule 64 validation.
+
+### Changed[c6f0253]
+- Quivr4s constraints validations.
+
+### Changed[28aa03e]
+- Genus protobuf migration
+
+### Changed[c226e4c]
+- Node models: Block, and FullBlockBody constraints validations.
 
 ### Changed[c920f90]
 - Consensus OperationalCertificate includes VerificationKeyEd25519, SecretKeyEd25519, SignatureEd25519 with constraints validations.
