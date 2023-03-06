@@ -15,18 +15,25 @@ message Value {
         LVL lvl = 1;
         TOPL topl = 2;
         Asset asset = 3;
+        Registration registration = 4;
     }
     message LVL {
         quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
     }
     message TOPL {
         quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
-        co.topl.consensus.models.SignatureKesProduct registration = 2;
+        // An optional staking address.
+        // An empty bytestring is interpreted as "None"
+        bytes stakingAddress = 2;
     }
     message Asset {
         string label = 1;
         quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 3 [(validate.rules).message.required = true];
+    }
+    message Registration {
+        co.topl.consensus.models.SignatureKesProduct registration = 1 [(validate.rules).message.required = true];
+        bytes stakingAddress = 2 [(validate.rules).bytes.len = 32];
     }
 }
 
