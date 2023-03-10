@@ -8,6 +8,9 @@ import 'brambl/models/address.proto';
 import 'brambl/models/box/box.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 import 'consensus/models/block_id.proto';
+import 'consensus/models/block_header.proto';
+import 'node/models/block.proto';
+import 'google/protobuf/wrappers.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
