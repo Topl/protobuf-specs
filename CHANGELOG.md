@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[0b81c5]
+- Create "StakingAddress" message, used in BlockHeader and Box Value
+
 ### Changed[2f145a]
 - Delete legacy proto messages
 - Simplify OperationalCertificate fields
