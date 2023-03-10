@@ -5,7 +5,4 @@ js
 python
 /.bsp/
 /log
-target/
-project/
 .metals/
-.bloop/
