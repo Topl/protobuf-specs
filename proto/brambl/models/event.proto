@@ -23,12 +23,6 @@ message Event {
         Header header = 4;
         //IO Transaction
         IoTransaction ioTransaction = 5;
-        // IO Transaction Input was created
-        SpentTransactionOutput spentTransactionOutput = 6;
-        // IO Transaction Output was created
-        UnspentTransactionOutput unspentTransactionOutput = 7;
-        Root root = 8;
-
     }
 
     message Eon {
@@ -54,18 +48,6 @@ message Event {
         //the range of acceptable slots the transaction can be accepted into
         co.topl.brambl.models.transaction.Schedule schedule = 1 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 4 [(validate.rules).message.required = true];
-    }
-
-    message SpentTransactionOutput {
-        quivr.models.SmallData metadata = 1 [(validate.rules).message.required = true];
-    }
-
-    message UnspentTransactionOutput {
-        quivr.models.SmallData metadata = 1 [(validate.rules).message.required = true];
-    }
-
-    message Root {
-        quivr.models.Root value = 1 [(validate.rules).message.required = true];
     }
 }
 

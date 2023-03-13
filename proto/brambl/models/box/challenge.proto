@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+
+import 'brambl/models/address.proto';
+import 'quivr/models/proposition.proto';
+
+
+// Challenge is a single field message with its options being
+// one of RevealedProposition or PreviousProposition
+message Challenge {
+    oneof proposition {
+        quivr.models.Proposition revealed = 1;
+        PreviousProposition previous = 2;
+    }
+
+    // Previousroposition requires two parameters
+    // the transaction input address and index of the previously
+    // revealed proposition.
+    message PreviousProposition {
+        TransactionInputAddress address = 1;
+        uint32 index = 2;
+    }
+}
