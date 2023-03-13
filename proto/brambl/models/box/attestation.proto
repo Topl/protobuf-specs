@@ -1,22 +1,23 @@
 syntax = "proto3";
 
-package co.topl.brambl.models.transaction;
+package co.topl.brambl.models.box;
 
 import 'validate/validate.proto';
 import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'brambl/models/box/lock.proto';
-import 'quivr/models/proposition.proto';
+import 'brambl/models/box/challenge.proto';
 import 'quivr/models/proof.proto';
+import 'quivr/models/shared.proto';
 
 message Attestation {
     oneof value {
         Predicate predicate = 1;
         Image32 image32 = 2;
         Image64 image64 = 3;
-        // Commitment32 commitment32 = 4;
-        // Commitment64 commitment64 = 5;
+        Commitment32 commitment32 = 4;
+        Commitment64 commitment64 = 5;
     }
 
     message Predicate {
@@ -27,31 +28,35 @@ message Attestation {
     message Image32 {
         co.topl.brambl.models.box.Lock.Image32 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
-        repeated quivr.models.Proposition known = 2;
+        repeated Challenge known = 2;
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
     message Image64 {
         co.topl.brambl.models.box.Lock.Image64 lock = 1 [(validate.rules).message.required = true];
         // list of optional values
-        repeated quivr.models.Proposition known = 2;
+        repeated Challenge known = 2;
         // list of optional values
         repeated quivr.models.Proof responses = 3;
     }
-    // message Commitment32 {
-    //     co.topl.brambl.models.box.Lock.Commitment32 lock = 1 [(validate.rules).message.required = true];
-    //     // list of optional values
-    //     repeated quivr.models.Proposition known = 2;
-    //     // list of optional values
-    //     repeated quivr.models.Proof responses = 3;
-    // }
-    // message Commitment64 {
-    //     co.topl.brambl.models.box.Lock.Commitment64 lock = 1 [(validate.rules).message.required = true];
-    //     // list of optional values
-    //     repeated quivr.models.Proposition known = 2;
-    //     // list of optional values
-    //     repeated quivr.models.Proof responses = 3;
-    // }
+    message Commitment32 {
+        co.topl.brambl.models.box.Lock.Commitment32 lock = 1 [(validate.rules).message.required = true];
+        // list of claim propositions that must be proven as memebrs of the root commitment and be suitably satisfied by the given proofs
+        repeated Challenge known = 2;
+        // list of witnesses for proving membership of claimed propositions
+        repeated quivr.models.Witness witness = 3;
+        // list of optional values
+        repeated quivr.models.Proof responses = 4;
+    }
+    message Commitment64 {
+        co.topl.brambl.models.box.Lock.Commitment64 lock = 1 [(validate.rules).message.required = true];
+        // list of claim propositions that must be proven as memebrs of the root commitment and be suitably satisfied by the given proofs
+        repeated Challenge known = 2;
+        // list of witnesses for proving membership of claimed propositions
+        repeated quivr.models.Witness witness = 3;
+        // list of optional values
+        repeated quivr.models.Proof responses = 4;
+    }
     
 }
 
