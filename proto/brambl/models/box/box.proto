@@ -9,6 +9,7 @@ import 'scalapb/validate.proto';
 import 'brambl/models/box/lock.proto';
 import 'brambl/models/box/value.proto';
 
+// encapsulates a value and lock that is needed to be satisfied in order to unlock value
 message Box {
     Lock lock = 1 [(validate.rules).message.required = true];
     Value value = 2 [(validate.rules).message.required = true];

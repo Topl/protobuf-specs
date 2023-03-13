@@ -9,6 +9,7 @@ import 'scalapb/validate.proto';
 import 'brambl/models/address.proto';
 import 'brambl/models/box/value.proto';
 
+// output of a transaction
 message UnspentTransactionOutput {
     co.topl.brambl.models.LockAddress address = 1 [(validate.rules).message.required = true];
     co.topl.brambl.models.box.Value value = 2 [(validate.rules).message.required = true];

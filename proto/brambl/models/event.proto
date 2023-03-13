@@ -13,10 +13,15 @@ import 'brambl/models/transaction/schedule.proto';
 // Each event is associated with certain data that may be updated every tick.
 message Event {
     oneof value {
+        // hard fork
         Eon eon = 1;
+        // configuration change
         Era era = 2;
+        // length of time in slots where stake updates occur
         Epoch epoch = 3;
+        // Header created
         Header header = 4;
+        //IO Transaction
         IoTransaction ioTransaction = 5;
     }
 
@@ -40,6 +45,7 @@ message Event {
     }
 
     message IoTransaction {
+        //the range of acceptable slots the transaction can be accepted into
         co.topl.brambl.models.transaction.Schedule schedule = 1 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 4 [(validate.rules).message.required = true];
     }

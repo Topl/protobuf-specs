@@ -10,6 +10,7 @@ import 'brambl/models/datum.proto';
 import 'brambl/models/transaction/spent_transaction_output.proto';
 import 'brambl/models/transaction/unspent_transaction_output.proto';
 
+// defines a transaction
 message IoTransaction {
     // 0-to-many list of inputs
     repeated SpentTransactionOutput inputs = 1;

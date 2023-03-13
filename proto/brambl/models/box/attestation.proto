@@ -11,6 +11,7 @@ import 'brambl/models/box/challenge.proto';
 import 'quivr/models/proof.proto';
 import 'quivr/models/shared.proto';
 
+// encapsulates the lock and responses are used to satisfy locks (may be successful or unsuccessful)
 message Attestation {
     oneof value {
         Predicate predicate = 1;
@@ -22,7 +23,7 @@ message Attestation {
 
     message Predicate {
         co.topl.brambl.models.box.Lock.Predicate lock = 1 [(validate.rules).message.required = true];
-        // list of optional values
+        // list of optional values (proofs used to attempt to satisfy the challenges contained in the predicate lock)
         repeated quivr.models.Proof responses = 2;
     }
     message Image32 {

@@ -19,6 +19,7 @@ When testing changes, it helps to verify their behavior in the libraries that co
 1. `cd build/scala`
 1. `sbt publishLocal`
 1. Check the logs to see the org/package/version that was published, and use as a normal SBT dependency in a different project
+  - i.e. `"co.topl" %% "protobuf-fs2" % "b56d2815"`
 
 ### Dart
 1. `cd build/dart`

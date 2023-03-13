@@ -4,7 +4,14 @@ package quivr.models;
 
 import 'quivr/models/shared.proto';
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
+
+// Condition that must be satisfied to unlock
 message Proposition {
+    // enumeration of different possible propositions
     oneof value {
         Locked locked = 1;
         Digest digest = 2;
@@ -21,65 +28,97 @@ message Proposition {
         Or or = 13;
     }
 
+    // Indicates that a proposition can never be satisfied
     message Locked {
-        // Optional
+        // Optional metadata
         Data data = 1;
     }
 
+    // a proposition that can be satisfied if the proof contains the preimage matching the digest
     message Digest {
         string routine = 1;
-        quivr.models.Digest digest = 2;
+        quivr.models.Digest digest = 2 [(validate.rules).message.required = true];
     }
     
+    // a proposition that can be satisfied if the proof contains the signature
     message DigitalSignature {
         string routine = 1;
-        VerificationKey verificationKey = 2;
+        VerificationKey verificationKey = 2 [(validate.rules).message.required = true];
     }
 
+    // a proposition that can be satisfied if the specified chain falls within min and max height values
     message HeightRange {
         string chain = 1;
         uint64 min = 2;
         uint64 max = 3;
     }
 
+    // a proposition that can be satisfied if the time value falls within the min and max
     message TickRange {
         uint64 min = 1;
         uint64 max = 2;
     }
 
+    // a proposition that can be satisfied if the value at a location is an exact match of the compareTo value
     message ExactMatch {
         string location = 1;
-        bytes compareTo = 2;
+        bytes compareTo = 2 [(validate.rules).bytes.max_len = 64];
     }
 
+    // a proposition that can be satisfied if the value at a location is less than the compareTo value
     message LessThan {
         string location = 1;
-        Int128 compareTo = 2;
+        Int128 compareTo = 2 [(validate.rules).message.required = true];
     }
 
+    // a proposition that can be satisfied if the value at a location is greater than the compareTo value
     message GreaterThan {
         string location = 1;
-        Int128 compareTo = 2;
+        Int128 compareTo = 2 [(validate.rules).message.required = true];
     }
 
+    // a proposition that can be satisfied if the value (int) at a location is equal to the compareTo value
     message EqualTo {
         string location = 1;
-        Int128 compareTo = 2;
+        Int128 compareTo = 2 [(validate.rules).message.required = true];
     }
 
+    // a proposition that can be satisfied if at least the threshold number of propositions are satisfied
     message Threshold {
         repeated Proposition challenges = 1;
         uint32 threshold = 2;
     }
+
+    // a proposition that can be satisfied if the proposition is contains is not satisfied
     message Not {
-        Proposition proposition = 1;
+        Proposition proposition = 1 [(validate.rules).message.required = true];
     }
+
+    // a proposition that can be satisfied if the prositions contained are both satisfied
     message And {
-        Proposition left = 1;
-        Proposition right = 2;
+        Proposition left = 1 [(validate.rules).message.required = true];
+        Proposition right = 2 [(validate.rules).message.required = true];
     }
+
+    // a proposition that can be satisfied if either of the propositions contained are both satisfied
     message Or {
-        Proposition left = 1;
-        Proposition right = 2;
+        Proposition left = 1 [(validate.rules).message.required = true];
+        Proposition right = 2 [(validate.rules).message.required = true];
     }
 }
+
+option (scalapb.options) = {
+    [scalapb.validate.file] {
+        validate_at_construction: true
+    }
+    field_transformations: [
+        {
+            when: {options: {[validate.rules] {message: {required: true}}}}
+            set: {
+                [scalapb.field] {
+                    required: true
+                }
+            }
+        }
+    ]
+};

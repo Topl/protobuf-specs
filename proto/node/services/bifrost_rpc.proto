@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package co.topl.node.services;
 
-import 'models/transaction.proto';
 import 'consensus/models/block_id.proto';
 import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
 import 'brambl/models/identifier.proto';
+import 'brambl/models/transaction/io_transaction.proto';
 
 import "validate/validate.proto";
 import "scalapb/scalapb.proto";
@@ -39,9 +39,8 @@ service NodeRpc {
 
 // Request type for BroadcastTransaction
 message BroadcastTransactionReq {
-  // TODO: Replace with Brambl's IoTransaction
   // A "proven" Transaction that is meant to be included in the blockchain
-  co.topl.proto.models.Transaction transaction = 1 [(validate.rules).message.required = true];
+  co.topl.brambl.models.transaction.IoTransaction transaction = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for BroadcastTransaction
@@ -89,10 +88,9 @@ message FetchTransactionReq {
 
 // Response type for FetchTransaction
 message FetchTransactionRes {
-  // TODO: Replace with Brambl's IoTransaction
   // The Transaction associated with the requested ID.  None/null if not found.
   // optional
-  co.topl.proto.models.Transaction transaction = 1;
+  co.topl.brambl.models.transaction.IoTransaction transaction = 1;
 }
 
 // Request type for FetchBlockIdAtHeight

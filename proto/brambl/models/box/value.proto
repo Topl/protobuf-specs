@@ -7,20 +7,37 @@ import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
 import 'quivr/models/shared.proto';
+import 'consensus/models/operational_certificate.proto';
+import 'consensus/models/staking_address.proto';
 
+// The value contained in a box
 message Value {
     oneof value {
-        Token token = 1;
-        Asset asset = 2;
+        LVL lvl = 1;
+        TOPL topl = 2;
+        Asset asset = 3;
+        Registration registration = 4;
     }
-
-    message Token {
+    // A payment token
+    message LVL {
         quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
     }
+    // A staking token
+    message TOPL {
+        quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
+        // Optional.  If not provided, this token will not be used for staking purposes.
+        co.topl.consensus.models.StakingAddress stakingAddress = 2;
+    }
+    // A user-defined token
     message Asset {
         string label = 1;
         quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 3 [(validate.rules).message.required = true];
+    }
+    // A proof-of-stake registration token
+    message Registration {
+        co.topl.consensus.models.SignatureKesProduct registration = 1 [(validate.rules).message.required = true];
+        co.topl.consensus.models.StakingAddress stakingAddress = 2 [(validate.rules).message.required = true];
     }
 }
 

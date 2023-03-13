@@ -20,6 +20,7 @@ message Address {
     Identifier id = 4 [(validate.rules).message.required = true ];
 }
 
+// Used in UTXOs
 message LockAddress {
     uint32 network = 1;
     uint32 ledger = 2;
@@ -29,9 +30,11 @@ message LockAddress {
     }
 }
 
+// Used in STXOs
 message TransactionOutputAddress {
     uint32 network = 1;
     uint32 ledger = 2;
+    // index of the output (UTXO) within the transaction targeted by id.
     uint32 index = 3;
     oneof id {
         Identifier.IoTransaction32 ioTransaction32 = 4;
@@ -39,6 +42,7 @@ message TransactionOutputAddress {
     }
 }
 
+// Used in Challenge.PreviousProposition
 message TransactionInputAddress {
     uint32 network = 1;
     uint32 ledger = 2;

@@ -6,6 +6,10 @@ import 'consensus/models/block_header.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 import 'brambl/models/identifier.proto';
 
+import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+import "scalapb/validate.proto";
+
 // Captures the ordering of transaction IDs within a block
 message BlockBody {
   // A list of Transaction IDs included in this block
@@ -21,15 +25,31 @@ message FullBlockBody {
 // Captures the header and all transactions in a block
 message Block {
   // The block's header
-  co.topl.consensus.models.BlockHeader header = 1;
+  co.topl.consensus.models.BlockHeader header = 1 [(validate.rules).message.required = true];
   // The block's body
-  BlockBody body = 2;
+  BlockBody body = 2 [(validate.rules).message.required = true];
 }
 
 // Captures the header and all transactions in a block
 message FullBlock {
   // The block's header
-  co.topl.consensus.models.BlockHeader header = 1;
+  co.topl.consensus.models.BlockHeader header = 1 [(validate.rules).message.required = true];
   // The block's full body
-  FullBlockBody fullBody = 2;
+  FullBlockBody fullBody = 2 [(validate.rules).message.required = true];
 }
+
+option (scalapb.options) = {
+  [scalapb.validate.file] {
+    validate_at_construction: true
+  }
+  field_transformations: [
+    {
+      when: {options: {[validate.rules] {message: {required: true}}}}
+      set: {
+        [scalapb.field] {
+          required: true
+        }
+      }
+    }
+  ]
+};
