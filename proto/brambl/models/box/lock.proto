@@ -4,13 +4,11 @@ package co.topl.brambl.models.box;
 
 
 import 'brambl/models/identifier.proto';
-import 'quivr/models/proposition.proto';
+import 'brambl/models/box/challenge.proto';
 
 // used to lock a box value and needs to be satisfied in order for the value of the box to be spent
 // should be able to calculate or retrieve the root of the Lock
-// - from Predicate -> Image -> Commitment
-// - from Image -> Commitment
-// - from Commitment -> _.root
+// - from Predicate -> Image -> Commitment -> Signable -> Evidence
 message Lock {
     oneof value {
         Predicate predicate = 1;
@@ -20,13 +18,11 @@ message Lock {
         Commitment64 commitment64 = 5;
     }
 
-    // Predicate -> Image -> Commitment -> Signable -> Evidence -> Identifier -> Address -> Reference
-
     // Private information
     // a Predicate is a type of lock that will be satisfied if at least the threshold number of the contained proposition are satisfied
     message Predicate {
-        // this should probably be a non-empty chain, but how to enforce across other languages?
-        repeated quivr.models.Proposition challenges = 1;
+        // this should probably be a non-empty chain
+        repeated Challenge challenges = 1;
         uint32 threshold = 2;
     }
     
@@ -41,6 +37,7 @@ message Lock {
         uint32 threshold = 2;
     }
 
+    // todo: jaa - should disable ot figure out how to provide the needed witness in the attestation
     // Public information
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions

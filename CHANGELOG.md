@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[0b81c5]
+- Create "StakingAddress" message, used in BlockHeader and Box Value
+
+### Changed[2f145a]
+- Delete legacy proto messages
+- Simplify OperationalCertificate fields
+- Replace "Token" Value with LVL and TOPL.  Added Registration Value.
+
+### Changed[9a6db2]
+- Create LockAddress, TransactionOutputAddress, and TransactionInputAddress
+- Remove KnownIdentifier
 
 ### Changed[7d2ba5c]
 - Quivr4s model, Witness value len rule 64 validation.

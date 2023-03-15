@@ -6,18 +6,13 @@ import 'validate/validate.proto';
 import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
-import 'brambl/models/datum.proto';
 import 'brambl/models/address.proto';
 import 'brambl/models/box/value.proto';
 
 // output of a transaction
 message UnspentTransactionOutput {
-    // encodes who can spend the utxo
-    co.topl.brambl.models.Address address = 1 [(validate.rules).message.required = true];
-    // value of output
+    co.topl.brambl.models.LockAddress address = 1 [(validate.rules).message.required = true];
     co.topl.brambl.models.box.Value value = 2 [(validate.rules).message.required = true];
-    // metadata
-    co.topl.brambl.models.Datum.UnspentOutput datum = 3 [(validate.rules).message.required = true];
 }
 
 option (scalapb.options) = {

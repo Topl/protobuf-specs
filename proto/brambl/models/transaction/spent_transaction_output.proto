@@ -6,23 +6,16 @@ import 'validate/validate.proto';
 import 'scalapb/scalapb.proto';
 import 'scalapb/validate.proto';
 
-import 'brambl/models/known_identifier.proto';
-import 'brambl/models/datum.proto';
+import 'brambl/models/address.proto';
 import 'brambl/models/box/value.proto';
-import 'brambl/models/box/lock.proto';
-import 'brambl/models/transaction/attestation.proto';
+import 'brambl/models/box/attestation.proto';
 
 // Input to a transaction
 message SpentTransactionOutput {
-    // used to identify a txo that has been commited
-    co.topl.brambl.models.KnownIdentifier KnownIdentifier = 1 [(validate.rules).message.required = true];
-    // needs to be satisfied in order for box to be spent
-    Attestation attestation = 2 [(validate.rules).message.required = true];
+    co.topl.brambl.models.TransactionOutputAddress address = 1 [(validate.rules).message.required = true];
+    co.topl.brambl.models.box.Attestation attestation = 2 [(validate.rules).message.required = true];
     // the value of the box being spent
     co.topl.brambl.models.box.Value value = 3 [(validate.rules).message.required = true];
-    // metadata
-    co.topl.brambl.models.Datum.SpentOutput datum = 4 [(validate.rules).message.required = true];
-    repeated co.topl.brambl.models.box.Lock opts = 5; // optional list of values
 }
 
 option (scalapb.options) = {
