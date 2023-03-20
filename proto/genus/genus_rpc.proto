@@ -103,7 +103,7 @@ message GetExistingTransactionIndexesResponse {
 }
 
 message BlockResponse {
-  node.models.FullBlock block = 1 [(validate.rules).message.required = true];
+  node.models.FullBlock block = 1;
 }
 
 message TransactionResponse {
