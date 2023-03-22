@@ -19,7 +19,7 @@ message BlockBody {
 // Captures the ordering of transactions (not just IDs) within a block
 message FullBlockBody {
   // A list of Transactions included in this block
-  repeated co.topl.brambl.models.transaction.IoTransaction transaction = 1;
+  repeated co.topl.brambl.models.transaction.IoTransaction transactions = 1;
 }
 
 // Captures the header and all transactions in a block
