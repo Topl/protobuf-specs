@@ -85,7 +85,9 @@ message SigningKey {
         bytes value = 1 [(validate.rules).bytes.len = 32];
     }
     message ExtendedEd25519SigningKey {
-        bytes value = 1 [(validate.rules).bytes.len = 32];
+        bytes leftKey = 1 [(validate.rules).bytes.len = 32];
+        bytes rightKey = 2 [(validate.rules).bytes.len = 32];
+        bytes chainCode = 3 [(validate.rules).bytes.len = 32];
     }
 }
 
