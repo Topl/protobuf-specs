@@ -58,33 +58,33 @@ message DigestVerification {
 
 // public key in a key pair used for verification
 message VerificationKey {
-    oneof value {
+    oneof vk {
         // either ed25519 or extendedEd25519 must be set.
         option (validate.required) = true;
-        Ed25519VerificationKey ed25519 = 1;
-        ExtendedEd25519VerificationKey extendedEd25519 = 2;
+        Ed25519Vk ed25519 = 1;
+        ExtendedEd25519Vk extendedEd25519 = 2;
     }
-    message Ed25519VerificationKey {
+    message Ed25519Vk {
         bytes value = 1 [(validate.rules).bytes.len = 32];
     }
-    message ExtendedEd25519VerificationKey {
-        Ed25519VerificationKey vk = 1 [(validate.rules).message.required = true];
+    message ExtendedEd25519Vk {
+        Ed25519Vk vk = 1 [(validate.rules).message.required = true];
         bytes chainCode = 2 [(validate.rules).bytes.len = 32];
     }
 }
 
 // Private key used to sign
 message SigningKey {
-    oneof value {
+    oneof sk {
         // either ed25519 or extendedEd25519 must be set.
         option (validate.required) = true;
-        Ed25519SigningKey ed25519 = 1;
-        ExtendedEd25519SigningKey extendedEd25519 = 2;
+        Ed25519Sk ed25519 = 1;
+        ExtendedEd25519Sk extendedEd25519 = 2;
     }
-    message Ed25519SigningKey {
+    message Ed25519Sk {
         bytes value = 1 [(validate.rules).bytes.len = 32];
     }
-    message ExtendedEd25519SigningKey {
+    message ExtendedEd25519Sk {
         bytes leftKey = 1 [(validate.rules).bytes.len = 32];
         bytes rightKey = 2 [(validate.rules).bytes.len = 32];
         bytes chainCode = 3 [(validate.rules).bytes.len = 32];
