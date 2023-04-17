@@ -1,9 +1,7 @@
 version: v1
-name: "buf.build/seancheatham/topl-protobuf-specs"
+name: "buf.build/seanattopl/topl-protobuf-specs"
 deps: 
   - buf.build/envoyproxy/protoc-gen-validate
-  - buf.build/scalapb/scalapb
-  - buf.build/scalapb/scalapb-validate
 build:
   excludes: []
 breaking:
