@@ -14,8 +14,6 @@ import 'google/protobuf/wrappers.proto';
 import 'node/models/block.proto';
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
 
 // Operations related to blocks
 service GenusFullBlockService {
@@ -227,19 +225,3 @@ message IndexMatchValue {
 //service SubscriptionService {
 //  rpc getAvailableMessageQueues(AvailableMessageQueueRequest) returns (AvailableMessageQueueResponse);
 //}
-
-option (scalapb.options) = {
-  [scalapb.validate.file] {
-    validate_at_construction: true
-  }
-  field_transformations: [
-    {
-      when: {options: {[validate.rules] {message: {required: true}}}}
-      set: {
-        [scalapb.field] {
-          required: true
-        }
-      }
-    }
-  ]
-};
