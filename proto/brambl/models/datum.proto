@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package co.topl.brambl.models;
 
 import 'validate/validate.proto';
