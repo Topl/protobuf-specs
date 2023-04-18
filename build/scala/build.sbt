@@ -101,7 +101,9 @@ lazy val protobufFs2 =
             val destination = Paths.get(destinationBase.toString, protoFile.toString.drop(protosRoot.toString.length + 1))
             sLog.value.debug(s"Copying from $protoFile to $destination")
             Files.createDirectories(destination.getParent)
-            Files.copy(protoFile, destination)
+            val contents = new String(Files.readAllBytes(protoFile), "UTF-8")
+            val modifiedContents = modifyProtoContents(contents)
+            Files.write(destination, modifiedContents.getBytes("UTF-8"))
           }
       },
       (Compile / compile) := (Compile / compile).dependsOn(copyProtobufTask).value,
@@ -120,3 +122,36 @@ lazy val protobufFs2 =
         .map(_.copy(outputPath = (Compile / sourceManaged).value))
         .:+(scalapb.validate.gen(scalapb.GeneratorOption.FlatPackage) -> (Compile / sourceManaged).value: protocbridge.Target)
     )
+
+/**
+ * Instead of embedding scala-specific overrides in the protobuf files, we copy+modify the contents to embed any
+ * Scala-specific code.
+ * @param contents The contents of the original protobuf file
+ * @return Updated contents, with scalapb validation included
+ */
+def modifyProtoContents(contents: String): String = {
+    val syntaxStr = "syntax = \"proto3\";"
+    val index = contents.indexOf(syntaxStr)
+    require(index >= 0, s"Could not find $syntaxStr in protobuf file")
+      s"""${contents.substring(0, index)}$syntaxStr
+         |import "scalapb/scalapb.proto";
+         |import "scalapb/validate.proto";
+         |${if(!contents.contains("validate/validate.proto")) "import \"validate/validate.proto\";" else ""}
+         |${contents.substring(index + syntaxStr.length)}
+         |option (scalapb.options) = {
+         |  [scalapb.validate.file] {
+         |    validate_at_construction: true
+         |  }
+         |  field_transformations: [
+         |    {
+         |      when: {options: {[validate.rules] {message: {required: true}}}}
+         |      set: {
+         |        [scalapb.field] {
+         |          required: true
+         |        }
+         |      }
+         |    }
+         |  ]
+         |};
+         |""".stripMargin
+}

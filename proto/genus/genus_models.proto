@@ -13,8 +13,6 @@ import 'node/models/block.proto';
 import 'google/protobuf/wrappers.proto';
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
 
 package co.topl.genus.services;
 
@@ -159,19 +157,3 @@ message BlockData {
   node.models.BlockBody body = 2 [(validate.rules).message.required = true];
   repeated brambl.models.transaction.IoTransaction transactions = 3;
 }
-
-option (scalapb.options) = {
-  [scalapb.validate.file] {
-    validate_at_construction: true
-  }
-  field_transformations: [
-    {
-      when: {options: {[validate.rules] {message: {required: true}}}}
-      set: {
-        [scalapb.field] {
-          required: true
-        }
-      }
-    }
-  ]
-};

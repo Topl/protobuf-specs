@@ -3,8 +3,6 @@ syntax = "proto3";
 package co.topl.consensus.models;
 
 import "validate/validate.proto";
-import "scalapb/scalapb.proto";
-import "scalapb/validate.proto";
 
 // A certificate which commits an operator to a linear key, which is then used to sign the block
 message OperationalCertificate {
@@ -37,19 +35,3 @@ message SignatureKesProduct {
     // length = 32
     bytes subRoot = 3 [(validate.rules).bytes.len = 32];
 }
-
-option (scalapb.options) = {
-  [scalapb.validate.file] {
-    validate_at_construction: true
-  }
-  field_transformations: [
-    {
-      when: {options: {[validate.rules] {message: {required: true}}}}
-      set: {
-        [scalapb.field] {
-          required: true
-        }
-      }
-    }
-  ]
-};
