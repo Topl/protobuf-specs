@@ -16,7 +16,7 @@ import 'node/models/block.proto';
 import "validate/validate.proto";
 
 // Operations related to blocks
-service GenusFullBlockService {
+service BlockService {
   // Retrieve a block with the specified `id` from the configured Genus service. This returns its result when there is a
   // block present in the genus service with the specified id and the confidence factor of the block is greater than or
   // equal to the value of the `confidenceFactor` parameter.
