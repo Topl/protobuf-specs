@@ -18,10 +18,7 @@ message SmallData {
 
 // Event root
 message Root {
-    oneof value {
-        bytes root32 = 1 [(validate.rules).bytes.len = 32];
-        bytes root64 = 2 [(validate.rules).bytes.len = 64];
-    }
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 // Preimage (input) for a digest operation
@@ -32,20 +29,8 @@ message Preimage {
 
 // Information output to Hash
 message Digest {
-    oneof value {
-        Digest32 digest32 = 1;
-        Digest64 digest64 = 2;
-    }
-
-    message Digest32 {
-        // strict length = 32
-        bytes value = 1 [(validate.rules).bytes.len = 32];
-    }
-
-    message Digest64 {
-        // strict length = 64
-        bytes value = 1 [(validate.rules).bytes.len = 64];
-    }
+    // strict length = 32
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 // Encapsulates digest and preimage used to verify that preimage results in digest

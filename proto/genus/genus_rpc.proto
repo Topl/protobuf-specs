@@ -129,7 +129,7 @@ message GetBlockByDepthRequest {
 
 // Used to request a transaction by specifying its ID.
 message GetTransactionByIdRequest {
-  brambl.models.Identifier.IoTransaction32 transactionId = 1 [(validate.rules).message.required = true];
+  brambl.models.TransactionId transactionId = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   ConfidenceFactor confidenceFactor = 2;
 }
@@ -143,7 +143,7 @@ message CreateOnChainTransactionIndexResponse {
 // Used to request TxOs by their associated address
 message QueryByAddressRequest {
   // All the addresses of interest
-  repeated brambl.models.Address addresses = 1;
+  repeated brambl.models.LockAddress addresses = 1;
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   ConfidenceFactor confidenceFactor = 2;
 }
