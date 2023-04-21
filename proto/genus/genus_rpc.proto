@@ -142,8 +142,8 @@ message CreateOnChainTransactionIndexResponse {
 
 // Used to request TxOs by their associated address
 message QueryByAddressRequest {
-  // All the addresses of interest
-  repeated brambl.models.Address addresses = 1;
+  // Address of interest
+  brambl.models.LockAddress address = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   ConfidenceFactor confidenceFactor = 2;
 }
@@ -157,11 +157,9 @@ message QueryByAssetLabelRequest {
 
 message TxoAddressResponse {
   // Map Base58 encoded addresses to TxOs.
+  // string key represents a TransactionOutputAddress
+  // key_type can be any integral or string type, see: https://protobuf.dev/programming-guides/proto3/#maps
   map<string, Txo> addressesToTxos = 1;
-
-  message Txos {
-    repeated genus.services.Txo txo = 1;
-  }
 }
 
 // A request to create an index of transactions based on their on-chain data
