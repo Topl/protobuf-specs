@@ -24,10 +24,11 @@ enum TxoState {
   PENDING = 2; // A transaction is pending that may spend the TXO. This state should only appear in bifrost clients.
 }
 
-// A Box and its status
+// A Txo and its status
 message Txo {
   brambl.models.transaction.UnspentTransactionOutput transactionOutput = 1 [(validate.rules).message.required = true];
   TxoState state = 2;
+  brambl.models.TransactionOutputAddress outputAddress = 3;
 }
 
 // Specify the order of data for indexes.

@@ -156,10 +156,7 @@ message QueryByAssetLabelRequest {
 }
 
 message TxoAddressResponse {
-  // Map Base58 encoded addresses to TxOs.
-  // string key represents a TransactionOutputAddress
-  // key_type can be any integral or string type, see: https://protobuf.dev/programming-guides/proto3/#maps
-  map<string, Txo> addressesToTxos = 1;
+  repeated Txo Txos = 1;
 }
 
 // A request to create an index of transactions based on their on-chain data
