@@ -12,10 +12,8 @@ import 'brambl/models/box/challenge.proto';
 message Lock {
     oneof value {
         Predicate predicate = 1;
-        Image32 image32 = 2;
-        Image64 image64 = 3;
-        Commitment32 commitment32 = 4;
-        Commitment64 commitment64 = 5;
+        Image image = 2;
+        Commitment commitment = 3;
     }
 
     // Private information
@@ -28,12 +26,8 @@ message Lock {
     
     // Semi-public information
     // The most commonly shared construction between parties
-    message Image32 {
-        repeated co.topl.brambl.models.Identifier.Lock32 leaves = 1;
-        uint32 threshold = 2;
-    }
-    message Image64 {
-        repeated co.topl.brambl.models.Identifier.Lock64 leaves = 1;
+    message Image {
+        repeated co.topl.brambl.models.LockId leaves = 1;
         uint32 threshold = 2;
     }
 
@@ -41,12 +35,8 @@ message Lock {
     // Public information
     // Predicate Commitments are used to encumber boxes
     // use a Root here so we can provide a membership proof of the conditions
-    message Commitment32 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot32 root = 1;
-        uint32 threshold = 2;
-    }
-    message Commitment64 {
-        co.topl.brambl.models.Identifier.AccumulatorRoot64 root = 1;
+    message Commitment {
+        co.topl.brambl.models.AccumulatorRootId root = 1;
         uint32 threshold = 2;
     }
 }

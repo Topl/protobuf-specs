@@ -3,7 +3,6 @@ Protobuf specifications and definitions representing blockchain data types and c
 
 
 ## Required tools
-
 - protocol compiler: [protoc-installation](https://grpc.io/docs/protoc-installation/)
 
 
@@ -12,6 +11,7 @@ Protobuf specifications and definitions representing blockchain data types and c
     > TODO
 - Linux: 
     > sh ./run_protocol_compilers.sh
+
 
 ## Developers
 When testing changes, it helps to verify their behavior in the libraries that consume these protobuf specs.  You can publish the compiled protobuf as a "local" library and consume it in a different project.
@@ -22,6 +22,7 @@ When testing changes, it helps to verify their behavior in the libraries that co
   - i.e. `"co.topl" %% "protobuf-fs2" % "b56d2815"`
 
 ### Dart
+1. Install Dart [protoc_plugin](https://pub.dev/packages/protoc_plugin)
 1. `cd build/dart`
 1. `sh compile_protos.sh`
 1. Reference the `protobuf-specs/build/dart` directory as a pubspec file dependency
@@ -30,4 +31,3 @@ When testing changes, it helps to verify their behavior in the libraries that co
       topl_protobuf:
         path: /path/to/protobuf-specs/build/dart
     ```
-

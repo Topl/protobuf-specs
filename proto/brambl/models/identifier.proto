@@ -4,40 +4,23 @@ package co.topl.brambl.models;
 
 import 'validate/validate.proto';
 
-import 'brambl/models/evidence.proto';
+// Represents the identifier of a Transction.  It is constructed from the evidence of the signable bytes of the Transaction.
+message TransactionId {
+    // The evidence of the Transaction's signable bytes
+    // length = 32
+    bytes value = 1 [(validate.rules).bytes.len = 32];
+}
 
-// Identifiers are tagged evidence of valid data with the context of (network, ledger)
-message Identifier {
-    oneof value {
-        Lock32 lock32 = 1;
-        Lock64 lock64 = 2;
-        IoTransaction32 ioTransaction32 = 3;
-        IoTransaction64 ioTransaction64 = 4;
-        AccumulatorRoot32 accumulatorRoot32 = 5;
-        AccumulatorRoot64 accumulatorRoot64 = 6;
-    }
-    // tag = box_lock_32
-    message Lock32 {
-        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
-    }
-    // tag = box_lock_64
-    message Lock64 {
-        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
-    }
-    // tag = iotx_32
-    message IoTransaction32 {
-        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
-    }
-    // tag = iotx_64
-    message IoTransaction64 {
-        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
-    }
-    // tag = acc_root_32
-    message AccumulatorRoot32 {
-        Evidence.Sized32 evidence = 1 [(validate.rules).message.required = true];
-    }
-    // tag = acc_root_64
-    message AccumulatorRoot64 {
-        Evidence.Sized64 evidence = 1 [(validate.rules).message.required = true];
-    }
+// Represents the identifier of a Lock.  It is constructed from the evidence of the signable bytes of the Lock.
+message LockId {
+    // The evidence of the Lock's signable bytes
+    // length = 32
+    bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+// Represents the identifier of an Accumulator Root.  It is constructed from the evidence of the signable bytes of the Lock.
+message AccumulatorRootId {
+    // The evidence of the Accumulator Root's signable bytes
+    // length = 32
+    bytes value = 1 [(validate.rules).bytes.len = 32];
 }

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[a06dd3]
+- Remove 32/64 message types
+- Add TransactionId message
+- Add LockId message
+
 ### Changed[0b81c5]
 - Create "StakingAddress" message, used in BlockHeader and Box Value
 

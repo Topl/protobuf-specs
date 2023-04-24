@@ -71,7 +71,7 @@ message AssetLabel {
 
   message V1Label {
     uint32 version = 1;
-    brambl.models.Address mintingAddress = 2 [(validate.rules).message.required = true];
+    brambl.models.LockAddress mintingAddress = 2 [(validate.rules).message.required = true];
   }
 
   message Tam2Label {

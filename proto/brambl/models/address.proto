@@ -7,26 +7,11 @@ import 'validate/validate.proto';
 import 'brambl/models/identifier.proto';
 import 'google/protobuf/wrappers.proto';
 
-// An address is a location specific (network + ledger) path to a certain Identitier
-message Address {
-    // the chain an Address will settle to (targets the security behind an Addresses usage)
-    uint32 network = 1;
-    // the application an Address interacts with directly
-    uint32 ledger = 2;
-    // optional index of another identifier possibly contained in an Event
-    google.protobuf.UInt32Value index = 3;
-    // identifier of valid data with the context of (network, ledger)
-    Identifier id = 4 [(validate.rules).message.required = true ];
-}
-
 // Used in UTXOs
 message LockAddress {
     uint32 network = 1;
     uint32 ledger = 2;
-    oneof id {
-        Identifier.Lock32 lock32 = 3;
-        Identifier.Lock64 lock64 = 4;
-    }
+    LockId id = 3 [(validate.rules).message.required = true];
 }
 
 // Used in STXOs
@@ -35,10 +20,7 @@ message TransactionOutputAddress {
     uint32 ledger = 2;
     // index of the output (UTXO) within the transaction targeted by id.
     uint32 index = 3;
-    oneof id {
-        Identifier.IoTransaction32 ioTransaction32 = 4;
-        Identifier.IoTransaction64 ioTransaction64 = 5;
-    }
+    TransactionId id = 4 [(validate.rules).message.required = true];
 }
 
 // Used in Challenge.PreviousProposition
@@ -46,8 +28,5 @@ message TransactionInputAddress {
     uint32 network = 1;
     uint32 ledger = 2;
     uint32 index = 3;
-    oneof id {
-        Identifier.IoTransaction32 ioTransaction32 = 4;
-        Identifier.IoTransaction64 ioTransaction64 = 5;
-    }
+    TransactionId id = 4 [(validate.rules).message.required = true];
 }
