@@ -28,7 +28,7 @@ enum TxoState {
 message Txo {
   brambl.models.transaction.UnspentTransactionOutput transactionOutput = 1 [(validate.rules).message.required = true];
   TxoState state = 2;
-  brambl.models.TransactionOutputAddress outputAddress = 3;
+  brambl.models.TransactionOutputAddress outputAddress = 3 [(validate.rules).message.required = true];
 }
 
 // Specify the order of data for indexes.
