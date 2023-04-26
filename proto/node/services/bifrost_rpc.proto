@@ -50,7 +50,7 @@ message CurrentMempoolReq {}
 // Response type for CurrentMempool
 message CurrentMempoolRes {
   // A list of Transaction IDs that are currently in the node's mempool
-  repeated co.topl.brambl.models.Identifier.IoTransaction32 transactionIds = 1;
+  repeated co.topl.brambl.models.TransactionId transactionIds = 1;
 }
 
 // Request type for FetchBlockHeader
@@ -81,7 +81,7 @@ message FetchBlockBodyRes {
 
 // Request type for FetchTransaction
 message FetchTransactionReq {
-  co.topl.brambl.models.Identifier.IoTransaction32 transactionId = 1 [(validate.rules).message.required = true];
+  co.topl.brambl.models.TransactionId transactionId = 1 [(validate.rules).message.required = true];
 }
 
 // Response type for FetchTransaction

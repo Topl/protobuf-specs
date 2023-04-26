@@ -11,7 +11,7 @@ import "validate/validate.proto";
 // Captures the ordering of transaction IDs within a block
 message BlockBody {
   // A list of Transaction IDs included in this block
-  repeated co.topl.brambl.models.Identifier.IoTransaction32 transactionIds = 1;
+  repeated co.topl.brambl.models.TransactionId transactionIds = 1;
 }
 
 // Captures the ordering of transactions (not just IDs) within a block
