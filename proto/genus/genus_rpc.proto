@@ -146,6 +146,8 @@ message QueryByAddressRequest {
   brambl.models.LockAddress address = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   ConfidenceFactor confidenceFactor = 2;
+  // Filter by status
+  TxoState state = 3;
 }
 
 // User to request TxOs by their asset type
