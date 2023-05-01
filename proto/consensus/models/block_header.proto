@@ -11,8 +11,10 @@ import "validate/validate.proto";
 
 // Captures a block producer's consensus-commitment to a new block
 message BlockHeader {
+  // The ID of _this_ block header.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+  // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
+  BlockId headerId = 12;
   // The parent block's ID.  Each header builds from a single parent.
-  // length = 32
   BlockId parentHeaderId = 1 [(validate.rules).message.required = true];
   // The slot of the parent block
   uint64 parentSlot = 2;
