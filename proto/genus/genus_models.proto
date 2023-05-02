@@ -7,6 +7,7 @@ syntax = "proto3";
 import 'brambl/models/address.proto';
 import 'brambl/models/box/box.proto';
 import 'brambl/models/transaction/io_transaction.proto';
+import 'brambl/models/transaction/unspent_transaction_output.proto';
 import 'consensus/models/block_id.proto';
 import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
@@ -23,12 +24,11 @@ enum TxoState {
   PENDING = 2; // A transaction is pending that may spend the TXO. This state should only appear in bifrost clients.
 }
 
-// A Box and its status
+// A Txo and its status
 message Txo {
-  brambl.models.box.Box box = 1 [(validate.rules).message.required = true];
+  brambl.models.transaction.UnspentTransactionOutput transactionOutput = 1 [(validate.rules).message.required = true];
   TxoState state = 2;
-  brambl.models.TransactionOutputAddress outputAddress = 3;
-  brambl.models.LockAddress lockAddress = 4;
+  brambl.models.TransactionOutputAddress outputAddress = 3 [(validate.rules).message.required = true];
 }
 
 // Specify the order of data for indexes.
