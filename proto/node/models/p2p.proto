@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package co.topl.node.models;
+
+import "validate/validate.proto";
+
+
+// Request type for CurrentKnownHosts
+message CurrentKnownHostsReq {
+  uint32 maxCount = 1;
+}
+
+
+message KnownHost {
+  string host = 1 [(validate.rules).string = {min_len: 7, max_len: 64}];
+  uint32 port = 2; 
+}
+
+// Response type for CurrentKnownHosts
+message CurrentKnownHostsRes {
+  // A list of Transaction IDs that are currently in the node's mempool
+  repeated KnownHost hotHosts = 1;
+  repeated KnownHost warmHosts = 2;
+  repeated KnownHost coldHosts = 3;
+}
