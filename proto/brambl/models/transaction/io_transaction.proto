@@ -5,11 +5,15 @@ package co.topl.brambl.models.transaction;
 import 'validate/validate.proto';
 
 import 'brambl/models/datum.proto';
+import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/spent_transaction_output.proto';
 import 'brambl/models/transaction/unspent_transaction_output.proto';
 
 // defines a transaction
 message IoTransaction {
+    // The ID of _this_ transaction.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+    // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
+    co.topl.brambl.models.TransactionId transactionId = 4;
     // 0-to-many list of inputs
     repeated SpentTransactionOutput inputs = 1;
     // 0-to-many list of outputs

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[36a496]
+- Add transactionId field to IoTransaction message
+- Add headerId field to BlockHeader message
+
 ### Changed[a06dd3]
 - Remove 32/64 message types
 - Add TransactionId message
