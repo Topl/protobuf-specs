@@ -54,7 +54,7 @@ service TransactionService {
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. This returns immediately.
   rpc getTxosByAddress(QueryByAddressRequest) returns(TxoAddressResponse);
-
+LockAddress 
   // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
@@ -140,8 +140,8 @@ message CreateOnChainTransactionIndexResponse {
   bool ok = 1;
 }
 
-// Used to request TxOs by their associated address
-message QueryByAddressRequest {
+// Used to request TxOs by their associated lock address
+message QueryByLockAddressRequest {
   // Address of interest
   brambl.models.LockAddress address = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
