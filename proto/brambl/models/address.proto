@@ -3,9 +3,7 @@ syntax = "proto3";
 package co.topl.brambl.models;
 
 import 'validate/validate.proto';
-
 import 'brambl/models/identifier.proto';
-import 'google/protobuf/wrappers.proto';
 
 // Used in UTXOs
 message LockAddress {

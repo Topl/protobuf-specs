@@ -45,7 +45,7 @@ service TransactionService {
   // Retrieve transactions that have an input or output associated with any of the specified addresses from the configured
   // Genus service. This returns a stream of existing and future transactions from the genus service with the specified id
   // that are in a block with confidence factor greater than or equal to the value of the `confidenceFactor` parameter.
-  rpc getTransactionByAddressStream(QueryByAddressRequest) returns(stream TransactionResponse);
+  rpc getTransactionByLockAddressStream(QueryByLockAddressRequest) returns(stream TransactionResponse);
 
   // In the future there will be a way to find transactions using a bloom filter.
   //rpc getTransactionByBloomFilter();
@@ -53,12 +53,12 @@ service TransactionService {
   // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. This returns immediately.
-  rpc getTxosByAddress(QueryByAddressRequest) returns(TxoAddressResponse);
-LockAddress 
+  rpc getTxosByLockAddress(QueryByLockAddressRequest) returns(TxoLockAddressResponse);
+
   // Retrieve from the configured Genus service TxOs (spent or unspent) that are associated with any of the specified
   // addresses and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
   // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
-  rpc getTxosByAddressStream(QueryByAddressRequest) returns(stream TxoAddressResponse);
+  rpc getTxosByLockAddressStream(QueryByLockAddressRequest) returns(stream TxoLockAddressResponse);
 
   // Retrieve from the configured Genus service TxOs (spent or unspent) that contain the type of asset specified by the
   // asset label and are in a block whose confidence factor is greater than or equal to the value of the `confidenceFactor`
@@ -157,7 +157,7 @@ message QueryByAssetLabelRequest {
   ConfidenceFactor confidenceFactor = 2;
 }
 
-message TxoAddressResponse {
+message TxoLockAddressResponse {
   repeated Txo Txos = 1;
 }
 
