@@ -96,6 +96,12 @@ service TransactionService {
   rpc dropIndex(DropIndexRequest) returns (DropIndexResponse);
 }
 
+// Operations related to Network Metrics
+service NetworkMetricsService {
+  // Retrieve Network Metrics
+  rpc getTxoStats(GetTxoStatsReq) returns (GetTxoStatsRes);
+}
+
 message GetExistingTransactionIndexesResponse {
   IndexSpecs indexSpecs = 1 [(validate.rules).message.required = true];
 }
@@ -133,6 +139,20 @@ message GetTransactionByIdRequest {
   // The default value for confidenceFactor is 0.9999999 (7 nines)
   ConfidenceFactor confidenceFactor = 2;
 }
+
+// Request type for NetworkMetricsService:getTxoStats
+message GetTxoStatsReq {}
+// Response type for NetworkMetricsService:getTxoStats
+message GetTxoStatsRes {
+  message TxoStats {
+    uint64 spent = 1;
+    uint64 unspent = 2;
+    uint64 pending = 4;
+    uint64 total = 5;
+  }
+  TxoStats txos = 1 [(validate.rules).message.required = true];
+}
+
 
 // Response from CreateOnChainTransactionIndex request
 message CreateOnChainTransactionIndexResponse {
