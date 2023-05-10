@@ -16,6 +16,9 @@ service NodeRpc {
   // Read the contents of the node's mempool
   rpc CurrentMempool (CurrentMempoolReq) returns (CurrentMempoolRes);
 
+  // Check the content of the node's mempool and return if a Transaction Id exists
+  rpc CurrentMempoolContains (CurrentMempoolContainsReq) returns (CurrentMempoolContainsRes);
+
   // retrieve a Block Header by its ID
   rpc FetchBlockHeader (FetchBlockHeaderReq) returns (FetchBlockHeaderRes);
 
@@ -51,6 +54,17 @@ message CurrentMempoolReq {}
 message CurrentMempoolRes {
   // A list of Transaction IDs that are currently in the node's mempool
   repeated co.topl.brambl.models.TransactionId transactionIds = 1;
+}
+
+// Request type for CurrentMempoolContainsReq
+message CurrentMempoolContainsReq {
+  co.topl.brambl.models.TransactionId transactionId = 1[(validate.rules).message.required = true];
+}
+
+// Response type for CurrentMempoolContainsRes
+message CurrentMempoolContainsRes {
+  // Predicate indicating if the Transaction ID is currently in the node's mempool
+  bool inMempool = 1;
 }
 
 // Request type for FetchBlockHeader
