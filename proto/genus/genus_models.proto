@@ -5,7 +5,6 @@ syntax = "proto3";
 ///////////////////////////////////////////////////////////////////////////////
 
 import 'brambl/models/address.proto';
-import 'brambl/models/box/box.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 import 'brambl/models/transaction/unspent_transaction_output.proto';
 import 'consensus/models/block_id.proto';
@@ -17,7 +16,7 @@ import "validate/validate.proto";
 
 package co.topl.genus.services;
 
-// Used to identify the status of a box.
+// Used to identify the status of a Txo.
 enum TxoState {
   SPENT = 0;   // The TxO is spent
   UNSPENT = 1; // The TxO is not spent
