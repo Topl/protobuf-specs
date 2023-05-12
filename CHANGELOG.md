@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[dfec2a0]
+- Add NetworkMetricsService, Genus rpc
+- Rename Address <- LockAddress
+
 ### Changed[36a496]
 - Add transactionId field to IoTransaction message
 - Add headerId field to BlockHeader message
