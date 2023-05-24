@@ -9,7 +9,7 @@ message NodeConfig {
   // Slot number
   uint64 slotNumber = 1;
   // Configured slot duration
-  uint32 slotDurationMillis = 2;
+  uint64 slotDurationMillis = 2;
   // Node computed epochLength
   uint64 epochLength = 3;
 }
