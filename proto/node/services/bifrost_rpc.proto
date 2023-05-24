@@ -153,5 +153,5 @@ message GetNodeConfigReq {}
 
 // Response type for GetNodeConfigReq
 message GetNodeConfigRes {
-  co.topl.proto.node.NodeConfig config = 1;
+  co.topl.proto.node.NodeConfig config = 1 [(validate.rules).message.required = true];
 }
