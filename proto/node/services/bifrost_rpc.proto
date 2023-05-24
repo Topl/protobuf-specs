@@ -5,6 +5,7 @@ package co.topl.node.services;
 import 'consensus/models/block_id.proto';
 import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
+import 'node/models/node_config.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 
@@ -36,6 +37,9 @@ service NodeRpc {
 
   // retrieve a stream of changes to the canonical head of the chain.
   rpc SynchronizationTraversal (SynchronizationTraversalReq) returns (stream SynchronizationTraversalRes);
+
+  // retrieve a stream of node's protocol configuration
+  rpc FetchNodeConfig (FetchNodeConfigReq) returns (stream FetchNodeConfigRes);
 }
 
 // Request type for BroadcastTransaction
@@ -142,4 +146,12 @@ message SynchronizationTraversalRes {
     // Block ID unapplied
     co.topl.consensus.models.BlockId unapplied = 2;
   }
+}
+
+// Request type for FetchNodeConfigReq
+message FetchNodeConfigReq {}
+
+// Response type for FetchNodeConfigReq
+message FetchNodeConfigRes {
+  co.topl.proto.node.NodeConfig config = 1 [(validate.rules).message.required = true];
 }

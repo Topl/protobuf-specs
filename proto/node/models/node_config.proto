@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package co.topl.proto.node;
 
-// Contains the configurations of the node over time
-message NodeConfigMap {
-  // Map slot numbers to node configurations. The key in the map is the first slot number that the configuration is effective.
-  map <uint64, NodeConfig> slotConfigMap = 1;
-}
+import "validate/validate.proto";
 
-// The configuration of the node the client is working with. There should be more fields in this.
+// Contains the configurations of the node over time
 message NodeConfig {
-  // the configured duration of
-  uint32 slotDurationMillis = 1;
+  // Slot number
+  uint64 slot = 1;
+  // Configured slot duration
+  uint64 slotDurationMillis = 2;
+  // Node computed epochLength
+  uint64 epochLength = 3;
 }
