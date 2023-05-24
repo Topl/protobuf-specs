@@ -38,8 +38,8 @@ service NodeRpc {
   // retrieve a stream of changes to the canonical head of the chain.
   rpc SynchronizationTraversal (SynchronizationTraversalReq) returns (stream SynchronizationTraversalRes);
 
-  // Returns the node's configuration information
-  rpc GetNodeConfig (GetNodeConfigReq) returns (stream GetNodeConfigRes);
+  // retrieve a stream of node's protocol configuration
+  rpc FetchNodeConfig (FetchNodeConfigReq) returns (stream FetchNodeConfigRes);
 }
 
 // Request type for BroadcastTransaction
@@ -148,10 +148,10 @@ message SynchronizationTraversalRes {
   }
 }
 
-// Request type for GetNodeConfigReq
-message GetNodeConfigReq {}
+// Request type for FetchNodeConfigReq
+message FetchNodeConfigReq {}
 
-// Response type for GetNodeConfigReq
-message GetNodeConfigRes {
+// Response type for FetchNodeConfigReq
+message FetchNodeConfigRes {
   co.topl.proto.node.NodeConfig config = 1 [(validate.rules).message.required = true];
 }
