@@ -142,6 +142,7 @@ message GetTransactionByIdRequest {
 
 // Request type for NetworkMetricsService:getTxoStats
 message GetTxoStatsReq {}
+
 // Response type for NetworkMetricsService:getTxoStats
 message GetTxoStatsRes {
   message TxoStats {
@@ -150,7 +151,16 @@ message GetTxoStatsRes {
     uint64 pending = 4;
     uint64 total = 5;
   }
+
+  message BlockchainSizeStats {
+    // Sum of BlockHeader immutable bytes
+    uint64 blockHeaderBytes = 1;
+    // Sum of Transaction immutable bytes
+    uint64 transactionBytes = 2;
+  }
+
   TxoStats txos = 1 [(validate.rules).message.required = true];
+  BlockchainSizeStats blockchainSize = 2 [(validate.rules).message.required = true];
 }
 
 
