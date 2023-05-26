@@ -98,8 +98,10 @@ service TransactionService {
 
 // Operations related to Network Metrics
 service NetworkMetricsService {
-  // Retrieve Network Metrics
+  // Retrieve Txo Stats
   rpc getTxoStats(GetTxoStatsReq) returns (GetTxoStatsRes);
+  // Retrieve Blockchain Size Stats
+  rpc getBlockchainSizeStats(BlockchainSizeStatsReq) returns (BlockchainSizeStatsRes);
 }
 
 message GetExistingTransactionIndexesResponse {
@@ -152,6 +154,14 @@ message GetTxoStatsRes {
     uint64 total = 5;
   }
 
+  TxoStats txos = 1 [(validate.rules).message.required = true];
+}
+
+// Request type for NetworkMetricsService:getBlockchainSizeStats
+message BlockchainSizeStatsReq {}
+
+// Response type for NetworkMetricsService:getBlockchainSizeStats
+message BlockchainSizeStatsRes {
   message BlockchainSizeStats {
     // Sum of BlockHeader immutable bytes
     uint64 blockHeaderBytes = 1;
@@ -159,10 +169,8 @@ message GetTxoStatsRes {
     uint64 transactionBytes = 2;
   }
 
-  TxoStats txos = 1 [(validate.rules).message.required = true];
-  BlockchainSizeStats blockchainSize = 2 [(validate.rules).message.required = true];
+  BlockchainSizeStats blockchainSize = 1 [(validate.rules).message.required = true];
 }
-
 
 // Response from CreateOnChainTransactionIndex request
 message CreateOnChainTransactionIndexResponse {
