@@ -147,13 +147,6 @@ message GetTxoStatsReq {}
 
 // Response type for NetworkMetricsService:getTxoStats
 message GetTxoStatsRes {
-  message TxoStats {
-    uint64 spent = 1;
-    uint64 unspent = 2;
-    uint64 pending = 4;
-    uint64 total = 5;
-  }
-
   TxoStats txos = 1 [(validate.rules).message.required = true];
 }
 
@@ -162,13 +155,6 @@ message BlockchainSizeStatsReq {}
 
 // Response type for NetworkMetricsService:getBlockchainSizeStats
 message BlockchainSizeStatsRes {
-  message BlockchainSizeStats {
-    // Sum of BlockHeader immutable bytes
-    uint64 blockHeaderBytes = 1;
-    // Sum of Transaction immutable bytes
-    uint64 transactionBytes = 2;
-  }
-
   BlockchainSizeStats blockchainSize = 1 [(validate.rules).message.required = true];
 }
 
@@ -255,6 +241,20 @@ message IndexMatchValue {
     uint64 uintValue = 3;
   }
   google.protobuf.StringValue fieldName = 4;
+}
+
+message TxoStats {
+  uint64 spent = 1;
+  uint64 unspent = 2;
+  uint64 pending = 4;
+  uint64 total = 5;
+}
+
+message BlockchainSizeStats {
+  // Sum of BlockHeader immutable bytes
+  uint64 blockHeaderBytes = 1;
+  // Sum of Transaction immutable bytes
+  uint64 transactionBytes = 2;
 }
 
 //service SubscriptionService {
