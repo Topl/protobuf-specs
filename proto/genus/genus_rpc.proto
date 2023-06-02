@@ -165,7 +165,7 @@ message BlockStatsReq {}
 
 // Response type for NetworkMetricsService:getBlockStats
 message BlockStatsRes {
-  BlockchainSizeStats blockchainSize = 1 [(validate.rules).message.required = true];
+  BlockStats blockStats = 1 [(validate.rules).message.required = true];
 }
 
 // Response from CreateOnChainTransactionIndex request
