@@ -6,6 +6,7 @@ import 'consensus/models/block_id.proto';
 import 'consensus/models/eligibility_certificate.proto';
 import 'consensus/models/operational_certificate.proto';
 import 'consensus/models/staking_address.proto';
+import 'google/protobuf/wrappers.proto';
 
 import "validate/validate.proto";
 
@@ -39,4 +40,7 @@ message BlockHeader {
   bytes metadata = 10 [(validate.rules).bytes.max_len = 32];
   // The operator's staking address
   StakingAddress address = 11 [(validate.rules).message.required = true];
+  // The size of _this_ block header. This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+  // Some gRpc implementations could eventually fulfill this value, which reference the immutable bytes size.
+  google.protobuf.UInt64Value size = 13;
 }
