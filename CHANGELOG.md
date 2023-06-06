@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added[ae3f01d]
+- Retrieve Block Stats, Genus rpc `getBlockStats`
+
 ### Added[17a28eb]
 - Retrieve Blockchain Size Stats, Genus rpc `getBlockchainSizeStats`
 - Retrieve a stream of node's protocol configuration, Node rpc `fetchNodeConfig`
