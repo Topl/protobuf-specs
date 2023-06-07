@@ -4,7 +4,8 @@ Seq(
   "com.github.sbt"          % "sbt-ci-release"            % "1.5.11",
   "net.bzzt"                % "sbt-reproducible-builds"   % "0.30",
   "org.typelevel"           % "sbt-fs2-grpc"              % "2.4.12",
-  "com.thesamet"            % "sbt-protoc"                % "1.0.3"
+  "com.thesamet"            % "sbt-protoc"                % "1.0.3",
+  "com.github.sbt"          % "sbt-ci-release"            % "1.5.12"
 ).map(addSbtPlugin)
 
 libraryDependencies ++= Seq(

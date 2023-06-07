@@ -4,9 +4,10 @@ inThisBuild(
   List(
     organization := "co.topl",
     scalaVersion := scala213,
+    version := "2.0.0.alpha-1"
     // TODO: This version will need to follow a different version scheme once we're ready to publish to maven.
     // For now, it will default to the latest git commit hash.
-    version := dynverGitDescribeOutput.value.mkVersion(_.ref.value, "local")
+    // version := dynverGitDescribeOutput.value.mkVersion(_.ref.value, "local")
   )
 )
 
@@ -17,6 +18,8 @@ lazy val commonSettings = Seq(
 lazy val publishSettings = Seq(
   homepage := Some(url("https://github.com/Topl/protobuf-specs")),
   licenses := Seq("MPL2.0" -> url("https://www.mozilla.org/en-US/MPL/2.0/")),
+  sonatypeCredentialHost := "s01.oss.sonatype.org",
+  sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
   Test / publishArtifact := false,
   pomIncludeRepository := { _ => false },
   pomExtra :=

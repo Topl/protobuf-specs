@@ -1,0 +1,34 @@
+name: deploy
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Protoc Build
+    runs-on: ubuntu-latest
+    steps:
+      - if: github.event.release
+        name: Checkout current branch
+        uses: actions/checkout@v2
+      - if: github.event.release
+        name: Setup Protoc
+        run: sudo apt install -y protobuf-compiler
+      - if: github.event.release
+        name: Compile and Test
+        run: sh run_protocol_compilers.sh
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - if: github.event.release
+        name: Checkout code
+        uses: actions/checkout@v2
+      - if: github.event.release
+        name: Deploy (release only)
+        run: sbt ci-release
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
