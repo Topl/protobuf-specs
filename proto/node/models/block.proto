@@ -7,6 +7,7 @@ import 'brambl/models/transaction/io_transaction.proto';
 import 'brambl/models/identifier.proto';
 
 import "validate/validate.proto";
+import 'google/protobuf/wrappers.proto';
 
 // Captures the ordering of transaction IDs within a block
 message BlockBody {
@@ -34,4 +35,7 @@ message FullBlock {
   co.topl.consensus.models.BlockHeader header = 1 [(validate.rules).message.required = true];
   // The block's full body
   FullBlockBody fullBody = 2 [(validate.rules).message.required = true];
+  // The size of _this_ block header. This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+  // Some gRpc implementations could eventually fulfill this value, which reference the immutable bytes size.
+  google.protobuf.UInt64Value headerSize = 3;
 }

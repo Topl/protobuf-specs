@@ -10,6 +10,7 @@ import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 
 import "validate/validate.proto";
+import 'google/protobuf/wrappers.proto';
 
 service NodeRpc {
   // Submit a proven Transaction to the node
@@ -82,6 +83,9 @@ message FetchBlockHeaderRes {
   // The Block Header associated with the requested ID.  None/null if not found.
   // optional
   co.topl.consensus.models.BlockHeader header = 1;
+  // The size of _this_ block header. This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+  // Some gRpc implementations could eventually fulfill this value, which reference the immutable bytes size.
+  google.protobuf.UInt64Value headerSize = 2;
 }
 
 // Request type for FetchBlockBody
