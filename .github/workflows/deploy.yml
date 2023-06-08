@@ -11,8 +11,6 @@ jobs:
   build:
     name: Protoc Build
     uses: ./.github/workflows/_protoc_build.yml
-    with:
-      preserve-cache-between-runs: true
   publish:
     name: Build and Publish
     needs: build
