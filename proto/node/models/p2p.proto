@@ -23,3 +23,11 @@ message CurrentKnownHostsRes {
   repeated KnownHost warmHosts = 2;
   repeated KnownHost coldHosts = 3;
 }
+
+message PingMessage {
+  string ping = 1 [(validate.rules).string = {min_len: 1024, max_len: 1024}];
+}
+
+message PongMessage {
+  string pong = 1 [(validate.rules).string = {min_len: 1024, max_len: 1024}];
+}
