@@ -3,8 +3,9 @@ val scala213 = "2.13.10"
 inThisBuild(
   List(
     organization := "co.topl",
-    scalaVersion := scala213,
-    version := "2.0.0.alpha-1"
+    scalaVersion := scala213
+    // sbt-ci-release says not to set version as it is handled by sbt-dynver
+    //  version := "2.0.0.alpha-1"
     // TODO: This version will need to follow a different version scheme once we're ready to publish to maven.
     // For now, it will default to the latest git commit hash.
     // version := dynverGitDescribeOutput.value.mkVersion(_.ref.value, "local")
