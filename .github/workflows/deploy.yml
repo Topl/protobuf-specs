@@ -1,7 +1,11 @@
 name: deploy
+#on:
+#  release:
+#    types: [published]
+
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ TSDK-498-maven-deploy ]
 
 jobs:
   build:
