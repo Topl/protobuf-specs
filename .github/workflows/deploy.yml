@@ -1,15 +1,11 @@
 name: deploy
-#on:
-#  release:
-#    types: [published]
-
 on:
-  push:
-    branches: [ TSDK-498-maven-deploy ]
+  release:
+    types: [published]
 
 jobs:
   build:
-    name: Protoc Build
+    name: Protoc Test Build and Compile
     uses: ./.github/workflows/_protoc_build.yml
   publish:
     name: Build and Publish
