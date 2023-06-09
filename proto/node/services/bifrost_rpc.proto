@@ -6,6 +6,7 @@ import 'consensus/models/block_id.proto';
 import 'consensus/models/block_header.proto';
 import 'node/models/block.proto';
 import 'node/models/node_config.proto';
+import 'node/models/node_epochData.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 
@@ -40,6 +41,9 @@ service NodeRpc {
 
   // retrieve a stream of node's protocol configuration
   rpc FetchNodeConfig (FetchNodeConfigReq) returns (stream FetchNodeConfigRes);
+
+  // retrieve epoch data content
+  rpc FetchEpochData (FetchEpochDataReq) returns (FetchEpochDataRes);
 }
 
 // Request type for BroadcastTransaction
@@ -154,4 +158,14 @@ message FetchNodeConfigReq {}
 // Response type for FetchNodeConfigReq
 message FetchNodeConfigRes {
   co.topl.proto.node.NodeConfig config = 1 [(validate.rules).message.required = true];
+}
+
+// Request type for FetchEpochDataReq
+message FetchEpochDataReq {
+  uint64 slot = 1;
+}
+
+// Response type for FetchEpochDataRes
+message FetchEpochDataRes {
+  co.topl.proto.node.EpochData epochData = 1 [(validate.rules).message.required = true];
 }

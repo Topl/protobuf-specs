@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added[ae3f01d]
+- Retrieve Epoch Data Stats, Node rpc `fetchEpochData`
+
+### Added[ae3f01d]
 - Retrieve Block Stats, Genus rpc `getBlockStats`
 
 ### Added[17a28eb]
