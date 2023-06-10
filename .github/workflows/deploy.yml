@@ -1,0 +1,25 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+    tags: ["*"]
+
+jobs:
+  build:
+    name: Protoc Test Build and Compile
+    uses: ./.github/workflows/_protoc_build.yml
+  publish:
+    name: Build and Publish
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy (release only)
+        run: sbt ci-release
+        working-directory: ./build/scala
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
