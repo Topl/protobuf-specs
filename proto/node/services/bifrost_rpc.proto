@@ -155,7 +155,7 @@ message SynchronizationTraversalRes {
 // Request type for FetchNodeConfigReq
 message FetchNodeConfigReq {}
 
-// Response type for FetchNodeConfigReq
+// Response type for FetchNodeConfigRes
 message FetchNodeConfigRes {
   co.topl.proto.node.NodeConfig config = 1 [(validate.rules).message.required = true];
 }
@@ -167,5 +167,5 @@ message FetchEpochDataReq {
 
 // Response type for FetchEpochDataRes
 message FetchEpochDataRes {
-  co.topl.proto.node.EpochData epochData = 1 [(validate.rules).message.required = true];
+  co.topl.proto.node.EpochData epochData = 1;
 }
