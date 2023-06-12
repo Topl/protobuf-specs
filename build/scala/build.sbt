@@ -14,7 +14,7 @@ lazy val commonSettings = Seq(
 lazy val publishSettings = Seq(
   homepage := Some(url("https://github.com/Topl/protobuf-specs")),
   licenses := Seq("MPL2.0" -> url("https://www.mozilla.org/en-US/MPL/2.0/")),
-  sonatypeCredentialHost := "s01.oss.sonatype.org",
+  ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org",
   sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
   Test / publishArtifact := false,
   pomIncludeRepository := { _ => false },
