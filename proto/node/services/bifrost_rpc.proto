@@ -11,6 +11,7 @@ import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/io_transaction.proto';
 
 import "validate/validate.proto";
+import 'google/protobuf/wrappers.proto';
 
 service NodeRpc {
   // Submit a proven Transaction to the node
@@ -162,7 +163,7 @@ message FetchNodeConfigRes {
 
 // Request type for FetchEpochDataReq
 message FetchEpochDataReq {
-  uint64 slot = 1;
+  google.protobuf.UInt64Value slot = 1;
 }
 
 // Response type for FetchEpochDataRes

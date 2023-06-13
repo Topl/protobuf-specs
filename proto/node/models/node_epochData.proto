@@ -3,8 +3,9 @@ syntax = "proto3";
 package co.topl.proto.node;
 
 import "validate/validate.proto";
+import 'quivr/models/shared.proto';
 
-// Epoch data Contains, The "current" epoch is updated as node blocks are adopted  over time
+// Epoch data Contains, The "current" epoch is updated as node blocks are adopted over time
 message EpochData {
 
   // epoch
@@ -13,34 +14,28 @@ message EpochData {
   uint64 eon = 2 ;
   // era
   uint64 era = 3 ;
-  // isComplete
+  // Flag indicating if the epoch has been completed
   bool isComplete = 4;
-  // startHeight
+  // The height of the first block in the epoch
   uint64 startHeight = 5;
-  // endHeight
+  // The height of the last/latest block in the epoch
   uint64 endHeight = 6;
-  // startSlot
+  // The first slot of the epoch
   uint64 startSlot = 7;
-  // endSlot
+  // The final slot of the epoch
   uint64 endSlot = 8;
-  // startTimestamp
+  // The timestamp of the epoch start
   uint64 startTimestamp = 9;
-  // endTimestamp
+  // The timestamp of the epoch end
   uint64 endTimestamp = 10;
   // transactionCount
   uint64 transactionCount = 11;
-  // totalTransactionReward
-  Int128 totalTransactionReward = 12 [(validate.rules).message.required = true];
-  // activeStake
-  Int128 activeStake = 13 [(validate.rules).message.required = true];
-  // inactiveStake
-  Int128 inactiveStake = 14 [(validate.rules).message.required = true];
-  // dataBytes
+  // The sum of all transaction rewards in the epoch
+  quivr.models.Int128 totalTransactionReward = 12 [(validate.rules).message.required = true];
+  // The sum of all stake that is registered for the epoch
+  quivr.models.Int128 activeStake = 13 [(validate.rules).message.required = true];
+  // The sum of all stake that is not registered for the epoch
+  quivr.models.Int128 inactiveStake = 14 [(validate.rules).message.required = true];
+  // The sum total number of bytes of headers and transactions for the epoch
   uint64 dataBytes = 15;
-}
-
-// Represents a 128-bit integer
-message Int128 {
-  // Java BigInt Representation: two's-complement, big-endian
-  bytes value = 1 [(validate.rules).bytes.max_len = 16];
 }
