@@ -25,9 +25,9 @@ message CurrentKnownHostsRes {
 }
 
 message PingMessage {
-  string ping = 1 [(validate.rules).string = {min_len: 1024, max_len: 1024}];
+  string ping = 1  [(validate.rules).string.len = 5];
 }
 
 message PongMessage {
-  string pong = 1 [(validate.rules).string = {min_len: 1024, max_len: 1024}];
+  string pong = 1  [(validate.rules).string.len = 5];
 }
