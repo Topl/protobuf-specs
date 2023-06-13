@@ -28,7 +28,7 @@ message EpochData {
   uint64 startTimestamp = 9;
   // The timestamp of the epoch end
   uint64 endTimestamp = 10;
-  // transactionCount
+  // The total number of transactions in this epoch
   uint64 transactionCount = 11;
   // The sum of all transaction rewards in the epoch
   quivr.models.Int128 totalTransactionReward = 12 [(validate.rules).message.required = true];
