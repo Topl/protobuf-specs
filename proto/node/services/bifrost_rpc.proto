@@ -163,10 +163,10 @@ message FetchNodeConfigRes {
 
 // Request type for FetchEpochDataReq
 message FetchEpochDataReq {
-  google.protobuf.UInt64Value slot = 1;
+  google.protobuf.UInt64Value epoch = 1;
 }
 
 // Response type for FetchEpochDataRes
 message FetchEpochDataRes {
-  co.topl.proto.node.EpochData epochData = 1 [(validate.rules).message.required = true];
+  co.topl.proto.node.EpochData epochData = 1;
 }
