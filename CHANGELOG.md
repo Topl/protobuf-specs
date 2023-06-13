@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added[Release - v2.0.0-alpha2 | todo replace: next commit hash]
+- Retrieve Epoch Data Stats, Node rpc `fetchEpochData`
+
 ### Added[ae3f01d]
 - Retrieve Block Stats, Genus rpc `getBlockStats`
 

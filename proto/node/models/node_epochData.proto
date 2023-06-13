@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package co.topl.proto.node;
+
+import "validate/validate.proto";
+import 'quivr/models/shared.proto';
+
+// Epoch data Contains, The "current" epoch is updated as node blocks are adopted over time
+message EpochData {
+
+  // epoch
+  uint64 epoch = 1 ;
+  // eon
+  uint64 eon = 2 ;
+  // era
+  uint64 era = 3 ;
+  // Flag indicating if the epoch has been completed
+  bool isComplete = 4;
+  // The height of the first block in the epoch
+  uint64 startHeight = 5;
+  // The height of the last/latest block in the epoch
+  uint64 endHeight = 6;
+  // The first slot of the epoch
+  uint64 startSlot = 7;
+  // The final slot of the epoch
+  uint64 endSlot = 8;
+  // The timestamp of the epoch start
+  uint64 startTimestamp = 9;
+  // The timestamp of the epoch end
+  uint64 endTimestamp = 10;
+  // The total number of transactions in this epoch
+  uint64 transactionCount = 11;
+  // The sum of all transaction rewards in the epoch
+  quivr.models.Int128 totalTransactionReward = 12 [(validate.rules).message.required = true];
+  // The sum of all stake that is registered for the epoch
+  quivr.models.Int128 activeStake = 13 [(validate.rules).message.required = true];
+  // The sum of all stake that is not registered for the epoch
+  quivr.models.Int128 inactiveStake = 14 [(validate.rules).message.required = true];
+  // The sum total number of bytes of headers and transactions for the epoch
+  uint64 dataBytes = 15;
+}
