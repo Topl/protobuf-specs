@@ -5,7 +5,7 @@ package co.topl.consensus.models;
 import 'consensus/models/block_id.proto';
 import 'consensus/models/eligibility_certificate.proto';
 import 'consensus/models/operational_certificate.proto';
-import 'consensus/models/staking_address.proto';
+import 'consensus/models/staking.proto';
 
 import "validate/validate.proto";
 
