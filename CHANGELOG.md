@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed[Release - v2.0.0-alpha2 | todo replace: next commit hash]
+- Remove "Registration" Box Value
+- Create co.topl.consensus.models.StakingRegistration message
+- Create co.topl.consensus.models.ActiveStaker message
+- Remove "stakingAddress" field from Topl Box Value
+- Embed "StakingRegistration" in Topl Box Value
+
 ### Added[Release - v2.0.0-alpha2 | todo replace: next commit hash]
 - Retrieve Epoch Data Stats, Node rpc `fetchEpochData`
 

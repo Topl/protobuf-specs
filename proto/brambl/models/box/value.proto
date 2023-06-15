@@ -6,7 +6,7 @@ import 'validate/validate.proto';
 
 import 'quivr/models/shared.proto';
 import 'consensus/models/operational_certificate.proto';
-import 'consensus/models/staking_address.proto';
+import 'consensus/models/staking.proto';
 
 // The value contained in a box
 message Value {
@@ -14,7 +14,6 @@ message Value {
         LVL lvl = 1;
         TOPL topl = 2;
         Asset asset = 3;
-        Registration registration = 4;
     }
     // A payment token
     message LVL {
@@ -23,18 +22,14 @@ message Value {
     // A staking token
     message TOPL {
         quivr.models.Int128 quantity = 1 [(validate.rules).message.required = true];
-        // Optional.  If not provided, this token will not be used for staking purposes.
-        co.topl.consensus.models.StakingAddress stakingAddress = 2;
+        // Optional.  If provided, the registration will take effect at the start of 2 epochs from now. If not provided, this token will not be used for staking purposes.
+        co.topl.consensus.models.StakingRegistration registration = 3;
+        
     }
     // A user-defined token
     message Asset {
         string label = 1;
         quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
         quivr.models.SmallData metadata = 3 [(validate.rules).message.required = true];
-    }
-    // A proof-of-stake registration token
-    message Registration {
-        co.topl.consensus.models.SignatureKesProduct registration = 1 [(validate.rules).message.required = true];
-        co.topl.consensus.models.StakingAddress stakingAddress = 2 [(validate.rules).message.required = true];
     }
 }

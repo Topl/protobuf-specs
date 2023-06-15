@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+import 'quivr/models/shared.proto';
+import 'consensus/models/operational_certificate.proto';
+
+import 'validate/validate.proto';
+
+// A reference to a unique staker
+message StakingAddress {
+    // The address bytes of the staker, usually an ed25519 VK
+    bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+// A proof-of-stake registration
+message StakingRegistration {
+    // the staker's address
+    co.topl.consensus.models.StakingAddress address = 1 [(validate.rules).message.required = true];
+    // the staker's commitment to a VRF VK and StakingAddress, signed using KES SK at timestep=0
+    co.topl.consensus.models.SignatureKesProduct signature = 2 [(validate.rules).message.required = true];
+}
+
+// An active, registered participate in the consensus protocol, for a particular epoch.
+message ActiveStaker {
+    // the staker's registration
+    StakingRegistration registration = 1 [(validate.rules).message.required = true];
+    // the quantity of staked tokens for the epoch
+    quivr.models.Int128 quantity = 3 [(validate.rules).message.required = true];
+}
