@@ -5,7 +5,6 @@ package co.topl.brambl.models.box;
 import 'validate/validate.proto';
 
 import 'quivr/models/shared.proto';
-import 'consensus/models/operational_certificate.proto';
 import 'consensus/models/staking.proto';
 
 // The value contained in a box
