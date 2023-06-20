@@ -1,4 +1,4 @@
-val scala213 = "2.13.10"
+val scala213 = "2.13.11"
 
 inThisBuild(
   List(
