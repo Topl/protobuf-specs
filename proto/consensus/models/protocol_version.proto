@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package co.topl.consensus.models;
+
+import "validate/validate.proto";
+
+// Protocol Version Specification, see TIP-003
+message ProtocolVersion {
+  // `firstDigit` Significant hard fork/version change/consensus rule set change
+  uint32 firstDigit = 1 [(validate.rules).uint32 = {gte:0, lte: 9}];
+  // `secondDigit` Feature additions, bugs fixing hard forks, minor hard forks, significant soft forks, interface should  work the same
+  uint32 secondDigit = 2 [(validate.rules).uint32 = {gte:0, lte: 9}];
+  // `thirdDigit` Minor changes
+  uint32 thirdDigit = 3 [(validate.rules).uint32 = {gte:0, lte: 9}];
+}
