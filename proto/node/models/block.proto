@@ -20,6 +20,8 @@ message BlockBody {
 message FullBlockBody {
   // A list of Transactions included in this block
   repeated co.topl.brambl.models.transaction.IoTransaction transactions = 1;
+  // An optional Transaction that represents the reward transaction for this block.
+  co.topl.brambl.models.transaction.IoTransaction rewardTransaction = 2;
 }
 
 // Captures the header and all transactions in a block
