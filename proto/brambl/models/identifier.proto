@@ -4,7 +4,7 @@ package co.topl.brambl.models;
 
 import 'validate/validate.proto';
 
-// Represents the identifier of a Transction.  It is constructed from the evidence of the signable bytes of the Transaction.
+// Represents the identifier of a Transaction.  It is constructed from the evidence of the signable bytes of the Transaction.
 message TransactionId {
     // The evidence of the Transaction's signable bytes
     // length = 32
