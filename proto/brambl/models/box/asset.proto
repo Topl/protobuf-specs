@@ -4,21 +4,22 @@ package co.topl.brambl.models.box;
 
 message SeriesTokenSupply {
   oneof value {
-    // we can mint as many tokens as we want of a given asset
-    Unlimited unlimited = 1;
-    // can only mint up to a certain amount of tokens of a given series.
+    SeriesTokenSupplyEnum enum = 1;
     Capped capped = 2;
-    // the same as capped but the network enforces that all tokens are minted in only one transaction.
-    Fixed fixed = 3;
   }
 }
 
+enum SeriesTokenSupplyEnum {
+  // we can mint as many tokens as we want of a given asset
+  UNLIMITED = 0;
+  // the same as capped but the network enforces that all tokens are minted in only one transaction.
+  FIXED = 1;
+}
+
 message Capped {
+  // can only mint up to a certain amount of tokens of a given series.
   uint64 supply = 1 ;
 }
-message Unlimited {}
-
-message Fixed {}
 
 // Fix a group identifier to a particular series, thus only allowing that group to be used to mint asset tokens with that series.
 message FixedSeries {
