@@ -7,6 +7,7 @@ import 'validate/validate.proto';
 import 'quivr/models/shared.proto';
 import 'consensus/models/staking.proto';
 import 'brambl/models/identifier.proto';
+import 'brambl/models/box/asset.proto';
 
 // The value contained in a box
 message Value {
@@ -50,27 +51,4 @@ message Value {
     string id = 6;
   }
 
-  message SeriesTokenSupply {
-    oneof value {
-      // we can mint as many tokens as we want of a given asset
-      Unlimited unlimited = 1;
-      // can only mint up to a certain amount of tokens of a given series.
-      Capped capped = 2;
-      // the same as capped but the network enforces that all tokens are minted in only one transaction.
-      Fixed fixed = 3;
-    }
-  }
-
-  message Capped {
-    uint64 supply = 1 ;
-  }
-  message Unlimited {}
-
-  message Fixed {}
-
-  // Fix a group identifier to a particular series, thus only allowing that group to be used to mint asset tokens with that series.
-  message FixedSeries {
-    // SHA256 series policy
-    string value = 1;
-  }
 }
