@@ -48,7 +48,7 @@ message Value {
     // index of the output (UTXO) within the transaction targeted by id.
     uint32 index = 4;
     // group identifier, hash of (label + fixedSeries + seriesTokenSupply + txId + index)
-    string id = 6;
+    GroupId id = 6 [(validate.rules).message.required = true];
   }
 
 }
