@@ -1,17 +1,52 @@
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/topl/protobuf-specs?label=release&style=plastic)
+
 # protobuf-specs
 Protobuf specifications and definitions representing blockchain data types and communication channels.
+
+The artifact will be pushed from this repo to multiple repositories. 
 
 
 ## Required tools
 - protocol compiler: [protoc-installation](https://grpc.io/docs/protoc-installation/)
 
-
 ## Run
-- Windows: 
-    > TODO
-- Linux: 
-    > sh ./run_protocol_compilers.sh
+- Windows:
+  > TODO
+- Linux:
+  > sh ./run_protocol_compilers.sh
+  
+##  JitPack
 
+This repo can be consumed using jitpack. Here is how:
+
+- [JitPack](https://jitpack.io/#Topl/protobuf-specs) produces an artifact on each commit/branch
+
+Add jitpack to the resolvers list in build.sbt. It should look like this:
+
+```sbt
+  resolvers ++= Seq("jitpack" at "https://jitpack.io")
+
+  libraryDependencies += "com.github.Topl.protobuf-specs" %% "protobuf-fs2" % "e03a093"
+```
+
+## Maven Release
+
+This repo can be consumed using Sonatype s01 releases. Here is how:
+
+- Each time a tag is created, it produces an artifact: releases: [releases](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
+- Each time a coomit on main branch is created, it produces a snapshot artifact: [snapshots](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
+
+Add Sonatype to the resolvers list in build.sbt. It should look like this:
+
+```sbt
+  resolvers ++= Seq(
+    "Sonatype Staging" at "https://s01.oss.sonatype.org/content/repositories/staging",
+    "Sonatype Snapshots" at "https://s01.oss.sonatype.org/content/repositories/snapshots/",
+    "Sonatype Releases" at "https://s01.oss.sonatype.org/content/repositories/releases/"
+  )
+
+ libraryDependencies +=  "co.topl" %% "protobuf-fs2" % "2.0.0-alpha2"
+```
 
 ## Developers
 When testing changes, it helps to verify their behavior in the libraries that consume these protobuf specs.  You can publish the compiled protobuf as a "local" library and consume it in a different project.
