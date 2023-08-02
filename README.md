@@ -19,7 +19,7 @@ The artifact will be pushed from this repo to multiple repositories.
 
 This repo can be consumed using jitpack. Here is how:
 
-- [JitPack](https://jitpack.io/#Topl/protobuf-specs) produces an artifact on each commit/branch
+- [JitPack](https://jitpack.io/#Topl/protobuf-specs) produces an artifact on each time is pushed. commit/branch
 
 Add jitpack to the resolvers list in build.sbt. It should look like this:
 
@@ -33,8 +33,8 @@ Add jitpack to the resolvers list in build.sbt. It should look like this:
 
 This repo can be consumed using Sonatype s01 releases. Here is how:
 
-- Each time a tag is created, it produces an artifact: releases: [releases](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
-- Each time a coomit on main branch is created, it produces a snapshot artifact: [snapshots](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
+- Each time a tag is pushed, it produces an artifact: releases: [releases](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
+- Each time a commit is pushed, it produces a snapshot artifact: [snapshots](https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/)
 
 Add Sonatype to the resolvers list in build.sbt. It should look like this:
 
