@@ -1,10 +1,24 @@
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/topl/protobuf-specs?label=release&style=plastic)
-
 # protobuf-specs
-Protobuf specifications and definitions representing blockchain data types and communication channels.
+Protobuf specification and definitions representing blockchain data types and communication channels.
 
-The artifact will be pushed from this repo to multiple repositories. 
 
+<table>
+  <tr>
+    <td>
+      <img width="118px" alt="Topl logo" src="https://avatars.githubusercontent.com/u/26033322?s=200&v=4" />
+    </td>
+    <td valign="middle">
+      <a href="https://github.com/Topl/protobuf-specs/blob/main/.github/CODE_OF_CONDUCT.md"><img width="100%" alt="Code of Conduct" src="https://img.shields.io/badge/code-of%20conduct-green.svg"></a>
+      <a href="https://opensource.org/licenses/MPL-2.0"><img width="100%"  alt="License" src="https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg"></a>
+    </td>
+    <td>
+      <a href="https://twitter.com/topl_protocol"><img alt="@topl_protocol on Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftopl_protocol"></a>
+    </td>
+    <td>
+      <a href="https://s01.oss.sonatype.org/content/repositories/snapshots/co/topl/protobuf-fs2_2.13/"><img alt="@topl_protocol release" src="https://img.shields.io/github/v/tag/topl/protobuf-specs?label=release&style=plastic"></a>
+    </td>
+  </tr>
+</table>
 
 ## Required tools
 - protocol compiler: [protoc-installation](https://grpc.io/docs/protoc-installation/)
@@ -15,11 +29,21 @@ The artifact will be pushed from this repo to multiple repositories.
 - Linux:
   > sh ./run_protocol_compilers.sh
   
-##  JitPack
+
+## Developers
+When testing changes, it helps to verify their behavior in the libraries that consume these protobuf specs.  You can publish the compiled protobuf as a "local" library and consume it in a different project.
+
+### Scala
+1. `cd build/scala`
+1. `sbt publishLocal`
+1. Check the logs to see the org/package/version that was published, and use as a normal SBT dependency in a different project
+  - i.e. `"co.topl" %% "protobuf-fs2" % "b56d2815"`
+
+####  JitPack
 
 This repo can be consumed using jitpack. Here is how:
 
-- [JitPack](https://jitpack.io/#Topl/protobuf-specs) produces an artifact on each time is pushed. commit/branch
+- Each time a commit is pushed, it produces an artifact [JitPack](https://jitpack.io/#Topl/protobuf-specs)
 
 Add jitpack to the resolvers list in build.sbt. It should look like this:
 
@@ -29,7 +53,7 @@ Add jitpack to the resolvers list in build.sbt. It should look like this:
   libraryDependencies += "com.github.Topl.protobuf-specs" %% "protobuf-fs2" % "e03a093"
 ```
 
-## Maven Release
+#### Maven Release
 
 This repo can be consumed using Sonatype s01 releases. Here is how:
 
@@ -48,13 +72,7 @@ Add Sonatype to the resolvers list in build.sbt. It should look like this:
  libraryDependencies +=  "co.topl" %% "protobuf-fs2" % "2.0.0-alpha2"
 ```
 
-## Developers
-When testing changes, it helps to verify their behavior in the libraries that consume these protobuf specs.  You can publish the compiled protobuf as a "local" library and consume it in a different project.
-### Scala
-1. `cd build/scala`
-1. `sbt publishLocal`
-1. Check the logs to see the org/package/version that was published, and use as a normal SBT dependency in a different project
-  - i.e. `"co.topl" %% "protobuf-fs2" % "b56d2815"`
+
 
 ### Dart
 1. Install Dart [protoc_plugin](https://pub.dev/packages/protoc_plugin)
@@ -66,3 +84,11 @@ When testing changes, it helps to verify their behavior in the libraries that co
       topl_protobuf:
         path: /path/to/protobuf-specs/build/dart
     ```
+
+## Usages
+See related projects 
+
+- [quivr4s](https://github.com/Topl/quivr4s)
+- [BramblSc](https://github.com/Topl/BramblSc)
+- [Bifrost](https://github.com/Topl/Bifrost/)
+- [dart_topl_common](https://github.com/Topl/dart_topl_common)
