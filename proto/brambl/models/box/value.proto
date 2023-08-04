@@ -50,7 +50,7 @@ message Value {
     // The ID of _this_ Group.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
     // Specification: GroupId: SHA-256(label + fixedSeries + seriesTokenSupply + txId + index)
-    GroupId id = 6;
+    GroupId groupId = 6;
   }
 
 }
