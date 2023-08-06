@@ -33,11 +33,11 @@ jobs:
       - name: Setup SBT
         run: |
           mkdir -p $HOME/bin/sbt
-          set -eux && curl --fail --silent --location --retry 3 https://github.com/sbt/sbt/releases/download/v1.7.3/sbt-1.7.3.tgz | gunzip | tar x -C $HOME/bin/sbt
+          set -eux && curl --fail --silent --location --retry 3 https://github.com/sbt/sbt/releases/download/v1.9.0/sbt-1.9.0.tgz | gunzip | tar x -C $HOME/bin/sbt
           echo "$HOME/bin/sbt" >> $GITHUB_PATH
 
       - name: Compile and Test
-        run: sbt publishLocal
+        run: sbt +publishLocal
         working-directory: build/scala
   build-dart:
     name: Dart Build
