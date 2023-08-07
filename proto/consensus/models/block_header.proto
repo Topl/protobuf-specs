@@ -6,6 +6,7 @@ import 'consensus/models/block_id.proto';
 import 'consensus/models/eligibility_certificate.proto';
 import 'consensus/models/operational_certificate.proto';
 import 'consensus/models/staking.proto';
+import 'consensus/models/protocol_version.proto';
 
 import "validate/validate.proto";
 
@@ -39,4 +40,6 @@ message BlockHeader {
   bytes metadata = 10 [(validate.rules).bytes.max_len = 32];
   // The operator's staking address
   StakingAddress address = 11 [(validate.rules).message.required = true];
+  // Protocol Version
+  ProtocolVersion version = 13 [(validate.rules).message.required = true];
 }
