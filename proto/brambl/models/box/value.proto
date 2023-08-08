@@ -41,16 +41,14 @@ message Value {
     string label = 1;
     // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
     FixedSeries fixedSeries = 2;
-    // Descriptor of how many series can be associated with this group
-    SeriesTokenSupply seriesTokenSupply = 3 [(validate.rules).message.required = true];
     // transaction id
-    TransactionId txId = 5 [(validate.rules).message.required = true];
+    TransactionId txId = 3 [(validate.rules).message.required = true];
     // index of the output (UTXO) within the transaction targeted by id.
     uint32 index = 4;
     // The ID of _this_ Group.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
-    // Specification: GroupId: SHA-256(label + fixedSeries + seriesTokenSupply + txId + index)
-    GroupId groupId = 6;
+    // Specification: GroupId: SHA-256(label + fixedSeries + txId + index)
+    GroupId groupId = 5;
   }
 
 }

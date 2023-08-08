@@ -2,25 +2,6 @@ syntax = "proto3";
 
 package co.topl.brambl.models.box;
 
-message SeriesTokenSupply {
-  oneof value {
-    SeriesTokenSupplyEnum enum = 1;
-    Capped capped = 2;
-  }
-}
-
-enum SeriesTokenSupplyEnum {
-  // we can mint as many tokens as we want of a given asset
-  UNLIMITED = 0;
-  // the same as capped but the network enforces that all tokens are minted in only one transaction.
-  FIXED = 1;
-}
-
-message Capped {
-  // can only mint up to a certain amount of tokens of a given series.
-  uint64 supply = 1 ;
-}
-
 // Fix a group identifier to a particular series, thus only allowing that group to be used to mint asset tokens with that series.
 message FixedSeries {
   // SHA256 series policy
