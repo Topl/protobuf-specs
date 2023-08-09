@@ -7,15 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed[Release - v2.0.0-alpha2 | todo replace: next commit hash]
+## [v2.0.0-alpha3] - TODO
+- TAM V2 Group Access token models
+
+## [Released] 
+
+## [v2.0.0-alpha2] - Fri Jun 30 14:41:29 UTC 2023
 - Remove "Registration" Box Value
 - Create co.topl.consensus.models.StakingRegistration message
 - Create co.topl.consensus.models.ActiveStaker message
 - Remove "stakingAddress" field from Topl Box Value
 - Embed "StakingRegistration" in Topl Box Value
-
-### Added[Release - v2.0.0-alpha2 | todo replace: next commit hash]
 - Retrieve Epoch Data Stats, Node rpc `fetchEpochData`
+
+## [v2.0.0-alpha1] - Mon Jun 12 13:53:06 UTC 2023
+- all the below changes were included on Sonatype releases repository
 
 ### Added[ae3f01d]
 - Retrieve Block Stats, Genus rpc `getBlockStats`
