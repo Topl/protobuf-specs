@@ -7,14 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed[Release - v2.0.0-alpha2 | todo replace: next commit hash]
+### Changed[Release - v2.0.0-alpha3]
+- BlockBody message contains optional rewardTransactionId field
+- FullBlockBody message contains optional rewardTransaction field
+- Genus BlockData message replace `body` and `transactions` fields with a FullBody instance 
+
+## [Released]
+
+### Changed[Release - v2.0.0-alpha2]
 - Remove "Registration" Box Value
 - Create co.topl.consensus.models.StakingRegistration message
 - Create co.topl.consensus.models.ActiveStaker message
 - Remove "stakingAddress" field from Topl Box Value
 - Embed "StakingRegistration" in Topl Box Value
 
-### Added[Release - v2.0.0-alpha2 | todo replace: next commit hash]
+### Added[Release - v2.0.0-alpha2]
 - Retrieve Epoch Data Stats, Node rpc `fetchEpochData`
 
 ### Added[ae3f01d]
