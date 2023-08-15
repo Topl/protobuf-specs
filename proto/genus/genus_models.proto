@@ -153,6 +153,5 @@ message HeightData {
 // Data structure with the most important parts of a Block. Equivalent to a denormalized Full Block.
 message BlockData {
   consensus.models.BlockHeader header = 1 [(validate.rules).message.required = true];
-  node.models.BlockBody body = 2 [(validate.rules).message.required = true];
-  repeated brambl.models.transaction.IoTransaction transactions = 3;
+  node.models.FullBlockBody body = 4 [(validate.rules).message.required = true];
 }

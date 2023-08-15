@@ -12,8 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  
 - TAM V2 Group Access token models
+- TAM V2 Series Access token models
 
-## [Released] 
+### Changed
+
+- BlockBody message contains optional rewardTransactionId field
+- FullBlockBody message contains optional rewardTransaction field
+- Genus BlockData message replace `body` and `transactions` fields with a FullBody instance 
+
+## [Released]
 
 ## [v2.0.0-alpha2] - Fri Jun 30 14:41:29 UTC 2023
 
