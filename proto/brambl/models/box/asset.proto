@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 package co.topl.brambl.models.box;
-import 'validate/validate.proto';
 
 enum FungibilityType {
   // `group-and-series` means that both the series and the group are considered for fungibility.
@@ -13,8 +12,8 @@ enum FungibilityType {
 }
 
 enum QuantityDescriptorType{
-  // `standard` means that the token has the standard behavior. If it is fungible one can fraction it in smaller tokens or merge two smaller tokens to make a bigger one.
-  STANDARD = 0;
+  // `liquid` If it is fungible one can fraction it in smaller tokens or merge two smaller tokens to make a bigger one.
+  LIQUID = 0;
   // `accumulator` means that the token can only be merged with other fungible tokens. Once two tokens are merged they can never be separated and will always share the same UTXO.
   ACCUMULATOR = 1;
   // `fractionable` means that the token can only be split but not merged with other fungible tokens. Once the token was split it can never be put together again.
