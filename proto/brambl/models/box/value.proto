@@ -17,6 +17,7 @@ message Value {
         LVL lvl = 1;
         TOPL topl = 2;
         Asset asset = 3;
+        UpdateProposal updateProposal = 6; // 4 and 5 reserved for group and series
     }
     // A payment token
     message LVL {
