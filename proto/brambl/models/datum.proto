@@ -4,12 +4,6 @@ package co.topl.brambl.models;
 
 import 'validate/validate.proto';
 import 'brambl/models/event.proto';
-import 'google/protobuf/wrappers.proto';
-import 'brambl/models/address.proto';
-import 'brambl/models/box/asset.proto';
-import 'brambl/models/identifier.proto';
-
-import "google/protobuf/struct.proto";
 
 // Datums represent a queryable product value of the arguments available from a certain Event. Datum may be
 // evaluated during the Quivr protocol execution by providing events as Datum in a Dynamic Context.
@@ -40,29 +34,9 @@ message Datum {
     Event.IoTransaction event = 1 [(validate.rules).message.required = true];
   }
   message GroupPolicy {
-    // Identifies the group policy for humans (do not confuse with the actual group identifier)
-    string label = 1;
-    // The address of a UTXO. The UTXO contains the LVLs that are paid for minting the group constructor token.
-    TransactionOutputAddress registrationUtxo = 2 [(validate.rules).message.required = true];
-    // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
-    SeriesId fixedSeries = 3;
+    Event.GroupPolicy groupPolicy = 1 [(validate.rules).message.required = true];
   }
   message SeriesPolicy {
-    // The human readable name of this series. (do not confuse with the actual series identifier)
-    string label = 1;
-    // This is an optional field. When provided it fixes the quantity of tokens that will be minted when this series is consumed,
-    // and the series constructor is burned by the minting transaction.
-    // When not provided, the series constructor is not burned, thus making the token supply unlimited.
-    google.protobuf.UInt32Value tokenSupply = 2;
-    // The address of a UTXO. The UTXO contains the LVLs that are paid for minting the series constructor token.
-    TransactionOutputAddress registrationUtxo = 3 [(validate.rules).message.required = true];
-    // Describes the behavior of the quantity field of the assets minted using the series constructor derived from this policy.
-    brambl.models.box.QuantityDescriptorType quantityDescriptor = 4;
-    //Describes the fungibility of the assets minted using the series constructor token derived from this policy.
-    brambl.models.box.FungibilityType fungibility = 5;
-    // Describes the schema of the data stored in the metadata field of the Asset Minting Statement.
-    google.protobuf.Struct ephemeralMetadataScheme = 6;
-    // Describes the schema of the data stored in the Asset Token.
-    google.protobuf.Struct permanentMetadataScheme = 7;
+    Event.SeriesPolicy seriesPolicy = 1 [(validate.rules).message.required = true];
   }
 }
