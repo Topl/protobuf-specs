@@ -19,4 +19,6 @@ message IoTransaction {
     // 0-to-many list of outputs
     repeated UnspentTransactionOutput outputs = 2;
     co.topl.brambl.models.Datum.IoTransaction datum = 3 [(validate.rules).message.required = true];
+    co.topl.brambl.models.Datum.GroupPolicy groupPolicyDatum = 5;
+    co.topl.brambl.models.Datum.SeriesPolicy seriesPolicyDatum = 6;
 }
