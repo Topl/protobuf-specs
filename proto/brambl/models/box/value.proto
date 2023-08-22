@@ -8,9 +8,7 @@ import 'quivr/models/shared.proto';
 import 'consensus/models/staking.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/box/asset.proto';
-import 'brambl/models/address.proto';
-import "google/protobuf/struct.proto";
-
+import 'google/protobuf/wrappers.proto';
 
 // The value contained in a box
 message Value {
@@ -19,6 +17,7 @@ message Value {
     TOPL topl = 2;
     Asset asset = 3;
     Group group = 4;
+    Series series = 5;
   }
   // A payment token
   message LVL {
@@ -40,41 +39,32 @@ message Value {
 
   // A group constructor token
   message Group {
-    // Identifies the group policy for humans (do not confuse with the actual group identifier)
-    string label = 1;
-    // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
-    SeriesId fixedSeries = 2;
-    // The address of a UTXO. The UTXO contains the LVLs that are paid for minting the group constructor token.
-    TransactionOutputAddress transactionOutputAddress = 3 [(validate.rules).message.required = true];
+    // The group identifier of this group constructor token.
     // The ID of _this_ Group.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
-    // Specification: GroupId: SHA-256(label + fixedSeries + transactionOutputAddress)
-    GroupId groupId = 4;
+    // It is the digest of the Group Policy.
+    GroupId groupId = 1;
+    // The quantity of group constructor tokens stored in a given UTXO.
+    quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
+    // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
+    SeriesId fixedSeries = 3;
   }
 
   // A series constructor token
   message Series {
-    // The human readable name of this series. (do not confuse with the actual series identifier)
-    string label = 1;
-    // The address of a UTXO. The UTXO contains the LVLs that are paid for minting the series constructor token.
-    TransactionOutputAddress transactionOutputAddress = 2 [(validate.rules).message.required = true];
-    //  This is an optional field.
-    //  When provided it fixes the quantity of tokens that can be minted when this series is consumed,
-    //  and the series constructor is burned by the minting transaction.
-    //  When not provided, the series constructor is not burned, thus making the token supply unlimited.
-    quivr.models.Int128 tokenSupply = 3;
-    //Describes the fungibility of the assets minted using the series constructor token derived from this policy.
-    FungibilityType fungibility = 4;
-    // Describes the behavior of the quantity field of the assets minted using the series constructor derived from this policy.
-    QuantityDescriptorType quantityDescriptor = 5;
-    // Describes the schema of the data stored in the metadata field of the Asset Minting Statement.
-    google.protobuf.Struct ephemeralMetadataScheme = 6;
-    // Describes the schema of the data stored in the Asset Token.
-    google.protobuf.Struct permanentMetadataScheme = 7;
     // The ID of _this_ Series.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
-    // Specification: GroupId: SHA-256(label + transactionOutputAddress + tokenSupply + fungibility + quantityDescriptor)
-    SeriesId seriesId = 8;
+    // It is the digest of the Series Policy.
+    SeriesId seriesId = 1;
+    // The quantity of series constructor tokens stored in a given UTXO.
+    quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
+    // This is an optional field. When provided it fixes the quantity of tokens that will be minted when this series is consumed, 
+    // and the series constructor is burned by the minting transaction. 
+    // When not provided, the series constructor is not burned, thus making the token supply unlimited.
+    google.protobuf.UInt32Value tokenSupply = 3;
+    // Describes the behavior of the quantity field of the assets minted using the series constructor derived from this policy.
+    QuantityDescriptorType quantityDescriptor = 4;
+    //Describes the fungibility of the assets minted using the series constructor token derived from this policy.
+    FungibilityType fungibility = 5;
   }
-
 }
