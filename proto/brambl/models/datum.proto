@@ -34,9 +34,9 @@ message Datum {
     Event.IoTransaction event = 1 [(validate.rules).message.required = true];
   }
   message GroupPolicy {
-    Event.GroupPolicy groupPolicy = 1 [(validate.rules).message.required = true];
+    Event.GroupPolicy event = 1 [(validate.rules).message.required = true];
   }
   message SeriesPolicy {
-    Event.SeriesPolicy seriesPolicy = 1 [(validate.rules).message.required = true];
+    Event.SeriesPolicy event = 1 [(validate.rules).message.required = true];
   }
 }
