@@ -1,4 +1,5 @@
 val scala213 = "2.13.11"
+val scala33 = "3.3.0"
 
 inThisBuild(
   List(
@@ -8,7 +9,7 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq(
-  crossScalaVersions := Seq(scala213)
+  crossScalaVersions := Seq(scala213, scala33)
 )
 
 lazy val publishSettings = Seq(
@@ -45,8 +46,7 @@ lazy val protobuf =
     .settings(
       moduleName := "protobuf",
       commonSettings,
-      // publish / skip := true,
-      crossScalaVersions := Nil
+      // publish / skip := true
     )
     .aggregate(
       protobufFs2
