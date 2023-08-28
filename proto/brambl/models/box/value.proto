@@ -6,9 +6,12 @@ import 'validate/validate.proto';
 
 import 'quivr/models/shared.proto';
 import 'consensus/models/staking.proto';
+import 'node/models/ratio.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/box/asset.proto';
 import 'brambl/models/event.proto';
+
+import 'google/protobuf/duration.proto';
 import 'google/protobuf/wrappers.proto';
 
 // The value contained in a box
@@ -19,6 +22,7 @@ message Value {
     Asset asset = 3;
     Group group = 4;
     Series series = 5;
+    UpdateProposal updateProposal = 6;
   }
   // A payment token
   message LVL {
@@ -61,8 +65,8 @@ message Value {
     SeriesId seriesId = 1;
     // The quantity of series constructor tokens stored in a given UTXO.
     quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
-    // This is an optional field. When provided it fixes the quantity of tokens that will be minted when this series is consumed, 
-    // and the series constructor is burned by the minting transaction. 
+    // This is an optional field. When provided it fixes the quantity of tokens that will be minted when this series is consumed,
+    // and the series constructor is burned by the minting transaction.
     // When not provided, the series constructor is not burned, thus making the token supply unlimited.
     google.protobuf.UInt32Value tokenSupply = 3;
     // Describes the behavior of the quantity field of the assets minted using the series constructor derived from this policy.
@@ -71,5 +75,35 @@ message Value {
     FungibilityType fungibility = 5;
     // Group Policy
     Event.SeriesPolicy seriesPolicy = 6 [(validate.rules).message.required = true];
+  }
+
+  message UpdateProposal {
+    // Update proposal label for humans (do not confuse with the actual update proposal identifier)
+    string label = 1;
+    // fEffective
+    co.topl.node.models.Ratio fEffective = 2;
+    // vrfLddCutoff
+    // Verifiable Random Function: mechanism for leader election in Ouroboros proof-of-stake
+    // Local dynamic difficulty, Short timescale variation of the block production eligibility threshold.
+    google.protobuf.UInt32Value vrfLddCutoff = 3;
+    // vrfPrecision
+    google.protobuf.UInt32Value vrfPrecision = 4;
+    // vrfBaselineDifficulty
+    co.topl.node.models.Ratio vrfBaselineDifficulty = 5;
+    // vrfAmplitude
+    co.topl.node.models.Ratio vrfAmplitude = 6;
+    // chainSelectionKLookback
+    google.protobuf.UInt64Value chainSelectionKLookback = 7;
+    // slotDuration, Slot: Atomic time unit in Ouroboros, smallest piece of time (~1 second for Topl, 2 for Cardano)
+    google.protobuf.Duration slotDuration = 8;
+    // forwardBiasedSlotWindow
+    google.protobuf.UInt64Value forwardBiasedSlotWindow = 9;
+    // operationalPeriodsPerEpoch, Epoch: Long time scale in Ouroboros, epochs are composed of many slots
+    google.protobuf.UInt64Value operationalPeriodsPerEpoch = 10;
+    // kesKeyHours Key-Evolving Signature: mechanism for securing chain selection process in Ouroboros proof-of-stake
+    google.protobuf.UInt32Value kesKeyHours = 11;
+    // kesKeyMinutes Key-Evolving Signature: mechanism for securing chain selection process in Ouroboros proof-of-stake
+    google.protobuf.UInt32Value kesKeyMinutes = 12;
+
   }
 }

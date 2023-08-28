@@ -8,6 +8,6 @@ Seq(
 ).map(addSbtPlugin)
 
 libraryDependencies ++= Seq(
-  "com.thesamet.scalapb" %% "compilerplugin"           % "0.11.11",
-  "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "0.3.1"
+  "com.thesamet.scalapb" %% "compilerplugin"           % "0.11.13",
+  "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "0.3.4"
 )
