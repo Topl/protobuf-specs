@@ -41,7 +41,7 @@ jobs:
           echo "$HOME/bin/sbt" >> $GITHUB_PATH
 
       - name: Compile and Test
-        run: sbt +publishLocal
+        run: sbt publishLocal
         working-directory: build/scala
   build-dart:
     name: Dart Build

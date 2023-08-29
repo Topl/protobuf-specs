@@ -1,4 +1,4 @@
 jdk:
   - openjdk11
 install:
-  - cd build/scala && sbt +publishM2
+  - cd build/scala && sbt publishM2
