@@ -8,27 +8,35 @@ import 'brambl/models/event.proto';
 // Datums represent a queryable product value of the arguments available from a certain Event. Datum may be
 // evaluated during the Quivr protocol execution by providing events as Datum in a Dynamic Context.
 message Datum {
-    oneof value {
-        Eon eon = 1;
-        Era era = 2;
-        Epoch epoch = 3;
-        Header header = 4;
-        IoTransaction ioTransaction = 5;
-    }
+  oneof value {
+    Eon eon = 1;
+    Era era = 2;
+    Epoch epoch = 3;
+    Header header = 4;
+    IoTransaction ioTransaction = 5;
+    GroupPolicy groupPolicy = 6;
+    SeriesPolicy seriesPolicy = 7;
+  }
 
-    message Eon {
-        Event.Eon event = 1 [(validate.rules).message.required = true];
-    }
-    message Era {
-        Event.Era event = 1 [(validate.rules).message.required = true];
-    }
-    message Epoch {
-        Event.Epoch event = 1 [(validate.rules).message.required = true];
-    }
-    message Header {
-        Event.Header event = 1 [(validate.rules).message.required = true];
-    }
-    message IoTransaction {
-        Event.IoTransaction event = 1 [(validate.rules).message.required = true];
-    }
+  message Eon {
+    Event.Eon event = 1 [(validate.rules).message.required = true];
+  }
+  message Era {
+    Event.Era event = 1 [(validate.rules).message.required = true];
+  }
+  message Epoch {
+    Event.Epoch event = 1 [(validate.rules).message.required = true];
+  }
+  message Header {
+    Event.Header event = 1 [(validate.rules).message.required = true];
+  }
+  message IoTransaction {
+    Event.IoTransaction event = 1 [(validate.rules).message.required = true];
+  }
+  message GroupPolicy {
+    Event.GroupPolicy event = 1 [(validate.rules).message.required = true];
+  }
+  message SeriesPolicy {
+    Event.SeriesPolicy event = 1 [(validate.rules).message.required = true];
+  }
 }

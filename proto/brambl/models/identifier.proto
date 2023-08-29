@@ -4,23 +4,39 @@ package co.topl.brambl.models;
 
 import 'validate/validate.proto';
 
-// Represents the identifier of a Transction.  It is constructed from the evidence of the signable bytes of the Transaction.
+// Represents the identifier of a Transaction.  It is constructed from the evidence of the signable bytes of the Transaction.
 message TransactionId {
-    // The evidence of the Transaction's signable bytes
-    // length = 32
-    bytes value = 1 [(validate.rules).bytes.len = 32];
+  // The evidence of the Transaction's signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 // Represents the identifier of a Lock.  It is constructed from the evidence of the signable bytes of the Lock.
 message LockId {
-    // The evidence of the Lock's signable bytes
-    // length = 32
-    bytes value = 1 [(validate.rules).bytes.len = 32];
+  // The evidence of the Lock's signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
 // Represents the identifier of an Accumulator Root.  It is constructed from the evidence of the signable bytes of the Lock.
 message AccumulatorRootId {
-    // The evidence of the Accumulator Root's signable bytes
-    // length = 32
-    bytes value = 1 [(validate.rules).bytes.len = 32];
+  // The evidence of the Accumulator Root's signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+// Represents the identifier of an TAM V2 group.
+// It is constructed using SHA-256 digest from fields label+fixedSeries+seriesTokenSupply+transactionId+utxoIndex.
+message GroupId {
+  // The evidence of the Group signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+// Represents the identifier of an TAM V2 series.
+// It is constructed using SHA-256 digest from fields label+fixedSeries+seriesTokenSupply+transactionId+utxoIndex.
+message SeriesId {
+  // The evidence of the Group signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
 }

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+enum FungibilityType {
+  // `group-and-series` means that both the series and the group are considered for fungibility.
+  GROUP_AND_SERIES = 0;
+  // `series` means that only the series is considered for fungibility.
+  SERIES = 1;
+  // `group` means that only the group is considered for fungibility
+  GROUP = 2;
+}
+
+enum QuantityDescriptorType{
+  // `liquid` If it is fungible one can fraction it in smaller tokens or merge two smaller tokens to make a bigger one.
+  LIQUID = 0;
+  // `accumulator` means that the token can only be merged with other fungible tokens. Once two tokens are merged they can never be separated and will always share the same UTXO.
+  ACCUMULATOR = 1;
+  // `fractionable` means that the token can only be split but not merged with other fungible tokens. Once the token was split it can never be put together again.
+  FRACTIONABLE = 2;
+  // `immutable` means that a token can neither be accumulated nor split, it always keeps the same quantity.
+  IMMUTABLE = 3;
+}
