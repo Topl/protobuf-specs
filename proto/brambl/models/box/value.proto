@@ -9,7 +9,6 @@ import 'consensus/models/staking.proto';
 import 'node/models/ratio.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/box/asset.proto';
-import 'brambl/models/event.proto';
 
 import 'google/protobuf/duration.proto';
 import 'google/protobuf/wrappers.proto';
@@ -44,11 +43,8 @@ message Value {
 
   // A group constructor token
   message Group {
-    // The group identifier of this group constructor token.
-    // The ID of _this_ Group.  This value is optional and its contents are included in the signable or identifiable data.  Clients which _can_ verify
-    // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
-    // It is the digest of the Group Policy.
-    GroupId groupId = 1;
+    // The ID of _this_ Group. It is the digest of the Group Policy.
+    GroupId groupId = 1 [(validate.rules).message.required = true];
     // The quantity of group constructor tokens stored in a given UTXO.
     quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
     // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
@@ -57,10 +53,8 @@ message Value {
 
   // A series constructor token
   message Series {
-    // The ID of _this_ Series.  This value is optional and its contents are included in the signable or identifiable data.  Clients which _can_ verify
-    // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
-    // It is the digest of the Series Policy.
-    SeriesId seriesId = 1;
+    // The ID of _this_ Series. It is the digest of the Series Policy.
+    SeriesId seriesId = 1 [(validate.rules).message.required = true];
     // The quantity of series constructor tokens stored in a given UTXO.
     quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
     // This is an optional field. When provided it fixes the quantity of tokens that will be minted when this series is consumed,
