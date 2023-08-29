@@ -45,7 +45,7 @@ message Value {
   // A group constructor token
   message Group {
     // The group identifier of this group constructor token.
-    // The ID of _this_ Group.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+    // The ID of _this_ Group.  This value is optional and its contents are included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
     // It is the digest of the Group Policy.
     GroupId groupId = 1;
@@ -57,7 +57,7 @@ message Value {
 
   // A series constructor token
   message Series {
-    // The ID of _this_ Series.  This value is optional and its contents are not included in the signable or identifiable data.  Clients which _can_ verify
+    // The ID of _this_ Series.  This value is optional and its contents are included in the signable or identifiable data.  Clients which _can_ verify
     // this value should verify this value, but some clients may not be able to or need to, in which case this field acts as a convenience.
     // It is the digest of the Series Policy.
     SeriesId seriesId = 1;

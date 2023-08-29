@@ -21,7 +21,7 @@ message IoTransaction {
   // Datum
   co.topl.brambl.models.Datum.IoTransaction datum = 3 [(validate.rules).message.required = true];
   // 0-to-many list of group Policy
-  repeated co.topl.brambl.models.Datum.GroupPolicy groupPolicy = 5;
+  repeated co.topl.brambl.models.Datum.GroupPolicy groupPolicies = 5;
   // 0-to-many list of seriesPolicy
-  repeated co.topl.brambl.models.Datum.SeriesPolicy seriesPolicy = 6;
+  repeated co.topl.brambl.models.Datum.SeriesPolicy seriesPolicies = 6;
 }
