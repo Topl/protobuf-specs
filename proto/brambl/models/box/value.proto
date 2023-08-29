@@ -53,8 +53,6 @@ message Value {
     quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
     // An optional series identifier. When this series identifier is defined, this groups that implement this policy can only be used to mint assets with the aforementioned series identifier
     SeriesId fixedSeries = 3;
-    // Group Policy
-    Event.GroupPolicy groupPolicy = 4 [(validate.rules).message.required = true];
   }
 
   // A series constructor token
@@ -73,8 +71,6 @@ message Value {
     QuantityDescriptorType quantityDescriptor = 4;
     //Describes the fungibility of the assets minted using the series constructor token derived from this policy.
     FungibilityType fungibility = 5;
-    // Group Policy
-    Event.SeriesPolicy seriesPolicy = 6 [(validate.rules).message.required = true];
   }
 
   message UpdateProposal {
