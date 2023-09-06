@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+import 'validate/validate.proto';
+
+import 'quivr/models/shared.proto';
+import 'brambl/models/address.proto';
+
+import 'google/protobuf/wrappers.proto';
+import "google/protobuf/struct.proto";
+
+message AssetMintingStatement {
+  // The address of the UTXO that contains the group constructor token that we are using to mint the asset token.
+  TransactionOutputAddress registrationUtxo = 1 [(validate.rules).message.required = true];
+
+  // The address of the UTXO that contains the seriesconstructor token that we are using to mint the asset token.
+  TransactionOutputAddress seriesTokenUtxo = 2 [(validate.rules).message.required = true];
+
+  // The number of assets that we are minting using the group and series constructor token references by the two other attributes.
+  quivr.models.Int128 quantity = 3 [(validate.rules).message.required = true];
+
+  // This is the permanent metadata of an asset.
+  // It follows the schema defined in the permanent metadata schema of the series policy corresponding to the token being minted.
+  // The conformance of this field to the schema is not checked by the node.
+  google.protobuf.Struct permanentMetadata = 4;
+}
+
+message AssetMergingStatement {
+  // The non-empty list of UTXOs that we are using to compute the Merkle root for the alloy.
+  repeated TransactionOutputAddress inputUtxos = 1;
+
+  // The index in the output sequence of the transaction where the merged tokens are stored.
+  google.protobuf.UInt32Value outputIdx = 2 [(validate.rules).message.required = true];
+
+}
+
+message AssetSplittingStatement {
+  // The non-empty list of indexes where the split asset is being put.
+  repeated google.protobuf.UInt32Value outputIndexes = 1;
+
+  // The UTXO that is being split.
+  TransactionOutputAddress inputUtxo = 2 [(validate.rules).message.required = true];
+}
