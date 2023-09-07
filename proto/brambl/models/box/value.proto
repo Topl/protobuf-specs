@@ -56,9 +56,9 @@ message Value {
     // This is the ephemeral metadata of an asset. It follows the schema defined in the ephemeral metadata schema of the series policy corresponding to the token being minted.
     // The conformance of this field to the schema is not checked by the node. This field is managed by the user.
     google.protobuf.Struct ephemeralMetadata = 8;
-    // This field is meant to store a commitment in the form of a hash. This field is managed by the user.
+    // This field is optional and meant to store a commitment in the form of a hash. This field is managed by the user.
     // Metadata concerning this field can be added to the metadata.
-    bytes commitment = 9 [(validate.rules).bytes.len = 32];
+    google.protobuf.BytesValue commitment = 9 [(validate.rules).bytes.len = 32];
   }
 
   // A group constructor token
