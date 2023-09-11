@@ -8,7 +8,7 @@ package co.topl.genus.services;
 
 import 'brambl/models/address.proto';
 import 'brambl/models/identifier.proto';
-import 'brambl/models/datum.proto';
+import 'brambl/models/event.proto';
 import 'consensus/models/block_id.proto';
 import 'genus/genus_models.proto';
 import 'google/protobuf/wrappers.proto';
@@ -216,7 +216,7 @@ message QueryByGroupIdRequest {
 }
 
 message GroupPolicyResponse {
-  brambl.models.Datum.GroupPolicy groupPolicy = 1;
+  brambl.models.Event.GroupPolicy groupPolicy = 1;
 }
 
 // Used to request a series policy associated by seriesId
@@ -226,7 +226,7 @@ message QueryBySeriesIdRequest {
 }
 
 message SeriesPolicyResponse {
-  brambl.models.Datum.SeriesPolicy seriesPolicy = 1;
+  brambl.models.Event.SeriesPolicy seriesPolicy = 1;
 }
 
 // Definitions of existing database indexes.
