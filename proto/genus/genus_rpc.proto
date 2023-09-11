@@ -66,12 +66,6 @@ service TransactionService {
   // parameter. As new TxOs are added or UTxOs are spent that match the request, additional results are returned.
   rpc getTxosByAssetLabel(QueryByAssetLabelRequest) returns(stream TxoResponse);
 
-  // Retrieve a group Policy with the specified `id` from the configured Genus service
-  rpc getGroupPolicy(QueryByGroupIdRequest) returns (GroupPolicyResponse);
-
-  // Retrieve a series Policy with the specified `id` from the configured Genus service
-  rpc getSeriesPolicy(QueryBySeriesIdRequest) returns (SeriesPolicyResponse);
-
   /////////////////////////////////////////////////////////////////////////////
   //
   // The following RPCs are for managing database indexes on the data fields of
@@ -111,6 +105,16 @@ service NetworkMetricsService {
   rpc getBlockchainSizeStats(BlockchainSizeStatsReq) returns (BlockchainSizeStatsRes);
   // Retrieve Block Stats
   rpc getBlockStats(BlockStatsReq) returns (BlockStatsRes);
+}
+
+
+// Operations related to Value specifics Items. Value: TOPL, LVL,...
+service ValueService {
+  // Retrieve a group Policy with the specified `id` from the configured Genus service
+  rpc getGroupPolicy(QueryByGroupIdRequest) returns (GroupPolicyResponse);
+
+  // Retrieve a series Policy with the specified `id` from the configured Genus service
+  rpc getSeriesPolicy(QueryBySeriesIdRequest) returns (SeriesPolicyResponse);
 }
 
 message GetExistingTransactionIndexesResponse {
