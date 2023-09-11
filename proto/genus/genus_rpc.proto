@@ -109,7 +109,7 @@ service NetworkMetricsService {
 
 
 // Operations related to Value specifics Items. Value: TOPL, LVL,...
-service ValueService {
+service TokenService {
   // Retrieve a group Policy with the specified `id` from the configured Genus service
   rpc getGroupPolicy(QueryByGroupIdRequest) returns (GroupPolicyResponse);
 
