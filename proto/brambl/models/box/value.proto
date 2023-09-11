@@ -12,6 +12,7 @@ import 'brambl/models/box/asset.proto';
 
 import 'google/protobuf/duration.proto';
 import 'google/protobuf/wrappers.proto';
+import "google/protobuf/struct.proto";
 
 // The value contained in a box
 message Value {
@@ -36,9 +37,28 @@ message Value {
   }
   // A user-defined token
   message Asset {
-    string label = 1;
-    quivr.models.Int128 quantity = 2 [(validate.rules).message.required = true];
-    quivr.models.SmallData metadata = 3 [(validate.rules).message.required = true];
+    // The group identifier of the group token that was used to mint this asset. When there is a groupAlloy this field is not used.
+    GroupId groupId = 1;
+    // The series identifier of the series token that was used to mint this asset. When there is a seriesAlloy this field is not used.
+    SeriesId seriesId = 2;
+    // A quantity
+    quivr.models.Int128 quantity = 3 [(validate.rules).message.required = true];
+    // This field is optional and represents a Merkle root of the alloy of groups in this asset. This is only valid for tokens that are series fungible.
+    // length = 32
+    google.protobuf.BytesValue groupAlloy = 4 [(validate.rules).bytes.len = 32];
+    // This field is optional and represents a Merkle root of the alloy of series in this asset. This is only valid for tokens that are group fungible.
+    // length = 32
+    google.protobuf.BytesValue seriesAlloy = 5 [(validate.rules).bytes.len = 32];
+    // Describes the fungibility of the asset..
+    brambl.models.box.FungibilityType fungibility = 6;
+    // Describes the quantity behavior of this asset.
+    brambl.models.box.QuantityDescriptorType quantityDescriptor = 7;
+    // This is the ephemeral metadata of an asset. It follows the schema defined in the ephemeral metadata schema of the series policy corresponding to the token being minted.
+    // The conformance of this field to the schema is not checked by the node. This field is managed by the user.
+    google.protobuf.Struct ephemeralMetadata = 8;
+    // This field is optional and meant to store a commitment in the form of a hash. This field is managed by the user.
+    // Metadata concerning this field can be added to the metadata.
+    google.protobuf.BytesValue commitment = 9 [(validate.rules).bytes.len = 32];
   }
 
   // A group constructor token
