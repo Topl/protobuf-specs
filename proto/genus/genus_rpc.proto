@@ -8,6 +8,7 @@ package co.topl.genus.services;
 
 import 'brambl/models/address.proto';
 import 'brambl/models/identifier.proto';
+import 'brambl/models/event.proto';
 import 'consensus/models/block_id.proto';
 import 'genus/genus_models.proto';
 import 'google/protobuf/wrappers.proto';
@@ -106,6 +107,16 @@ service NetworkMetricsService {
   rpc getBlockStats(BlockStatsReq) returns (BlockStatsRes);
 }
 
+
+// Operations related to Value specifics Items. Value: TOPL, LVL,...
+service TokenService {
+  // Retrieve a group Policy with the specified `id` from the configured Genus service
+  rpc getGroupPolicy(QueryByGroupIdRequest) returns (GroupPolicyResponse);
+
+  // Retrieve a series Policy with the specified `id` from the configured Genus service
+  rpc getSeriesPolicy(QueryBySeriesIdRequest) returns (SeriesPolicyResponse);
+}
+
 message GetExistingTransactionIndexesResponse {
   IndexSpecs indexSpecs = 1 [(validate.rules).message.required = true];
 }
@@ -184,7 +195,7 @@ message QueryByLockAddressRequest {
   TxoState state = 3;
 }
 
-// User to request TxOs by their asset type
+// Used to request TxOs by their asset type
 message QueryByAssetLabelRequest {
   AssetLabel assetLabel = 1 [(validate.rules).message.required = true];
   // The default value for confidenceFactor is 0.9999999 (7 nines)
@@ -200,6 +211,26 @@ message CreateOnChainTransactionIndexRequest {
   IndexSpec indexSpec = 1 [(validate.rules).message.required = true];
   // If populate is true, then scan the existing transaction in the database to populate the index.
   bool populate = 2;
+}
+
+// Used to request a group policy associated by groupId
+message QueryByGroupIdRequest {
+  // GroupId of interest
+  brambl.models.GroupId groupId = 1 [(validate.rules).message.required = true];
+}
+
+message GroupPolicyResponse {
+  brambl.models.Event.GroupPolicy groupPolicy = 1;
+}
+
+// Used to request a series policy associated by seriesId
+message QueryBySeriesIdRequest {
+  // GroupId of interest
+  brambl.models.SeriesId seriesId = 1 [(validate.rules).message.required = true];
+}
+
+message SeriesPolicyResponse {
+  brambl.models.Event.SeriesPolicy seriesPolicy = 1;
 }
 
 // Definitions of existing database indexes.
