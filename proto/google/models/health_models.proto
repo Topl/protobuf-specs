@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package grpc.health.v1;
+
+enum ServingStatus {
+  UNKNOWN = 0; // Default status. Indicates that no stats was returned.
+  SERVING = 1; // Service is in a healthy state.
+  NOT_SERVING = 2; // Service is unhealthy. Reason is implementation specific.
+  SERVICE_UNKNOWN = 3;  // Used only by the Watch method.
+}
+
