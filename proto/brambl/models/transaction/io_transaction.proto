@@ -27,4 +27,8 @@ message IoTransaction {
   repeated co.topl.brambl.models.Datum.SeriesPolicy seriesPolicies = 6;
   // 0-to-many list of minting asset statements
   repeated co.topl.brambl.models.box.AssetMintingStatement mintingStatements = 7;
+  // 0-to-many list of merging asset statements
+  repeated co.topl.brambl.models.box.AssetMergingStatement mergingStatements = 8;
+  // 0-to-many list of splitting asset statements
+  repeated co.topl.brambl.models.box.AssetSplittingStatement splittingStatements = 9;
 }
