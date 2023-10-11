@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.0-alpha6] - Tue Sep 19 20:21:28 UTC 2023
+
+### Added
+- Io Transaction includes includes merging and splitting statements
+
 ## [Released]
 
 ## [v2.0.0-alpha5] - Tue Sep 19 20:21:28 UTC 2023	
@@ -16,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - gRPC Health Check
 - gRPC Fetch group and series policies
 - TAM V2  models, minting, merging and splitting statements
+
 ### Changed
 
 - Io Transaction includes minting asset statements
