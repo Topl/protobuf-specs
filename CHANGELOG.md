@@ -7,7 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v2.0.0-alpha3] - TODO
+## [Released]
+
+## [v2.0.0-alpha5] - Tue Sep 19 20:21:28 UTC 2023	
+
+### Added
+ 
+- gRPC Health Check
+- gRPC Fetch group and series policies
+- TAM V2  models, minting, merging and splitting statements
+### Changed
+
+- Io Transaction includes minting asset statements
+- Required GroupId and SeriesId on constructor tokens
+
+## [v2.0.0-alpha4] - Tue Aug 29 17:36:07 UTC 2023	
+
+### Added
+ 
+- TAM V2 Access token models, FungibilityType QuantityDescriptorType
+
+### Changed
+
+- Io Transaction includes group and series policies
+
+
+## [v2.0.0-alpha3] - Wed Aug 16 18:39:18 UTC 2023	
 
 ### Added
  
@@ -19,8 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BlockBody message contains optional rewardTransactionId field
 - FullBlockBody message contains optional rewardTransaction field
 - Genus BlockData message replace `body` and `transactions` fields with a FullBody instance 
-
-## [Released]
 
 ## [v2.0.0-alpha2] - Fri Jun 30 14:41:29 UTC 2023
 
