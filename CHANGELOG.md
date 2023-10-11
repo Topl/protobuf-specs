@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v2.0.0-alpha6] - Tue Sep 19 20:21:28 UTC 2023
 
 ### Added
+- Refactor Ratio message, moved to Quivr/shared
 - Io Transaction includes includes merging and splitting statements
 
 ## [Released]

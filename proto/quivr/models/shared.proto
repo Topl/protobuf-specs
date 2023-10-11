@@ -112,3 +112,9 @@ message Int128 {
     // Java BigInt Representation: two's-complement, big-endian
     bytes value = 1 [(validate.rules).bytes.max_len = 16];
 }
+
+message Ratio {
+    quivr.models.Int128 numerator = 1 [(validate.rules).message.required = true];
+    // Populate with 1 if not defined
+    quivr.models.Int128 denominator = 2 [(validate.rules).message.required = true];
+}
