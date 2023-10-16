@@ -6,7 +6,6 @@ import 'validate/validate.proto';
 
 import 'quivr/models/shared.proto';
 import 'consensus/models/staking.proto';
-import 'node/models/ratio.proto';
 import 'brambl/models/identifier.proto';
 import 'brambl/models/box/asset.proto';
 
@@ -91,7 +90,7 @@ message Value {
     // Update proposal label for humans (do not confuse with the actual update proposal identifier)
     string label = 1;
     // fEffective
-    co.topl.node.models.Ratio fEffective = 2;
+    quivr.models.Ratio fEffective = 2;
     // vrfLddCutoff
     // Verifiable Random Function: mechanism for leader election in Ouroboros proof-of-stake
     // Local dynamic difficulty, Short timescale variation of the block production eligibility threshold.
@@ -99,9 +98,9 @@ message Value {
     // vrfPrecision
     google.protobuf.UInt32Value vrfPrecision = 4;
     // vrfBaselineDifficulty
-    co.topl.node.models.Ratio vrfBaselineDifficulty = 5;
+    quivr.models.Ratio vrfBaselineDifficulty = 5;
     // vrfAmplitude
-    co.topl.node.models.Ratio vrfAmplitude = 6;
+    quivr.models.Ratio vrfAmplitude = 6;
     // chainSelectionKLookback
     google.protobuf.UInt64Value chainSelectionKLookback = 7;
     // slotDuration, Slot: Atomic time unit in Ouroboros, smallest piece of time (~1 second for Topl, 2 for Cardano)
