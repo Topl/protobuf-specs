@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package co.topl.brambl.models.box;
+
+import 'validate/validate.proto';
+
+import 'brambl/models/address.proto';
+
+message UpdateProposalMintingStatement {
+  // The address of a UTXO. The UTXO contains the TOPLs that are paid for minting the update proposal token.
+  TransactionOutputAddress registrationUtxo = 1 [(validate.rules).message.required = true];
+}

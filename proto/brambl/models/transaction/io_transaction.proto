@@ -9,6 +9,7 @@ import 'brambl/models/identifier.proto';
 import 'brambl/models/transaction/spent_transaction_output.proto';
 import 'brambl/models/transaction/unspent_transaction_output.proto';
 import 'brambl/models/box/assets_statements.proto';
+import 'brambl/models/box/update_proposal_statements.proto';
 
 // defines a transaction
 message IoTransaction {
@@ -31,4 +32,6 @@ message IoTransaction {
   repeated co.topl.brambl.models.box.AssetMergingStatement mergingStatements = 8;
   // 0-to-many list of splitting asset statements
   repeated co.topl.brambl.models.box.AssetSplittingStatement splittingStatements = 9;
+  // 0-to-many list of minting update proposal statements
+  repeated co.topl.brambl.models.box.UpdateProposalMintingStatement updateProposalMintingStatements = 10;
 }
