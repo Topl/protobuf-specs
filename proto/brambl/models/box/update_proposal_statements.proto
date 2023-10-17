@@ -5,8 +5,11 @@ package co.topl.brambl.models.box;
 import 'validate/validate.proto';
 
 import 'brambl/models/address.proto';
+import 'brambl/models/identifier.proto';
 
 message UpdateProposalMintingStatement {
+  // The ID of the UpdateProposalId
+  UpdateProposalId updateProposalId = 1 [(validate.rules).message.required = true];
   // The address of a UTXO. The UTXO contains the TOPLs that are paid for minting the update proposal token.
-  TransactionOutputAddress registrationUtxo = 1 [(validate.rules).message.required = true];
+  TransactionOutputAddress registrationUtxo = 2 [(validate.rules).message.required = true];
 }

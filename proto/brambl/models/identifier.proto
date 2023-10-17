@@ -25,7 +25,7 @@ message AccumulatorRootId {
   bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
-// Represents the identifier of an TAM V2 group.
+// Represents the identifier of a TAM V2 group.
 // It is constructed using SHA-256 digest from fields label+fixedSeries+seriesTokenSupply+transactionId+utxoIndex.
 message GroupId {
   // The evidence of the Group signable bytes
@@ -33,10 +33,18 @@ message GroupId {
   bytes value = 1 [(validate.rules).bytes.len = 32];
 }
 
-// Represents the identifier of an TAM V2 series.
+// Represents the identifier of a TAM V2 series.
 // It is constructed using SHA-256 digest from fields label+fixedSeries+seriesTokenSupply+transactionId+utxoIndex.
 message SeriesId {
   // The evidence of the Group signable bytes
+  // length = 32
+  bytes value = 1 [(validate.rules).bytes.len = 32];
+}
+
+// Represents the identifier of an UpdateProposal
+// It is constructed using SHA-256 digest of the UpdateProposal.
+message UpdateProposalId {
+  // The evidence of the UpdateProposal signable bytes
   // length = 32
   bytes value = 1 [(validate.rules).bytes.len = 32];
 }
