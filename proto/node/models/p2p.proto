@@ -12,13 +12,12 @@ message CurrentKnownHostsReq {
 
 
 message KnownHost {
-  string host = 1 [(validate.rules).string = {min_len: 7, max_len: 64}];
+  string host = 1 [(validate.rules).string = {min_len: 1, max_len: 255}];
   uint32 port = 2; 
 }
 
 // Response type for CurrentKnownHosts
 message CurrentKnownHostsRes {
-  // A list of Transaction IDs that are currently in the node's mempool
   repeated KnownHost hotHosts = 1;
   repeated KnownHost warmHosts = 2;
   repeated KnownHost coldHosts = 3;
