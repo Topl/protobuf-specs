@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package co.topl.node.services;
+
+service NodeAdminRpc {
+    // retrieve node software version
+    rpc FetchSoftwareVersion (FetchSoftwareVersionReq) returns (FetchSoftwareVersionRes);
+}
+
+// Request type for FetchSoftwareVersion
+message FetchSoftwareVersionReq {}
+  
+// Response type for FetchSoftwareVersion
+message FetchSoftwareVersionRes {
+string version = 1;
+}
