@@ -27,7 +27,7 @@ message Lock {
     // Semi-public information
     // The most commonly shared construction between parties
     message Image {
-        repeated co.topl.brambl.models.LockId leaves = 1;
+        repeated co.topl.brambl.models.PropositionId leaves = 1;
         uint32 threshold = 2;
     }
 
