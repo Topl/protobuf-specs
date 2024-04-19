@@ -1,4 +1,5 @@
 val scala213 = "2.13.11"
+val scala3 = "3.4.1"
 
 inThisBuild(
   List(
@@ -8,7 +9,7 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq(
-  crossScalaVersions := Seq(scala213)
+  crossScalaVersions := Seq(scala213, scala3)
 )
 
 lazy val publishSettings = Seq(
