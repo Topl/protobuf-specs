@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package co.topl.node.services;
+
+service RegtestRpc {
+  // Instruct the node to make new blocks
+  rpc MakeBlocks (MakeBlocksReq) returns (MakeBlocksRes);
+}
+
+// Instruct the node to make new blocks
+message MakeBlocksReq {
+  // The number of blocks to make
+  uint32 quantity = 1;
+}
+
+// Response indicating the node received the command.
+// NOTE: This is an async response; the blocks may not be ready yet
+message MakeBlocksRes {}
