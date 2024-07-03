@@ -114,6 +114,6 @@ message Value {
     // kesKeyMinutes Key-Evolving Signature: mechanism for securing chain selection process in Ouroboros proof-of-stake
     google.protobuf.UInt32Value kesKeyMinutes = 12;
     // gap of non-eligibility after a block is minted
-    google.protobuf.UInt32Value slotGapLeaderElection = 13;
+    google.protobuf.UInt64Value slotGapLeaderElection = 13;
   }
 }
