@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package co.topl.node.services;
+
+import "validate/validate.proto";
+
+service NetworkControlRpc {
+  // Get current hostId
+  rpc GetHostId (GetHostIdReq) returns (GetHostIdRes);
+  
+  // Instruct the node to forget peer i.e. close connection and remove peer from known hosts
+  rpc ForgetPeer (ForgetPeerReq) returns (ForgetPeerRes);
+  
+  // Add remote peer as known peer, node will node install connection to that peer automatically
+  rpc AddPeer (AddPeerReq) returns (AddPeerRes);
+  
+}
+
+
+message RpcHostId {
+  bytes id = 1 [(validate.rules).bytes.len = 32];
+}
+
+//Get current host id
+message GetHostIdReq {}
+
+message GetHostIdRes {
+  RpcHostId id = 1 [(validate.rules).message.required = true];
+}
+
+// Instruct the node to forget remote peer
+message ForgetPeerReq {
+  // Host to move to cold
+  RpcHostId id = 1 [(validate.rules).message.required = true];
+}
+
+// Response indicating the node received the command.
+// NOTE: This is an async response;
+message ForgetPeerRes {}
+
+// Instruct the node to add remote peer as known peer
+message AddPeerReq {
+  // Host to move to cold
+  RpcHostId id = 1;
+  string ip = 2 [(validate.rules).string.address = true];
+  uint32 port = 3 [(validate.rules).uint32 = {gte:1, lte:65535}];
+}
+
+// Response indicating the node received the command.
+// NOTE: This is an async response;
+message AddPeerRes {}
